@@ -47,8 +47,8 @@ static const int showtab = showtab_auto; /* Default tab bar show mode */
 static const int toptab = True;          /* False means bottom tab bar */
 #endif                                   // TAB_PATCH
 #if BAR_HEIGHT_PATCH
-static const int bar_height = 0; /* 0 means derive from font, >= 1 explicit height */
-#endif                           // BAR_HEIGHT_PATCH
+static const int bar_height = 22; /* 0 means derive from font, >= 1 explicit height */
+#endif                            // BAR_HEIGHT_PATCH
 #if BAR_PADDING_PATCH
 static const int vertpad = 10; /* vertical padding of bar */
 static const int sidepad = 10; /* horizontal padding of bar */
@@ -73,18 +73,18 @@ static const int riodraw_matchpid = 1; /* 0 or 1, indicates whether to match the
 #endif                                 // SWALLOW_PATCH
 #endif                                 // RIODRAW_PATCH
 #if BAR_STATUSPADDING_PATCH
-static const int horizpadbar = 2; /* horizontal padding for statusbar */
+static const int horizpadbar = 0; /* horizontal padding for statusbar */
 static const int vertpadbar = 0;  /* vertical padding for statusbar */
 #endif                            // BAR_STATUSPADDING_PATCH
 #if BAR_STATUSBUTTON_PATCH
-static const char buttonbar[] = "<O>";
+static const char buttonbar[] = "󰀘";
 #endif // BAR_STATUSBUTTON_PATCH
 #if BAR_SYSTRAY_PATCH
 static const unsigned int systrayspacing = 4; /* systray spacing */
 static const int showsystray = 1;             /* 0 means no systray */
 #endif                                        // BAR_SYSTRAY_PATCH
 /* Indicators: see patch/bar_indicators.h for options */
-static int tagindicatortype = INDICATOR_TOP_LEFT_SQUARE;
+static int tagindicatortype = INDICATOR_BOTTOM_BAR;
 static int tiledindicatortype = INDICATOR_NONE;
 static int floatindicatortype = INDICATOR_TOP_LEFT_SQUARE;
 #if FAKEFULLSCREEN_CLIENT_PATCH && !FAKEFULLSCREEN_PATCH
@@ -388,10 +388,13 @@ static const Rule rules[] = {
      */
     RULE(.wintype = WTYPE "DIALOG", .isfloating = 1) RULE(.wintype = WTYPE "UTILITY", .isfloating = 1)
         RULE(.wintype = WTYPE "TOOLBAR", .isfloating = 1) RULE(.wintype = WTYPE "SPLASH", .isfloating = 1) RULE(.class = "Gimp", .tags = 1 << 4)
-            RULE(.class = "Firefox", .tags = 1 << 7) RULE(.class = "Google-chrome-unstable", .tags = 1 << 1)
-                RULE(.class = "jetbrains-clion", .tags = 1 << 2) RULE(.class = "jetbrains-idea", .tags = 1 << 2) RULE(.class = "Code", .tags = 1 << 0)
+            RULE(.class = "Google-chrome-unstable", .tags = 1 << 1) RULE(.class = "jetbrains-clion", .tags = 1 << 2)
+                RULE(.class = "jetbrains-idea", .tags = 1 << 2) RULE(.class = "Code", .tags = 1 << 0)
+                    RULE(.class = "TelegramDesktop", .tags = 1 << 3, .isfloating = 1) RULE(.class = "Wine", .tags = 1 << 3, .isfloating = 1)
+                        RULE(.class = "SimpleScreenRecorder", .isfloating = 1) RULE(.class = "fcitx5-config-qt", .isfloating = 1)
+                            RULE(.wintype = WTYPE "fcitx5-config-qt", .isfloating = 1)
 #if SCRATCHPADS_PATCH
-                    RULE(.instance = "spterm", .tags = SPTAG(0), .isfloating = 1)
+                                RULE(.instance = "spterm", .tags = SPTAG(0), .isfloating = 1)
 #endif // SCRATCHPADS_PATCH
 };
 
@@ -644,9 +647,9 @@ static const Layout layouts[] = {
 #if NROWGRID_LAYOUT
     {"###", nrowgrid},
 #endif
-#if CYCLELAYOUTS_PATCH
-    {NULL, NULL},
-#endif
+    // #if CYCLELAYOUTS_PATCH
+    // {NULL, NULL},
+    // #endif
     {"><>", NULL}, /* no layout function means floating behavior */
 };
 #endif // FLEXTILE_DELUXE_LAYOUT
@@ -723,12 +726,9 @@ static const char *xkb_layouts[] = {
 /* commands */
 #if !NODMENU_PATCH
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-#endif                         // NODMENU_PATCH
 static const char *dmenucmd[] = {"dmenu_run",
-#if !NODMENU_PATCH
                                  "-m",
                                  dmenumon,
-#endif // NODMENU_PATCH
                                  "-fn",
                                  dmenufont,
                                  "-nb",
@@ -743,15 +743,17 @@ static const char *dmenucmd[] = {"dmenu_run",
                                  topbar ? NULL : "-b",
 #endif // BAR_DMENUMATCHTOP_PATCH
                                  NULL};
+#endif                                          // NODMENU_PATCH
 static const char *termcmd[] = {"kitty", NULL}; // change this to your term
-static const char *rofi[] = {".config/rofi/launchers/text/executable_launcher.sh", NULL};
+static const char *rofi[] = {"/home/nextalone/.config/rofi/launchers/text/executable_launcher.sh", NULL};
+static const char *power[] = {"/home/nextalone/.config/rofi/powermenu/executable_powermenu.sh", NULL};
 static const char *flameshot[] = {"flameshot", "gui", NULL};
 static const char *lock[] = {"slock", NULL};
 static const char *screen_recorder[] = {"simplescreenrecorder", NULL};
 static const char *chrome[] = {"google-chrome-unstable", NULL};
-static const char *volume_up[] = {"pactl", "set-sink-volume", "0", "+5%", NULL};
-static const char *volume_down[] = {"pactl", "set-sink-volume", "0", "-5%", NULL};
-static const char *volume_mute[] = {"pactl", "set-sink-mute", "0", "toggle", NULL};
+static const char *volume_up[] = {"pactl", "set-sink-volume", "1", "+5%", NULL};
+static const char *volume_down[] = {"pactl", "set-sink-volume", "1", "-5%", NULL};
+static const char *volume_mute[] = {"pactl", "set-sink-mute", "1", "toggle", NULL};
 #if BAR_STATUSCMD_PATCH
 #if BAR_DWMBLOCKS_PATCH
 /* This defines the name of the executable that handles the bar (used for signalling purposes) */
@@ -1184,7 +1186,7 @@ static Command commands[] = {
 static Button buttons[] = {
 /* click                event mask           button          function        argument */
 #if BAR_STATUSBUTTON_PATCH
-    {ClkButton, 0, Button1, spawn, {.v = dmenucmd}},
+    {ClkButton, 0, Button1, spawn, {.v = power}},
 #endif // BAR_STATUSBUTTON_PATCH
     {ClkLtSymbol, 0, Button1, setlayout, {0}},
 #if BAR_LAYOUTMENU_PATCH
