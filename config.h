@@ -97,11 +97,11 @@ static const char etagf[] = "[%s]";    /* format of an empty tag */
 static const int lcaselbl = 0;         /* 1 means make tag label lowercase */
 #endif                                 // BAR_TAGLABELS_PATCH
 #if BAR_UNDERLINETAGS_PATCH
-static const unsigned int ulinepad = 5;     /* horizontal padding between the underline and tag */
-static const unsigned int ulinestroke = 2;  /* thickness / height of the underline */
-static const unsigned int ulinevoffset = 0; /* how far above the bottom of the bar the line should appear */
-static const int ulineall = 0;              /* 1 to show underline on all tags, 0 for just the active ones */
-#endif                                      // BAR_UNDERLINETAGS_PATCH
+static const unsigned int ulinepad = 5;         /* horizontal padding between the underline and tag */
+static const unsigned int ulinestroke  = 2;     /* thickness / height of the underline */
+static const unsigned int ulinevoffset = 0;     /* how far above the bottom of the bar the line should appear */
+static const int ulineall = 0;                  /* 1 to show underline on all tags, 0 for just the active ones */
+#endif // BAR_UNDERLINETAGS_PATCH
 
 /* Indicators: see patch/bar_indicators.h for options */
 static int tagindicatortype = INDICATOR_BOTTOM_BAR;
@@ -200,6 +200,18 @@ static char col_br_magenta[] = "#bb9af7";
 static char col_cyan[] = "#449dab";
 static char col_br_cyan[] = "#0db9d7";
 
+#if RENAMED_SCRATCHPADS_PATCH
+static char scratchselfgcolor[]          = "#FFF7D4";
+static char scratchselbgcolor[]          = "#77547E";
+static char scratchselbordercolor[]      = "#894B9F";
+static char scratchselfloatcolor[]       = "#894B9F";
+
+static char scratchnormfgcolor[]         = "#FFF7D4";
+static char scratchnormbgcolor[]         = "#664C67";
+static char scratchnormbordercolor[]     = "#77547E";
+static char scratchnormfloatcolor[]      = "#77547E";
+#endif // RENAMED_SCRATCHPADS_PATCH
+
 #if BAR_FLEXWINTITLE_PATCH
 static char normTTBbgcolor[] = "#330000";
 static char normLTRbgcolor[] = "#330033";
@@ -250,6 +262,10 @@ static const unsigned int alphas[][3] = {
     [SchemeTag4] = {OPAQUE, baralpha, borderalpha},         [SchemeTag5] = {OPAQUE, baralpha, borderalpha},
     [SchemeTag6] = {OPAQUE, baralpha, borderalpha},         [SchemeTag7] = {OPAQUE, baralpha, borderalpha},
     [SchemeTag8] = {OPAQUE, baralpha, borderalpha},         [SchemeTag9] = {OPAQUE, baralpha, borderalpha},
+#if RENAMED_SCRATCHPADS_PATCH
+    [SchemeScratchSel]  = { OPAQUE, baralpha, borderalpha },
+    [SchemeScratchNorm] = { OPAQUE, baralpha, borderalpha },
+#endif // RENAMED_SCRATCHPADS_PATCH
 #if BAR_FLEXWINTITLE_PATCH
     [SchemeFlexActTTB] = {OPAQUE, baralpha, borderalpha},   [SchemeFlexActLTR] = {OPAQUE, baralpha, borderalpha},
     [SchemeFlexActMONO] = {OPAQUE, baralpha, borderalpha},  [SchemeFlexActGRID] = {OPAQUE, baralpha, borderalpha},
@@ -368,7 +384,9 @@ static const char *const autostart[] = {
 };
 #endif // COOL_AUTOSTART_PATCH
 
-#if SCRATCHPADS_PATCH
+#if RENAMED_SCRATCHPADS_PATCH
+static const char *scratchpadcmd[] = {"s", "st", "-n", "spterm", NULL};
+#elif SCRATCHPADS_PATCH
 const char *spcmd1[] = {"st", "-n", "spterm", "-g", "120x34", NULL};
 static Sp scratchpads[] = {
     /* name          cmd  */
@@ -449,32 +467,34 @@ static const Rule rules[] = {
      *	_NET_WM_WINDOW_TYPE(ATOM) = wintype
      */
     // Jetbrains family
-    RULE(.wintype = WTYPE "DIALOG", .isfloating = 1 /*, .iscentered = 1*/),
-    RULE(.wintype = WTYPE "UTILITY", .isfloating = 1),
-    RULE(.wintype = WTYPE "TOOLBAR", .isfloating = 1),
-    RULE(.wintype = WTYPE "SPLASH", .isfloating = 1),
-    RULE(.class = "TelegramDesktop", .isfloating = 1),
-    RULE(.class = "Wine", .isfloating = 1),
-    RULE(.class = "SimpleScreenRecorder", .isfloating = 1),
-    RULE(.class = "fcitx5-config-qt", .isfloating = 1 /*, .iscentered = 1*/),
-    RULE(.class = "GParted", .isfloating = 1),
-    RULE(.class = "Steam", .isfloating = 0 /*, .iscentered = 1*/),
-    RULE(.class = "Lxpolkit", .isfloating = 1 /*, .iscentered = 1*/),
-    RULE(.class = "SimpleScreenRecorder", .isfloating = 1),
-    RULE(.class = "64Gram", .isfloating = 1),
-    RULE(.class = "Xdg-desktop-portal-gtk", .title = "Choose Files", .isfloating = 1),
-    RULE(.class = "Nm-connection-editor", .isfloating = 1),
-    RULE(.class = "\345\276\256\344\277\241", .isfloating = 1),
-    RULE(.class = "flameshot", .title = "Configuration", .isfloating = 1),
-    RULE(.class = "Steam", .isfloating = 0),
-    RULE(.class = "Pinentry-gtk-2", .isfloating = 1),
-    RULE(.class = "weixin", .isfloating = 1),
-    RULE(.class = "wemeetapp", .isfloating = 1),
+    RULE(.wintype = WTYPE "DIALOG", .isfloating = 1 /*, .iscentered = 1*/)
+        RULE(.wintype = WTYPE "UTILITY", .isfloating = 1)
+            RULE(.wintype = WTYPE "TOOLBAR", .isfloating = 1)
+                RULE(.wintype = WTYPE "SPLASH", .isfloating = 1)
+                    RULE(.class = "TelegramDesktop", .isfloating = 1)
+                        RULE(.class = "Wine", .isfloating = 1)
+                            RULE(.class = "SimpleScreenRecorder", .isfloating = 1)
+                                RULE(.class = "fcitx5-config-qt", .isfloating = 1 /*, .iscentered = 1*/)
+                                    RULE(.class = "GParted", .isfloating = 1)
+                                        RULE(.class = "Steam", .isfloating = 0 /*, .iscentered = 1*/)
+                                            RULE(.class = "Lxpolkit", .isfloating = 1 /*, .iscentered = 1*/)
+                                                RULE(.class = "SimpleScreenRecorder", .isfloating = 1)
+                                                    RULE(.class = "64Gram", .isfloating = 1)
+                                                        RULE(.class = "Xdg-desktop-portal-gtk", .title = "Choose Files", .isfloating = 1)
+                                                            RULE(.class = "Nm-connection-editor", .isfloating = 1)
+                                                                RULE(.class = "\345\276\256\344\277\241", .isfloating = 1)
+                                                                    RULE(.class = "flameshot", .title = "Configuration", .isfloating = 1)
+                                                                        RULE(.class = "Steam", .isfloating = 0)
+                                                                            RULE(.class = "Pinentry-gtk-2", .isfloating = 1)
+                                                                                RULE(.class = "weixin", .isfloating = 1)
+                                                                                    RULE(.class = "wemeetapp", .isfloating = 1)
 
 // ,RULE(.class = "", .title = "Android Emulator - Pixel:5554", .isfloating = 1)
 //     ,RULE(.class = "Emulator", .isfloating = 1)
-#if SCRATCHPADS_PATCH
-    RULE(.instance = "spterm", .tags = SPTAG(0), .isfloating = 1)
+#if RENAMED_SCRATCHPADS_PATCH
+                                                                                        RULE(.instance = "spterm", .scratchkey = 's', .isfloating = 1)
+#elif SCRATCHPADS_PATCH
+                                                                                        RULE(.instance = "spterm", .tags = SPTAG(0), .isfloating = 1)
 #endif // SCRATCHPADS_PATCH
 };
 
@@ -1040,6 +1060,7 @@ static Key keys[] = {
     {M, XK_t, setlayout, {.v = &layouts[1]}},
     {M, XK_m, setlayout, {.v = &layouts[2]}},
 #if COLUMNS_LAYOUT
+    {M, XK_c, setlayout, {.v = &layouts[3]}},
 #endif // COLUMNS_LAYOUT
 #if FLEXTILE_DELUXE_LAYOUT
     {M | C, XK_t, rotatelayoutaxis, {.i = +1}},              /* flextile, 1 = layout axis */
@@ -1064,11 +1085,15 @@ static Key keys[] = {
 #if NO_MOD_BUTTONS_PATCH
     {M | S, XK_Escape, togglenomodbuttons, {0}},
 #endif // NO_MOD_BUTTONS_PATCH
-#if SCRATCHPADS_PATCH
+#if RENAMED_SCRATCHPADS_PATCH
+    {M, XK_grave, togglescratch, {.v = scratchpadcmd}},
+    {M | C, XK_grave, setscratch, {.v = scratchpadcmd}},
+    {M | S, XK_grave, removescratch, {.v = scratchpadcmd}},
+#elif SCRATCHPADS_PATCH
     {M, XK_grave, togglescratch, {.ui = 0}},
     {M | C, XK_grave, setscratch, {.ui = 0}},
     {M | S, XK_grave, removescratch, {.ui = 0}},
-#endif // SCRATCHPADS_PATCH
+#endif // SCRATCHPADS_PATCH | RENAMED_SCRATCHPADS_PATCH
 #if UNFLOATVISIBLE_PATCH
     {M | A, XK_space, unfloatvisible, {0}},
     {M | S, XK_t, unfloatvisible, {.v = &layouts[0]}},
@@ -1089,7 +1114,7 @@ static Key keys[] = {
     {M, XK_minus, scratchpad_show, {0}},
     {M | S, XK_minus, scratchpad_hide, {0}},
     {M, XK_equal, scratchpad_remove, {0}},
-#elif SCRATCHPADS_PATCH
+#elif SCRATCHPADS_PATCH && !RENAMED_SCRATCHPADS_PATCH
     {M, XK_0, view, {.ui = ~SPTAGMASK}},
     {M | S, XK_0, tag, {.ui = ~SPTAGMASK}},
 #else
@@ -1342,10 +1367,6 @@ static Button buttons[] = {
 #if TAB_PATCH
     {ClkTabBar, 0, Button1, focuswin, {0}},
 #endif // TAB_PATCH
-#if SHIFTVIEW_PATCH
-    {ClkTagBar, 0, Button4, shiftview, {.i = -1}},
-    {ClkTagBar, 0, Button5, shiftview, {.i = 1}},
-#endif // SHIFTVIEW_PATCH
 };
 
 #if DWMC_PATCH
@@ -1489,7 +1510,7 @@ static Signal signals[] = {
     {"toggleverticalmax", toggleverticalmax},
     {"togglemax", togglemax},
 #endif // MAXIMIZE_PATCH
-#if SCRATCHPADS_PATCH
+#if SCRATCHPADS_PATCH && !RENAMED_SCRATCHPADS_PATCH
     {"togglescratch", togglescratch},
 #endif // SCRATCHPADS_PATCH
 #if UNFLOATVISIBLE_PATCH
@@ -1614,7 +1635,7 @@ static IPCCommand ipccommands[] = {
 #if ROTATESTACK_PATCH
     IPCCOMMAND(rotatestack, 1, {ARG_TYPE_SINT}),
 #endif // ROTATESTACK_PATCH
-#if SCRATCHPADS_PATCH
+#if SCRATCHPADS_PATCH && !RENAMED_SCRATCHPADS_PATCH
     IPCCOMMAND(togglescratch, 1, {ARG_TYPE_UINT}),
 #endif // SCRATCHPADS_PATCH
 #if SELFRESTART_PATCH

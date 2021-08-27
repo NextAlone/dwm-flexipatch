@@ -98,8 +98,8 @@ drawstatusbar(BarArg *a, char* stext)
 	#endif // BAR_STATUSCMD_PATCH
 
     x += lrpad;
-    drw_setscheme(drw, scheme[LENGTH(colors)]);
-    drw->scheme[ColFg] = scheme[SchemeNorm][ColFg];
+	drw_setscheme(drw, scheme[LENGTH(colors)]);
+	drw->scheme[ColFg] = scheme[SchemeNorm][ColFg];
 	drw->scheme[ColBg] = scheme[SchemeNorm][ColBg];
 
 	/* process status text */
@@ -185,42 +185,42 @@ drawstatusbar(BarArg *a, char* stext)
 					drw->scheme[ColFg] = oldfg;
 					drw->scheme[ColBg] = oldbg;
 				} else if (text[i] == 'r') {
-                  int rx = atoi(text + ++i);
-                  while (text[++i] != ',')
-                    ;
-                  int ry = atoi(text + ++i);
-                  while (text[++i] != ',')
-                    ;
-                  int rw = atoi(text + ++i);
-                  while (text[++i] != ',')
-                    ;
-                  int rh = atoi(text + ++i);
+					int rx = atoi(text + ++i);
+					while (text[++i] != ',');
+					int ry = atoi(text + ++i);
+					while (text[++i] != ',');
+					int rw = atoi(text + ++i);
+					while (text[++i] != ',');
+					int rh = atoi(text + ++i);
 
-                  if (ry < 0) ry = 0;
-                  if (rx < 0) rx = 0;
+					if (ry < 0)
+						ry = 0;
+					if (rx < 0)
+						rx = 0;
 
-                  drw_rect(drw, rx + x, y + ry, rw, rh, 1, 0);
-                } else if (text[i] == 'f') {
-                  x += atoi(text + ++i);
-                }
-            }
+					drw_rect(drw, rx + x, y + ry, rw, rh, 1, 0);
+				} else if (text[i] == 'f') {
+					x += atoi(text + ++i);
+				}
+			}
 
-            text = text + i + 1;
-            len -= i + 1;
-            i = -1;
-            isCode = 0;
-            if (len <= 0) break;
-        }
-    }
-    if (!isCode && len > 0) {
-      w = TEXTWM(text) - lrpad;
-      drw_text(drw, x, y, w, bh, 0, text, 0, True);
-      x += w;
-    }
-    free(p);
+			text = text + i + 1;
+			len -= i + 1;
+			i = -1;
+			isCode = 0;
+			if (len <= 0)
+				break;
+		}
+	}
+	if (!isCode && len > 0) {
+		w = TEXTWM(text) - lrpad;
+		drw_text(drw, x, y, w, bh, 0, text, 0, True);
+		x += w;
+	}
+	free(p);
 
-    drw_setscheme(drw, scheme[SchemeNorm]);
-    return 1;
+	drw_setscheme(drw, scheme[SchemeNorm]);
+	return 1;
 }
 
 int
