@@ -632,7 +632,6 @@ static const Layout layouts[] = {
 #if DECK_LAYOUT
     {"[D]", deck},
 #endif
-
 #if GRIDMODE_LAYOUT
     {"HHH", grid},
 #endif
@@ -921,9 +920,9 @@ static Key keys[] = {
 #if SELFRESTART_PATCH
     {MODKEY | ShiftMask, XK_r, self_restart, {0}},
 #endif // SELFRESTART_PATCH
-    {MODKEY | ShiftMask, XK_q, quit, {0}},
+    {MODKEY | ControlMask, XK_q, quit, {0}},
 #if RESTARTSIG_PATCH
-    {MODKEY | ControlMask, XK_q, quit, {1}},
+    {MODKEY | ShiftMask, XK_q, quit, {1}},
 #endif // RESTARTSIG_PATCH
 #if FOCUSURGENT_PATCH
     {MODKEY, XK_u, focusurgent, {0}},
