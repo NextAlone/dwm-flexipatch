@@ -228,7 +228,7 @@
  * sole purpose of providing visual aid.
  * https://dwm.suckless.org/patches/alternativetags/
  */
-#define BAR_ALTERNATIVE_TAGS_PATCH 0
+#define BAR_ALTERNATIVE_TAGS_PATCH 1
 
 /* This patches provides the ability to use alternative text for tags which contain at
  * least one window.
@@ -441,7 +441,7 @@
  * This patch takes precedence over centeredwindowname and fancybar patches.
  * https://dwm.suckless.org/patches/center/
  */
-#define CENTER_PATCH 0
+#define CENTER_PATCH 1
 
 /* A transient window is one that is meant to be short lived and is usually raised by a
  * parent window. Such windows are typically dialog boxes and the like.
@@ -487,7 +487,7 @@
 /* The cyclelayouts patch lets you cycle through all your layouts.
  * https://dwm.suckless.org/patches/cyclelayouts/
  */
-#define CYCLELAYOUTS_PATCH 0
+#define CYCLELAYOUTS_PATCH 1
 
 /* Make dwm respect _MOTIF_WM_HINTS property, and not draw borders around windows requesting
  * for it. Some applications use this property to notify window managers to not draw window
@@ -793,7 +793,7 @@
 /* This patch lets you change the position of a client in the stack using the mouse.
  * https://github.com/bakkeby/patches/wiki/placemouse
  */
-#define PLACEMOUSE_PATCH 0
+#define PLACEMOUSE_PATCH 1
 
 /* This patch provides a way to move clients up and down inside the client list.
  * https://dwm.suckless.org/patches/push/
@@ -836,7 +836,7 @@
  * Additionally dwm can quit cleanly by using kill -TERM dwmpid.
  * https://dwm.suckless.org/patches/restartsig/
  */
-#define RESTARTSIG_PATCH 0
+#define RESTARTSIG_PATCH 1
 
 /* Adds rio-like drawing to resize the selected client.
  * This depends on an external tool slop being installed.
@@ -896,7 +896,7 @@
 /* Allows restarting dwm without the dependency of an external script.
  * https://dwm.suckless.org/patches/selfrestart/
  */
-#define SELFRESTART_PATCH 0
+#define SELFRESTART_PATCH 1
 
 /* This patch allow clients to keep focus when being sent to another monitor.
  * https://github.com/bakkeby/patches/blob/master/dwm/dwm-sendmon_keepfocus-6.2.diff
@@ -1033,7 +1033,7 @@
  * Note that fancybar, awesomebar, bartabgroups and similar patches make the tab patch redundant.
  * https://dwm.suckless.org/patches/tab/
  */
-#define TAB_PATCH 0
+#define TAB_PATCH 1
 
 /* Adds keyboard shortcuts to move all (or only floating) windows from one tag to another.
  * https://dwm.suckless.org/patches/tagall/
@@ -1091,7 +1091,7 @@
 /* This patch allows you to toggle fullscreen on and off using a single shortcut key.
  * https://github.com/bakkeby/patches/blob/master/dwm/dwm-togglefullscreen-6.2.diff
  */
-#define TOGGLEFULLSCREEN_PATCH 0
+#define TOGGLEFULLSCREEN_PATCH 1
 
 /* Minor patch that lets you use the same keyboard shortcut to toggle to the previous layout if the
  * designated layout is already active.

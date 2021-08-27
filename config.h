@@ -5,7 +5,7 @@
 static const unsigned int borderpx = 0; /* border pixel of windows */
 static const int corner_radius = 10;
 #else
-static const unsigned int borderpx = 1; /* border pixel of windows */
+static const unsigned int borderpx = 0; /* border pixel of windows */
 #endif                               // ROUNDED_CORNERS_PATCH
 static const unsigned int snap = 32; /* snap pixel */
 #if SWALLOW_PATCH
@@ -15,23 +15,23 @@ static const int swallowfloating = 0; /* 1 means swallow floating windows by def
 static int nomodbuttons = 1; /* allow client mouse button bindings that have no modifier */
 #endif                       // NO_MOD_BUTTONS_PATCH
 #if VANITYGAPS_PATCH
-static const unsigned int gappih = 20; /* horiz inner gap between windows */
+static const unsigned int gappih = 10; /* horiz inner gap between windows */
 static const unsigned int gappiv = 10; /* vert inner gap between windows */
 static const unsigned int gappoh = 10; /* horiz outer gap between windows and screen edge */
-static const unsigned int gappov = 30; /* vert outer gap between windows and screen edge */
+static const unsigned int gappov = 10; /* vert outer gap between windows and screen edge */
 static const int smartgaps_fact = 1;   /* gap factor when there is only one client; 0 = no gaps, 3 = 3x outer gaps */
 #endif                                 // VANITYGAPS_PATCH
 #if AUTOSTART_PATCH
-static const char autostartblocksh[] = "autostart_blocking.sh";
+static const char autostartblocksh[] = "bar.sh";
 static const char autostartsh[] = "autostart.sh";
 static const char dwmdir[] = "dwm";
 static const char localshare[] = ".local/share";
 #endif // AUTOSTART_PATCH
 #if BAR_ANYBAR_PATCH
-static const int usealtbar = 1;                /* 1 means use non-dwm status bar */
-static const char *altbarclass = "Polybar";    /* Alternate bar class name */
-static const char *altbarcmd = "$HOME/bar.sh"; /* Alternate bar launch command */
-#endif                                         // BAR_ANYBAR_PATCH
+static const int usealtbar = 1;                                 /* 1 means use non-dwm status bar */
+static const char *altbarclass = "status2d";                    /* Alternate bar class name */
+static const char *altbarcmd = "$HOME/.local/share/dwm/bar.sh"; /* Alternate bar launch command */
+#endif                                                          // BAR_ANYBAR_PATCH
 #if BAR_HOLDBAR_PATCH
 static const int showbar = 0; /* 0 means no bar */
 #else
@@ -44,7 +44,7 @@ static const int topbar = 1; /* 0 means bottom bar */
 /*  Modes after showtab_nmodes are disabled.                                */
 enum showtab_modes { showtab_never, showtab_auto, showtab_nmodes, showtab_always };
 static const int showtab = showtab_auto; /* Default tab bar show mode */
-static const int toptab = False;         /* False means bottom tab bar */
+static const int toptab = True;          /* False means bottom tab bar */
 #endif                                   // TAB_PATCH
 #if BAR_HEIGHT_PATCH
 static const int bar_height = 0; /* 0 means derive from font, >= 1 explicit height */
@@ -80,7 +80,7 @@ static const int vertpadbar = 0;  /* vertical padding for statusbar */
 static const char buttonbar[] = "<O>";
 #endif // BAR_STATUSBUTTON_PATCH
 #if BAR_SYSTRAY_PATCH
-static const unsigned int systrayspacing = 2; /* systray spacing */
+static const unsigned int systrayspacing = 4; /* systray spacing */
 static const int showsystray = 1;             /* 0 means no systray */
 #endif                                        // BAR_SYSTRAY_PATCH
 /* Indicators: see patch/bar_indicators.h for options */
@@ -297,7 +297,7 @@ static char *statuscolors[][ColCount] = {
 #endif // BAR_POWERLINE_STATUS_PATCH
 
 #if BAR_LAYOUTMENU_PATCH
-static const char *layoutmenu_cmd = "/home/nextalone/.dwm/layoutmenu.sh";
+static const char *layoutmenu_cmd = "/home/nextalone/.local/share/dwm/layoutmenu.sh";
 #endif
 
 #if COOL_AUTOSTART_PATCH
@@ -342,7 +342,7 @@ static Sp scratchpads[] = {
  * them. This works seamlessly with alternative tags and alttagsdecoration patches.
  */
 static char *tagicons[][NUMTAGS] = {
-    [DEFAULT_TAGS] = {"1", "2", "3", "4", "5", "6", "7", "8", "9"},
+    [DEFAULT_TAGS] = {"󰨞", "󰟍", "󰊠", "󰇮", "󰈐", "󰎆", "󱂚", "󰸼", "󰒓"},
     [ALTERNATIVE_TAGS] = {"A", "B", "C", "D", "E", "F", "G", "H", "I"},
     [ALT_TAGS_DECORATION] = {"<1>", "<2>", "<3>", "<4>", "<5>", "<6>", "<7>", "<8>", "<9>"},
 };
@@ -388,9 +388,10 @@ static const Rule rules[] = {
      */
     RULE(.wintype = WTYPE "DIALOG", .isfloating = 1) RULE(.wintype = WTYPE "UTILITY", .isfloating = 1)
         RULE(.wintype = WTYPE "TOOLBAR", .isfloating = 1) RULE(.wintype = WTYPE "SPLASH", .isfloating = 1) RULE(.class = "Gimp", .tags = 1 << 4)
-            RULE(.class = "Firefox", .tags = 1 << 7)
+            RULE(.class = "Firefox", .tags = 1 << 7) RULE(.class = "Google-chrome-unstable", .tags = 1 << 1)
+                RULE(.class = "jetbrains-clion", .tags = 1 << 2) RULE(.class = "jetbrains-idea", .tags = 1 << 2) RULE(.class = "Code", .tags = 1 << 0)
 #if SCRATCHPADS_PATCH
-                RULE(.instance = "spterm", .tags = SPTAG(0), .isfloating = 1)
+                    RULE(.instance = "spterm", .tags = SPTAG(0), .isfloating = 1)
 #endif // SCRATCHPADS_PATCH
 };
 
@@ -604,9 +605,14 @@ static const Layout layouts[] = {
 #if TILE_LAYOUT
     {"[]=", tile}, /* first entry is default */
 #endif
-    {"><>", NULL}, /* no layout function means floating behavior */
 #if MONOCLE_LAYOUT
     {"[M]", monocle},
+#endif
+#if FIBONACCI_SPIRAL_LAYOUT
+    {"(@)", spiral},
+#endif
+#if FIBONACCI_DWINDLE_LAYOUT
+    {"[\\]", dwindle},
 #endif
 #if BSTACK_LAYOUT
     {"TTT", bstack},
@@ -626,12 +632,7 @@ static const Layout layouts[] = {
 #if DECK_LAYOUT
     {"[D]", deck},
 #endif
-#if FIBONACCI_SPIRAL_LAYOUT
-    {"(@)", spiral},
-#endif
-#if FIBONACCI_DWINDLE_LAYOUT
-    {"[\\]", dwindle},
-#endif
+
 #if GRIDMODE_LAYOUT
     {"HHH", grid},
 #endif
@@ -647,6 +648,7 @@ static const Layout layouts[] = {
 #if CYCLELAYOUTS_PATCH
     {NULL, NULL},
 #endif
+    {"><>", NULL}, /* no layout function means floating behavior */
 };
 #endif // FLEXTILE_DELUXE_LAYOUT
 
@@ -659,7 +661,7 @@ static const char *xkb_layouts[] = {
 #endif // XKB_PATCH
 
 /* key definitions */
-#define MODKEY Mod1Mask
+#define MODKEY Mod4Mask
 #if COMBO_PATCH && SWAPTAGS_PATCH && TAGOTHERMONITOR_PATCH
 #define TAGKEYS(KEY, TAG)                                                                                                          \
   {MODKEY, KEY, comboview, {.ui = 1 << TAG}}, {MODKEY | ControlMask, KEY, toggleview, {.ui = 1 << TAG}},                           \
@@ -775,8 +777,17 @@ static Key on_empty_keys[] = {
 };
 #endif // ON_EMPTY_KEYS_PATCH
 
+#include <X11/XF86keysym.h>
 static Key keys[] = {
-/* modifier                     key            function                argument */
+    /* modifier                     key            function                argument */
+    {0, XF86XK_AudioRaiseVolume, spawn, {.v = volume_up}},
+    {0, XF86XK_AudioLowerVolume, spawn, {.v = volume_down}},
+    {0, XF86XK_AudioMute, spawn, {.v = volume_mute}},
+    {0, XF86XK_Calculator, spawn, {.v = lock}},
+    {MODKEY, XK_Print, spawn, SHCMD("maim | xclip -selection clipboard -t image/png")},
+    {0, XK_Print, spawn, {.v = flameshot}},
+    {ShiftMask, XK_Print, spawn, {.v = screen_recorder}},
+    {MODKEY, XK_w, spawn, {.v = chrome}},
 #if KEYMODES_PATCH
     {MODKEY, XK_Escape, setkeymode, {.ui = COMMANDMODE}},
 #endif // KEYMODES_PATCH
@@ -903,7 +914,7 @@ static Key keys[] = {
 #if BAR_WINTITLEACTIONS_PATCH
     {MODKEY | ControlMask, XK_z, showhideclient, {0}},
 #endif // BAR_WINTITLEACTIONS_PATCH
-    {MODKEY | ShiftMask, XK_c, killclient, {0}},
+    {MODKEY, XK_q, killclient, {0}},
 #if KILLUNSEL_PATCH
     {MODKEY | ShiftMask, XK_x, killunsel, {0}},
 #endif // KILLUNSEL_PATCH
@@ -912,7 +923,7 @@ static Key keys[] = {
 #endif // SELFRESTART_PATCH
     {MODKEY | ShiftMask, XK_q, quit, {0}},
 #if RESTARTSIG_PATCH
-    {MODKEY | ControlMask | ShiftMask, XK_q, quit, {1}},
+    {MODKEY | ControlMask, XK_q, quit, {1}},
 #endif // RESTARTSIG_PATCH
 #if FOCUSURGENT_PATCH
     {MODKEY, XK_u, focusurgent, {0}},
@@ -929,6 +940,7 @@ static Key keys[] = {
     {MODKEY, XK_t, setlayout, {.v = &layouts[0]}},
     {MODKEY, XK_f, setlayout, {.v = &layouts[1]}},
     {MODKEY, XK_m, setlayout, {.v = &layouts[2]}},
+    {MODKEY, XK_g, setlayout, {.v = &layouts[3]}},
 #if COLUMNS_LAYOUT
     {MODKEY, XK_c, setlayout, {.v = &layouts[3]}},
 #endif // COLUMNS_LAYOUT
