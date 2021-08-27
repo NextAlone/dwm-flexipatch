@@ -3,3 +3,9 @@ dwm
 dwm-msg
 config.h
 patches.h
+/.idea/codeStyles/codeStyleConfig.xml
+/.idea/misc.xml
+/.idea/saveactions_settings.xml
+/.idea/vcs.xml
+/.idea/libraries/workspace.xml
+/.idea/.gitignore
