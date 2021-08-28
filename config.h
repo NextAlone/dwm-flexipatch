@@ -790,9 +790,9 @@ static const char *flameshot[] = {"flameshot", "gui", NULL};
 static const char *lock[] = {"slock", NULL};
 static const char *screen_recorder[] = {"simplescreenrecorder", NULL};
 static const char *chrome[] = {"google-chrome-unstable", NULL};
-static const char *volume_up[] = {"pactl", "set-sink-volume", "1", "+5%", NULL};
-static const char *volume_down[] = {"pactl", "set-sink-volume", "1", "-5%", NULL};
-static const char *volume_mute[] = {"pactl", "set-sink-mute", "1", "toggle", NULL};
+static const char *volume_up[] = {"pactl", "set-sink-volume", "@DEFAULT_SINK@", "+5%", NULL};
+static const char *volume_down[] = {"pactl", "set-sink-volume", "@DEFAULT_SINK@", "-5%", NULL};
+static const char *volume_mute[] = {"pactl", "set-sink-mute", "@DEFAULT_SINK@", "toggle", NULL};
 #if BAR_STATUSCMD_PATCH
 #if BAR_DWMBLOCKS_PATCH
 /* This defines the name of the executable that handles the bar (used for signalling purposes) */
