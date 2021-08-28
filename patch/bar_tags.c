@@ -47,7 +47,7 @@ draw_tags(Bar *bar, BarArg *a)
       icon = tagicon(bar->mon, i);
       invert = 0;
       w = TEXTW(icon);
-      drw_setscheme(drw, scheme[occ & 1 << i || m->tagset[m->seltags] & 1 << i ? tagschemes[i] : urg & 1 << i ? SchemeUrg : SchemeTagsNorm]);
+      drw_setscheme(drw, scheme[occ & 1 << i ? tagschemes[i] : urg & 1 << i ? SchemeUrg : SchemeTagsNorm]);
       drw_text(drw, x, a->y, w, a->h, lrpad / 2, icon, invert, False);
       drawindicator(m, NULL, occ, x, a->y, w, a->h, i, -1, invert, tagindicatortype);
       x += w;

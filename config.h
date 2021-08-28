@@ -52,7 +52,7 @@ static const int bar_height = 26; /* 0 means derive from font, >= 1 explicit hei
 #if BAR_PADDING_PATCH
 static const int vertpad = 10; /* vertical padding of bar */
 static const int sidepad = 10; /* horizontal padding of bar */
-#endif                        // BAR_PADDING_PATCH
+#endif                         // BAR_PADDING_PATCH
 #if BAR_WINICON_PATCH
 #define ICONSIZE    20 /* icon size */
 #define ICONSPACING 5  /* space between icon and title */
@@ -155,28 +155,28 @@ static char urgbgcolor[] = "#222222";
 static char urgbordercolor[] = "#ff0000";
 static char urgfloatcolor[] = "#db8fd9";
 
-static const char col_bg[] = "#1a1b26";
-static const char col_dark[] = "#16161E";
-static const char col_dark_1[] = "#232433";
-static const char col_dark_2[] = "#2a2b3d";
-static const char col_dark_3[] = "#3b3d57";
-static const char col_fg[] = "#a9b1d6";
-static const char col_black[] = "#32344a";
-static const char col_br_black[] = "#444b6a";
-static const char col_white[] = "#787c99";
-static const char col_br_white[] = "#acb0d0";
-static const char col_red[] = "#f7768e";
-static const char col_br_red[] = "#ff7a93";
-static const char col_green[] = "#9ece6a";
-static const char col_br_green[] = "#b9f27c";
-static const char col_yellow[] = "#e0af68";
-static const char col_br_yellow[] = "#ff9e64";
-static const char col_blue[] = "#7aa2f7";
-static const char col_br_blue[] = "#7da6ff";
-static const char col_magenta[] = "#ad8ee6";
-static const char col_br_magenta[] = "#bb9af7";
-static const char col_cyan[] = "#449dab";
-static const char col_br_cyan[] = "#0db9d7";
+static char col_bg[] = "#1a1b26";
+static char col_dark[] = "#16161E";
+static char col_dark_1[] = "#232433";
+static char col_dark_2[] = "#2a2b3d";
+static char col_dark_3[] = "#3b3d57";
+static char col_fg[] = "#a9b1d6";
+static char col_black[] = "#32344a";
+static char col_br_black[] = "#444b6a";
+static char col_white[] = "#787c99";
+static char col_br_white[] = "#acb0d0";
+static char col_red[] = "#f7768e";
+static char col_br_red[] = "#ff7a93";
+static char col_green[] = "#9ece6a";
+static char col_br_green[] = "#b9f27c";
+static char col_yellow[] = "#e0af68";
+static char col_br_yellow[] = "#ff9e64";
+static char col_blue[] = "#7aa2f7";
+static char col_br_blue[] = "#7da6ff";
+static char col_magenta[] = "#ad8ee6";
+static char col_br_magenta[] = "#bb9af7";
+static char col_cyan[] = "#449dab";
+static char col_br_cyan[] = "#0db9d7";
 
 #if BAR_FLEXWINTITLE_PATCH
 static char normTTBbgcolor[] = "#330000";
@@ -256,17 +256,28 @@ static const int color_ptrs[][ColCount] = {
 };
 #endif // BAR_VTCOLORS_PATCH
 
+#include "themes/onedark.h"
+
 static char *colors[][ColCount] = {
     /*                       fg                bg                border                float */
-    [SchemeNorm] = {normfgcolor, normbgcolor, normbordercolor, normfloatcolor},
-    [SchemeSel] = {selfgcolor, selbgcolor, selbordercolor, selfloatcolor},
+    [SchemeNorm] = {gray3, black, black, normfloatcolor},
+    [SchemeSel] = {gray4, black, black, selfloatcolor},
     [SchemeTitleNorm] = {titlenormfgcolor, titlenormbgcolor, titlenormbordercolor, titlenormfloatcolor},
     [SchemeTitleSel] = {titleselfgcolor, titleselbgcolor, titleselbordercolor, titleselfloatcolor},
-    [SchemeTagsNorm] = {tagsnormfgcolor, tagsnormbgcolor, tagsnormbordercolor, tagsnormfloatcolor},
-    [SchemeTagsSel] = {tagsselfgcolor, tagsselbgcolor, tagsselbordercolor, tagsselfloatcolor},
+    [SchemeTagsNorm] = {gray3, black, black, tagsnormfloatcolor},
+    [SchemeTagsSel] = {gray4, black, black, tagsselfloatcolor},
     [SchemeHidNorm] = {hidnormfgcolor, hidnormbgcolor, c000000, c000000},
     [SchemeHidSel] = {hidselfgcolor, hidselbgcolor, c000000, c000000},
     [SchemeUrg] = {urgfgcolor, urgbgcolor, urgbordercolor, urgfloatcolor},
+    [SchemeTag1] = {col_yellow, black, black, black},
+    [SchemeTag2] = {col_red, black, black, black},
+    [SchemeTag3] = {col_cyan, black, black, black},
+    [SchemeTag4] = {col_blue, black, black, black},
+    [SchemeTag5] = {col_magenta, black, black, black},
+    [SchemeTag6] = {col_br_yellow, black, black, black},
+    [SchemeTag7] = {col_br_green, black, black, black},
+    [SchemeTag8] = {col_br_blue, black, black, black},
+    [SchemeTag9] = {col_br_red, black, black, black},
 #if BAR_FLEXWINTITLE_PATCH
     [SchemeFlexActTTB] = {titleselfgcolor, actTTBbgcolor, actTTBbgcolor, c000000},
     [SchemeFlexActLTR] = {titleselfgcolor, actLTRbgcolor, actLTRbgcolor, c000000},
@@ -318,7 +329,7 @@ static char *statuscolors[][ColCount] = {
     [SchemeUrg] = {urgfgcolor, urgbgcolor, urgbordercolor, urgfloatcolor},
 };
 #endif // BAR_POWERLINE_STATUS_PATCH
-
+static int tagschemes[] = {SchemeTag1, SchemeTag2, SchemeTag3, SchemeTag4, SchemeTag5, SchemeTag6, SchemeTag7, SchemeTag8, SchemeTag9};
 #if BAR_LAYOUTMENU_PATCH
 static const char *layoutmenu_cmd = "/home/nextalone/.local/share/dwm/layoutmenu.sh";
 #endif
@@ -419,10 +430,9 @@ static const Rule rules[] = {
     RULE(.class = "jetbrains-idea", .tags = 1 << 2),
     RULE(.class = "Code", .tags = 1 << 0),
     RULE(.class = "TelegramDesktop", .tags = 1 << 3, .isfloating = 1, .iscentered = 1),
-    RULE(.class = "Wine", .tags = 1 << 3, .isfloating = 1, .iscentered = 1),
+    RULE(.class = "Wine", .tags = 1 << 3, .isfloating = 1, .noswallow = 1),
     RULE(.class = "SimpleScreenRecorder", .isfloating = 1),
     RULE(.class = "fcitx5-config-qt", .isfloating = 1),
-    RULE(.wintype = WTYPE "fcitx5-config-qt", .isfloating = 1),
     RULE(.class = "kitty", .isterminal = 1, .noswallow = 1)
 #if SCRATCHPADS_PATCH
         ,
@@ -482,7 +492,7 @@ static const BarRule barrules[] = {
     {-1, 0, BAR_ALIGN_LEFT, width_taggrid, draw_taggrid, click_taggrid, "taggrid"},
 #endif // BAR_TAGGRID_PATCH
 #if BAR_SYSTRAY_PATCH
-    {0, 0, BAR_ALIGN_RIGHT, width_systray, draw_systray, click_systray, "systray"},
+    {'A', 0, BAR_ALIGN_RIGHT, width_systray, draw_systray, click_systray, "systray"},
 #endif // BAR_SYSTRAY_PATCH
 #if BAR_LTSYMBOL_PATCH
     {-1, 0, BAR_ALIGN_LEFT, width_ltsymbol, draw_ltsymbol, click_ltsymbol, "layout"},
@@ -494,7 +504,7 @@ static const BarRule barrules[] = {
 #elif BAR_STATUS2D_PATCH && BAR_STATUSCMD_PATCH
     {'A', 0, BAR_ALIGN_RIGHT, width_status2d, draw_status2d, click_statuscmd, "status2d"},
 #elif BAR_STATUS2D_PATCH
-    {'A', 0, BAR_ALIGN_RIGHT, width_status2d, draw_status2d, click_status2d, "status2d"},
+    {-1, 0, BAR_ALIGN_RIGHT, width_status2d, draw_status2d, click_status2d, "status2d"},
 #elif BAR_POWERLINE_STATUS_PATCH
     {0, 0, BAR_ALIGN_RIGHT, width_pwrl_status, draw_pwrl_status, click_pwrl_status, "powerline_status"},
 #elif BAR_STATUS_PATCH && BAR_STATUSCMD_PATCH
