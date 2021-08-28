@@ -39,28 +39,21 @@ draw_tags(Bar *bar, BarArg *a)
 			urg |= c->tags;
 	}
 	for (i = 0; i < NUMTAGS; i++) {
-		#if BAR_HIDEVACANTTAGS_PATCH
-		/* do not draw vacant tags */
-		if (!(occ & 1 << i || m->tagset[m->seltags] & 1 << i))
-			continue;
-		#endif // BAR_HIDEVACANTTAGS_PATCH
+#if BAR_HIDEVACANTTAGS_PATCH
+      /* do not draw vacant tags */
+      if (!(occ & 1 << i || m->tagset[m->seltags] & 1 << i)) continue;
+#endif // BAR_HIDEVACANTTAGS_PATCH
 
-		icon = tagicon(bar->mon, i);
-		invert = 0;
-		w = TEXTW(icon);
-		drw_setscheme(drw, scheme[
-			m->tagset[m->seltags] & 1 << i
-			? SchemeTagsSel
-			: urg & 1 << i
-			? SchemeUrg
-			: SchemeTagsNorm
-		]);
-		drw_text(drw, x, a->y, w, a->h, lrpad / 2, icon, invert, False);
-		drawindicator(m, NULL, occ, x, a->y, w, a->h, i, -1, invert, tagindicatortype);
-		x += w;
-	}
+      icon = tagicon(bar->mon, i);
+      invert = 0;
+      w = TEXTW(icon);
+      drw_setscheme(drw, scheme[occ & 1 << i || m->tagset[m->seltags] & 1 << i ? tagschemes[i] : urg & 1 << i ? SchemeUrg : SchemeTagsNorm]);
+      drw_text(drw, x, a->y, w, a->h, lrpad / 2, icon, invert, False);
+      drawindicator(m, NULL, occ, x, a->y, w, a->h, i, -1, invert, tagindicatortype);
+      x += w;
+    }
 
-	return 1;
+    return 1;
 }
 
 int

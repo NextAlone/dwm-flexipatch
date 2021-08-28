@@ -13,10 +13,9 @@ void
 drawindicator(Monitor *m, Client *c, unsigned int occ, int x, int y, int w, int h, unsigned int tag, int filled, int invert, int type)
 {
 	int i, boxw, boxs, indn = 0;
-	if (!(occ & 1 << tag) || type == INDICATOR_NONE)
-		return;
+    if (!(m->tagset[m->seltags] & 1 << tag) || type == INDICATOR_NONE) return;
 
-	boxs = drw->fonts->h / 9;
+    boxs = drw->fonts->h / 9;
 	boxw = drw->fonts->h / 6 + 2;
 	if (filled == -1)
 		filled = m == selmon && m->sel && m->sel->tags & 1 << tag;
