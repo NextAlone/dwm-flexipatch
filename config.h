@@ -50,9 +50,9 @@ static const int toptab = True;          /* False means bottom tab bar */
 static const int bar_height = 26; /* 0 means derive from font, >= 1 explicit height */
 #endif                            // BAR_HEIGHT_PATCH
 #if BAR_PADDING_PATCH
-static const int vertpad = 10; /* vertical padding of bar */
-static const int sidepad = 10; /* horizontal padding of bar */
-#endif                         // BAR_PADDING_PATCH
+static const int vertpad = 8; /* vertical padding of bar */
+static const int sidepad = 8; /* horizontal padding of bar */
+#endif                        // BAR_PADDING_PATCH
 #if BAR_WINICON_PATCH
 #define ICONSIZE    20 /* icon size */
 #define ICONSPACING 5  /* space between icon and title */
@@ -81,12 +81,12 @@ static const char buttonbar[] = "󰀘";
 #endif // BAR_STATUSBUTTON_PATCH
 #if BAR_SYSTRAY_PATCH
 static const unsigned int systrayspacing = 4; /* systray spacing */
-static const int showsystray = 1;             /* 0 means no systray */
+static const int showsystray = 1;             /* 0 meINDICATORans no systray */
 #endif                                        // BAR_SYSTRAY_PATCH
 /* Indicators: see patch/bar_indicators.h for options */
 static int tagindicatortype = INDICATOR_BOTTOM_BAR;
 static int tiledindicatortype = INDICATOR_NONE;
-static int floatindicatortype = INDICATOR_TOP_LEFT_SQUARE;
+static int floatindicatortype = INDICATOR_RIGHT_TAGS;
 #if FAKEFULLSCREEN_CLIENT_PATCH && !FAKEFULLSCREEN_PATCH
 static int fakefsindicatortype = INDICATOR_PLUS;
 static int floatfakefsindicatortype = INDICATOR_PLUS_AND_LARGER_SQUARE;
@@ -396,8 +396,8 @@ static const int tagrows = 2;
  * The RULE macro has the default values set for each field allowing you to only
  * specify the values that are relevant for your rule, e.g.
  *
- *    RULE(.class = "Gimp", .tags = 1 << 4)
- *    RULE(.class = "Firefox", .tags = 1 << 7)
+ *    ,RULE(.class = "Gimp", .tags = 1 << 4)
+ *    ,RULE(.class = "Firefox", .tags = 1 << 7)
  *
  * Refer to the Rule struct definition for the list of available fields depending on
  * the patches you enable.
@@ -409,15 +409,24 @@ static const Rule rules[] = {
      *	WM_WINDOW_ROLE(STRING) = role
      *	_NET_WM_WINDOW_TYPE(ATOM) = wintype
      */
-    RULE(.wintype = WTYPE "DIALOG", .isfloating = 1) RULE(.wintype = WTYPE "UTILITY", .isfloating = 1)
-        RULE(.wintype = WTYPE "TOOLBAR", .isfloating = 1) RULE(.wintype = WTYPE "SPLASH", .isfloating = 1) RULE(.class = "Gimp", .tags = 1 << 4)
-            RULE(.class = "Google-chrome-unstable", .tags = 1 << 1) RULE(.class = "jetbrains-clion", .tags = 1 << 2)
-                RULE(.class = "jetbrains-idea", .tags = 1 << 2) RULE(.class = "Code", .tags = 1 << 0)
-                    RULE(.class = "TelegramDesktop", .tags = 1 << 3, .isfloating = 1, .iscentered = 1)
-                        RULE(.class = "Wine", .tags = 1 << 3, .isfloating = 1, .iscentered = 1) RULE(.class = "SimpleScreenRecorder", .isfloating = 1)
-                            RULE(.class = "fcitx5-config-qt", .isfloating = 1) RULE(.wintype = WTYPE "fcitx5-config-qt", .isfloating = 1)
+    RULE(.wintype = WTYPE "DIALOG", .isfloating = 1),
+    RULE(.wintype = WTYPE "UTILITY", .isfloating = 1),
+    RULE(.wintype = WTYPE "TOOLBAR", .isfloating = 1),
+    RULE(.wintype = WTYPE "SPLASH", .isfloating = 1),
+    RULE(.class = "Gimp", .tags = 1 << 4),
+    RULE(.class = "Google-chrome-unstable", .tags = 1 << 1),
+    RULE(.class = "jetbrains-clion", .tags = 1 << 2),
+    RULE(.class = "jetbrains-idea", .tags = 1 << 2),
+    RULE(.class = "Code", .tags = 1 << 0),
+    RULE(.class = "TelegramDesktop", .tags = 1 << 3, .isfloating = 1, .iscentered = 1),
+    RULE(.class = "Wine", .tags = 1 << 3, .isfloating = 1, .iscentered = 1),
+    RULE(.class = "SimpleScreenRecorder", .isfloating = 1),
+    RULE(.class = "fcitx5-config-qt", .isfloating = 1),
+    RULE(.wintype = WTYPE "fcitx5-config-qt", .isfloating = 1),
+    RULE(.class = "kitty", .isterminal = 1, .noswallow = 1)
 #if SCRATCHPADS_PATCH
-                                RULE(.instance = "spterm", .tags = SPTAG(0), .isfloating = 1)
+        ,
+    RULE(.instance = "spterm", .tags = SPTAG(0), .isfloating = 1)
 #endif // SCRATCHPADS_PATCH
 };
 
@@ -1266,6 +1275,10 @@ static Button buttons[] = {
 #if TAB_PATCH
     {ClkTabBar, 0, Button1, focuswin, {0}},
 #endif // TAB_PATCH
+#if SHIFTVIEW_PATCH
+    {ClkTagBar, 0, Button4, shiftview, {.i = -1}},
+    {ClkTagBar, 0, Button5, shiftview, {.i = 1}},
+#endif // SHIFTVIEW_PATCH
 };
 
 #if DWMC_PATCH
