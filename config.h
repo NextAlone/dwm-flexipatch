@@ -429,10 +429,11 @@ static const Rule rules[] = {
     RULE(.class = "jetbrains-clion", .tags = 1 << 2),
     RULE(.class = "jetbrains-idea", .tags = 1 << 2),
     RULE(.class = "Code", .tags = 1 << 0),
-    RULE(.class = "TelegramDesktop", .tags = 1 << 3, .isfloating = 1, .iscentered = 1),
+    RULE(.class = "TelegramDesktop", .isfloating = 1, .iscentered = 1),
     RULE(.class = "Wine", .tags = 1 << 3, .isfloating = 1, .noswallow = 1),
-    RULE(.class = "SimpleScreenRecorder", .isfloating = 1),
-    RULE(.class = "fcitx5-config-qt", .isfloating = 1),
+    RULE(.class = "SimpleScreenRecorder", .isfloating = 1, ),
+    RULE(.class = "fcitx5-config-qt", .isfloating = 1, .iscentered = 1),
+    RULE(.class = "GParted", .isfloating = 1, .iscentered = 1),
     RULE(.class = "kitty", .isterminal = 1, .noswallow = 1)
 #if SCRATCHPADS_PATCH
         ,
@@ -554,7 +555,7 @@ static const BarRule barrules[] = {
 };
 
 /* layout(s) */
-static const float mfact = 0.55; /* factor of master area size [0.05..0.95] */
+static const float mfact = 0.60; /* factor of master area size [0.05..0.95] */
 static const int nmaster = 1;    /* number of clients in master area */
 #if FLEXTILE_DELUXE_LAYOUT
 static const int nstack = 0;      /* number of clients in primary stack area */
