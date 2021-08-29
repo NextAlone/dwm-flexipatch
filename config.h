@@ -420,24 +420,16 @@ static const Rule rules[] = {
      *	WM_WINDOW_ROLE(STRING) = role
      *	_NET_WM_WINDOW_TYPE(ATOM) = wintype
      */
-    RULE(.wintype = WTYPE "DIALOG", .isfloating = 1),
-    RULE(.wintype = WTYPE "UTILITY", .isfloating = 1),
-    RULE(.wintype = WTYPE "TOOLBAR", .isfloating = 1),
-    RULE(.wintype = WTYPE "SPLASH", .isfloating = 1),
-    RULE(.class = "Gimp", .tags = 1 << 4),
-    RULE(.class = "Google-chrome-unstable", .tags = 1 << 1),
-    RULE(.class = "jetbrains-clion", .tags = 1 << 2),
-    RULE(.class = "jetbrains-idea", .tags = 1 << 2),
-    RULE(.class = "Code", .tags = 1 << 0),
-    RULE(.class = "TelegramDesktop", .isfloating = 1, .iscentered = 1),
-    RULE(.class = "Wine", .tags = 1 << 3, .isfloating = 1, .noswallow = 1),
-    RULE(.class = "SimpleScreenRecorder", .isfloating = 1, ),
-    RULE(.class = "fcitx5-config-qt", .isfloating = 1, .iscentered = 1),
-    RULE(.class = "GParted", .isfloating = 1, .iscentered = 1),
-    RULE(.class = "kitty", .isterminal = 1, .noswallow = 1)
+    RULE(.wintype = WTYPE "DIALOG", .isfloating = 1) RULE(.wintype = WTYPE "UTILITY", .isfloating = 1) RULE(.wintype = WTYPE "TOOLBAR",
+                                                                                                            .isfloating = 1)
+        RULE(.wintype = WTYPE "SPLASH", .isfloating = 1) RULE(.class = "Gimp", .tags = 1 << 4) RULE(.class = "Google-chrome-unstable", .tags = 1 << 1)
+            RULE(.class = "jetbrains-clion", .tags = 1 << 2) RULE(.class = "jetbrains-idea", .tags = 1 << 2) RULE(.class = "Code", .tags = 1 << 0)
+                RULE(.class = "TelegramDesktop", .isfloating = 1, .iscentered = 1) RULE(.class = "Wine", .isfloating = 1, .noswallow = 1)
+                    RULE(.class = "Wine", .title = "Wine System Tray", .isfloating = 1, .noswallow = 1)
+                        RULE(.class = "SimpleScreenRecorder", .isfloating = 1, ) RULE(.class = "fcitx5-config-qt", .isfloating = 1, .iscentered = 1)
+                            RULE(.class = "GParted", .isfloating = 1, .iscentered = 1) RULE(.class = "kitty", .isterminal = 1, .noswallow = 1)
 #if SCRATCHPADS_PATCH
-        ,
-    RULE(.instance = "spterm", .tags = SPTAG(0), .isfloating = 1)
+                                RULE(.instance = "spterm", .tags = SPTAG(0), .isfloating = 1)
 #endif // SCRATCHPADS_PATCH
 };
 
@@ -829,6 +821,7 @@ static Key keys[] = {
     {0, XK_Print, spawn, {.v = flameshot}},
     {S, XK_Print, spawn, {.v = screen_recorder}},
     {M, XK_w, spawn, {.v = chrome}},
+    {M, XK_p, spawn, {.v = power}},
 #if KEYMODES_PATCH
     {M, XK_Escape, setkeymode, {.ui = COMMANDMODE}},
 #endif // KEYMODES_PATCH
@@ -1226,7 +1219,7 @@ static Command commands[] = {
 static Button buttons[] = {
 /* click                event mask           button          function        argument */
 #if BAR_STATUSBUTTON_PATCH
-    {ClkButton, 0, Button1, spawn, {.v = power}},
+    {ClkButton, 0, Button1, spawn, {.v = rofi}},
 #endif // BAR_STATUSBUTTON_PATCH
     {ClkLtSymbol, 0, Button1, setlayout, {0}},
 #if BAR_LAYOUTMENU_PATCH
