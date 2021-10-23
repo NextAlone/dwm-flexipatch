@@ -428,8 +428,9 @@ static const Rule rules[] = {
                     RULE(.class = "Wine", .title = "Wine System Tray", .isfloating = 1, .noswallow = 1)
                         RULE(.class = "SimpleScreenRecorder", .isfloating = 1, ) RULE(.class = "fcitx5-config-qt", .isfloating = 1, .iscentered = 1)
                             RULE(.class = "GParted", .isfloating = 1, .iscentered = 1) RULE(.class = "kitty", .isterminal = 1, .noswallow = 1)
+                                RULE(.class = "GParted", .isfloating = 1)
 #if SCRATCHPADS_PATCH
-                                RULE(.instance = "spterm", .tags = SPTAG(0), .isfloating = 1)
+                                    RULE(.instance = "spterm", .tags = SPTAG(0), .isfloating = 1)
 #endif // SCRATCHPADS_PATCH
 };
 
@@ -485,7 +486,7 @@ static const BarRule barrules[] = {
     {-1, 0, BAR_ALIGN_LEFT, width_taggrid, draw_taggrid, click_taggrid, "taggrid"},
 #endif // BAR_TAGGRID_PATCH
 #if BAR_SYSTRAY_PATCH
-    {'A', 0, BAR_ALIGN_RIGHT, width_systray, draw_systray, click_systray, "systray"},
+    {1, 0, BAR_ALIGN_RIGHT, width_systray, draw_systray, click_systray, "systray"},
 #endif // BAR_SYSTRAY_PATCH
 #if BAR_LTSYMBOL_PATCH
     {-1, 0, BAR_ALIGN_LEFT, width_ltsymbol, draw_ltsymbol, click_ltsymbol, "layout"},
@@ -821,7 +822,7 @@ static Key keys[] = {
     {0, XK_Print, spawn, {.v = flameshot}},
     {S, XK_Print, spawn, {.v = screen_recorder}},
     {M, XK_w, spawn, {.v = chrome}},
-    {M, XK_p, spawn, {.v = power}},
+// {M, XK_p, spawn, {.v = power}},
 #if KEYMODES_PATCH
     {M, XK_Escape, setkeymode, {.ui = COMMANDMODE}},
 #endif // KEYMODES_PATCH
