@@ -15,3 +15,6 @@ patches.h
 /.idea/vcs.xml
 /.idea/libraries/workspace.xml
 /.idea/.gitignore
+/.idea/deployment.xml
+/.idea/dwm.iml
+/.idea/modules.xml
