@@ -420,10 +420,9 @@ static const Rule rules[] = {
      *	WM_WINDOW_ROLE(STRING) = role
      *	_NET_WM_WINDOW_TYPE(ATOM) = wintype
      */
-    RULE(.wintype = WTYPE "DIALOG", .isfloating = 1) RULE(.wintype = WTYPE "UTILITY", .isfloating = 1) RULE(.wintype = WTYPE "TOOLBAR",
-                                                                                                            .isfloating = 1)
-        RULE(.wintype = WTYPE "SPLASH", .isfloating = 1) RULE(.class = "Gimp", .tags = 1 << 4) RULE(.class = "Google-chrome-unstable", .tags = 1 << 1)
-            RULE(.class = "jetbrains-clion", .tags = 1 << 2) RULE(.class = "jetbrains-idea", .tags = 1 << 2) RULE(.class = "Code", .tags = 1 << 0)
+    RULE(.wintype = WTYPE "DIALOG", .isfloating = 1) RULE(.wintype = WTYPE "UTILITY", .isfloating = 1)
+        RULE(.wintype = WTYPE "TOOLBAR", .isfloating = 1) RULE(.wintype = WTYPE "SPLASH", .isfloating = 1) RULE(.class = "Gimp")
+            RULE(.class = "Google-chrome-unstable") RULE(.class = "jetbrains-clion") RULE(.class = "jetbrains-idea") RULE(.class = "Code")
                 RULE(.class = "TelegramDesktop", .isfloating = 1, .iscentered = 1) RULE(.class = "Wine", .isfloating = 1, .noswallow = 1)
                     RULE(.class = "Wine", .title = "Wine System Tray", .isfloating = 1, .noswallow = 1)
                         RULE(.class = "SimpleScreenRecorder", .isfloating = 1, ) RULE(.class = "fcitx5-config-qt", .isfloating = 1, .iscentered = 1)
