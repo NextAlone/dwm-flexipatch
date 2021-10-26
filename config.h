@@ -766,12 +766,9 @@ static const char *xkb_layouts[] = {
 /* commands */
 #if !NODMENU_PATCH
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-#endif                         // NODMENU_PATCH
 static const char *dmenucmd[] = {"dmenu_run",
-#if !NODMENU_PATCH
                                  "-m",
                                  dmenumon,
-#endif // NODMENU_PATCH
                                  "-fn",
                                  dmenufont,
                                  "-nb",
