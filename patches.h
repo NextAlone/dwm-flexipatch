@@ -198,7 +198,7 @@
  * you need it.
  */
 #define BAR_TITLE_RIGHT_PAD_PATCH 0
-#define BAR_TITLE_LEFT_PAD_PATCH 1
+#define BAR_TITLE_LEFT_PAD_PATCH  1
 
 /**
  * Bar options
@@ -209,13 +209,13 @@
  * Set the tagindicatortype variable in config.h to INDICATOR_TOP_BAR to enable this.
  * https://dwm.suckless.org/patches/activetagindicatorbar/
  */
-#define BAR_ACTIVETAGINDICATORBAR_PATCH N/A
+#define BAR_ACTIVETAGINDICATORBAR_PATCH N / A
 
 /* Alternative patch to the activetagindicatorbar patch, adds the bar below the tag
  * icon rather than above.
  * Set the tagindicatortype variable in config.h to INDICATOR_BOTTOM_BAR to enable this.
  */
-#define BAR_ACTIVETAGINDICATORBAR_ALT1_PATCH N/A
+#define BAR_ACTIVETAGINDICATORBAR_ALT1_PATCH N / A
 
 /* The alpha patch adds transparency for the status bar.
  * You need to uncomment the corresponding line in config.mk to use the -lXrender library
@@ -270,7 +270,7 @@
  * Set the tagindicatortype variable in config.h to INDICATOR_CLIENT_DOTS to enable this.
  * https://dwm.suckless.org/patches/clientindicators/
  */
-#define BAR_CLIENTINDICATOR_PATCH N/A
+#define BAR_CLIENTINDICATOR_PATCH N / A
 
 /* This patch enables color emoji in dwm by removing a workaround for a BadLength error
  * in the Xft library when color glyphs are used.
@@ -358,6 +358,18 @@
  */
 #define BAR_PANGO_PATCH 0
 
+/* This patch allows the status text to be fixed to the bar on a specific
+ * monitor rather than being drawn on the focused monitor.
+ * The statusallmons patch takes precedence over this patch.
+ * https://dwm.suckless.org/patches/staticstatus/
+ */
+#define BAR_STATICSTATUS_PATCH 0
+
+/* This patch draws and updates the statusbar on all monitors.
+ * https://dwm.suckless.org/patches/statusallmons/
+ */
+#define BAR_STATUSALLMONS_PATCH 1
+
 /* This patch enables colored text in the status bar. It changes the way colors are defined
  * in config.h allowing multiple color combinations for use in the status script.
  * This patch is incompatible with and takes precedence over the status2d patch.
@@ -393,6 +405,13 @@
 /***
  * Other patches
  */
+
+/* All floating windows are centered, like the center patch, but without a rule.
+ * The center patch takes precedence over this patch.
+ * This patch interferes with the center transient windows patches.
+ * https://dwm.suckless.org/patches/alwayscenter/
+ */
+#define ALWAYSCENTER_PATCH 0
 
 /* This patch allows windows to be resized with its aspect ratio remaining constant.
  * https://dwm.suckless.org/patches/aspectresize/
@@ -438,7 +457,7 @@
 #define AUTORESIZE_PATCH 0
 
 /* This patch adds an iscentered rule to automatically center clients on the current monitor.
- * This patch takes precedence over centeredwindowname and fancybar patches.
+ * This patch takes precedence over centeredwindowname, alwayscenter and fancybar patches.
  * https://dwm.suckless.org/patches/center/
  */
 #define CENTER_PATCH 1
@@ -461,7 +480,7 @@
 #define CENTER_TRANSIENT_WINDOWS_BY_PARENT_PATCH 0
 
 /* This patch provides the ability to assign different weights to clients in their
- * respective stack in tiled layout.r
+ * respective stack in tiled layout.
  * https://dwm.suckless.org/patches/cfacts/
  */
 #define CFACTS_PATCH 0
@@ -735,17 +754,17 @@
 #define NODMENU_PATCH 1
 
 /* This patch allows for toggleable client button bindings that have no modifiers.
- * This can, for example, allow you to move or resize using the mouse alone without holding
- * down a modifier key. This can be practical if you have extra buttons on your mouse.
- * While you can use button bindings with no modifiers without this patch in a bare dwm,
- * those buttons are then unavailable for use within the application itself so being able to
- * toggle these on and off can be necessary in certain situations (e.g. being able to use
- * back and forward buttons in a browser).
+* This can, for example, allow you to move or resize using the mouse alone without holding
+* down a modifier key. This can be practical if you have extra buttons on your mouse.
+* While you can use button bindings with no modifiers without this patch in a bare dwm,
+* those buttons are then unavailable for use within the application itself so being able to
+* toggle these on and off can be necessary in certain situations (e.g. being able to use
+* back and forward buttons in a browser).
 
- * Example bindings:
- *     { ClkClientWin,              0,              Button8,        movemouse,      {0} },
- *     { ClkClientWin,              0,              Button9,        resizemouse,    {0} },
- */
+* Example bindings:
+*     { ClkClientWin,              0,              Button8,        movemouse,      {0} },
+*     { ClkClientWin,              0,              Button9,        resizemouse,    {0} },
+*/
 #define NO_MOD_BUTTONS_PATCH 0
 
 /* When terminals have transparency then their borders also become transparent.

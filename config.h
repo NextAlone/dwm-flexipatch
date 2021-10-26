@@ -72,6 +72,14 @@ static const int riodraw_borders = 0; /* 0 or 1, indicates whether the area draw
 static const int riodraw_matchpid = 1; /* 0 or 1, indicates whether to match the PID of the client that was spawned with riospawn */
 #endif                                 // SWALLOW_PATCH
 #endif                                 // RIODRAW_PATCH
+/* Status is to be shown on: -1 (all monitors), 0 (a specific monitor by index), 'A' (active monitor) */
+#if BAR_STATUSALLMONS_PATCH
+static const int statusmon = -1;
+#elif BAR_STATICSTATUS_PATCH
+static const int statusmon = 0;
+#else
+static const int statusmon = 'A';
+#endif // BAR_STATUSALLMONS_PATCH | BAR_STATICSTATUS_PATCH
 #if BAR_STATUSPADDING_PATCH
 static const int horizpadbar = 0; /* horizontal padding for statusbar */
 static const int vertpadbar = 0;  /* vertical padding for statusbar */
@@ -407,8 +415,8 @@ static const int tagrows = 2;
  * The RULE macro has the default values set for each field allowing you to only
  * specify the values that are relevant for your rule, e.g.
  *
- *    ,RULE(.class = "Gimp", .tags = 1 << 4)
- *    ,RULE(.class = "Firefox", .tags = 1 << 7)
+ *    RULE(.class = "Gimp", .tags = 1 << 4)
+ *    RULE(.class = "Firefox", .tags = 1 << 7)
  *
  * Refer to the Rule struct definition for the list of available fields depending on
  * the patches you enable.
@@ -471,7 +479,7 @@ static const Inset default_inset = {
  *    name - does nothing, intended for visual clue and for logging / debugging
  */
 static const BarRule barrules[] = {
-/* monitor  bar    alignment         widthfunc                drawfunc                clickfunc                name */
+/* monitor   bar    alignment         widthfunc                drawfunc                clickfunc                name */
 #if BAR_STATUSBUTTON_PATCH
     {-1, 0, BAR_ALIGN_LEFT, width_stbutton, draw_stbutton, click_stbutton, "statusbutton"},
 #endif // BAR_STATUSBUTTON_PATCH
@@ -491,19 +499,19 @@ static const BarRule barrules[] = {
     {-1, 0, BAR_ALIGN_LEFT, width_ltsymbol, draw_ltsymbol, click_ltsymbol, "layout"},
 #endif // BAR_LTSYMBOL_PATCH
 #if BAR_STATUSCOLORS_PATCH && BAR_STATUSCMD_PATCH
-    {'A', 0, BAR_ALIGN_RIGHT, width_statuscolors, draw_statuscolors, click_statuscmd, "statuscolors"},
+    {statusmon, 0, BAR_ALIGN_RIGHT, width_statuscolors, draw_statuscolors, click_statuscmd, "statuscolors"},
 #elif BAR_STATUSCOLORS_PATCH
-    {'A', 0, BAR_ALIGN_RIGHT, width_statuscolors, draw_statuscolors, click_statuscolors, "statuscolors"},
+    {statusmon, 0, BAR_ALIGN_RIGHT, width_statuscolors, draw_statuscolors, click_statuscolors, "statuscolors"},
 #elif BAR_STATUS2D_PATCH && BAR_STATUSCMD_PATCH
-    {'A', 0, BAR_ALIGN_RIGHT, width_status2d, draw_status2d, click_statuscmd, "status2d"},
+    {statusmon, 0, BAR_ALIGN_RIGHT, width_status2d, draw_status2d, click_statuscmd, "status2d"},
 #elif BAR_STATUS2D_PATCH
-    {-1, 0, BAR_ALIGN_RIGHT, width_status2d, draw_status2d, click_status2d, "status2d"},
+    {statusmon, 0, BAR_ALIGN_RIGHT, width_status2d, draw_status2d, click_status2d, "status2d"},
 #elif BAR_POWERLINE_STATUS_PATCH
-    {0, 0, BAR_ALIGN_RIGHT, width_pwrl_status, draw_pwrl_status, click_pwrl_status, "powerline_status"},
+    {statusmon, 0, BAR_ALIGN_RIGHT, width_pwrl_status, draw_pwrl_status, click_pwrl_status, "powerline_status"},
 #elif BAR_STATUS_PATCH && BAR_STATUSCMD_PATCH
-    {0, 0, BAR_ALIGN_RIGHT, width_status, draw_status, click_statuscmd, "status"},
+    {statusmon, 0, BAR_ALIGN_RIGHT, width_status, draw_status, click_statuscmd, "status"},
 #elif BAR_STATUS_PATCH
-    {'A', 0, BAR_ALIGN_RIGHT, width_status, draw_status, click_status, "status"},
+    {statusmon, 0, BAR_ALIGN_RIGHT, width_status, draw_status, click_status, "status"},
 #endif // BAR_STATUS2D_PATCH | BAR_STATUSCMD_PATCH
 #if XKB_PATCH
     {0, 0, BAR_ALIGN_RIGHT, width_xkb, draw_xkb, click_xkb, "xkb"},
@@ -521,19 +529,19 @@ static const BarRule barrules[] = {
 #endif // BAR_TABGROUPS_PATCH | BAR_AWESOMEBAR_PATCH | BAR_FANCYBAR_PATCH | BAR_WINTITLE_PATCH
 #if BAR_EXTRASTATUS_PATCH
 #if BAR_STATUSCOLORS_PATCH && BAR_STATUSCMD_PATCH
-    {'A', 1, BAR_ALIGN_CENTER, width_statuscolors_es, draw_statuscolors_es, click_statuscmd_es, "statuscolors_es"},
+    {statusmon, 1, BAR_ALIGN_CENTER, width_statuscolors_es, draw_statuscolors_es, click_statuscmd_es, "statuscolors_es"},
 #elif BAR_STATUSCOLORS_PATCH
-    {'A', 1, BAR_ALIGN_CENTER, width_statuscolors_es, draw_statuscolors_es, click_statuscolors, "statuscolors_es"},
+    {statusmon, 1, BAR_ALIGN_CENTER, width_statuscolors_es, draw_statuscolors_es, click_statuscolors, "statuscolors_es"},
 #elif BAR_STATUS2D_PATCH && BAR_STATUSCMD_PATCH
-    {'A', 1, BAR_ALIGN_CENTER, width_status2d_es, draw_status2d_es, click_statuscmd_es, "status2d_es"},
+    {statusmon, 1, BAR_ALIGN_CENTER, width_status2d_es, draw_status2d_es, click_statuscmd_es, "status2d_es"},
 #elif BAR_STATUS2D_PATCH
-    {'A', 1, BAR_ALIGN_CENTER, width_status2d_es, draw_status2d_es, click_status2d, "status2d_es"},
+    {statusmon, 1, BAR_ALIGN_CENTER, width_status2d_es, draw_status2d_es, click_status2d, "status2d_es"},
 #elif BAR_POWERLINE_STATUS_PATCH
-    {0, 1, BAR_ALIGN_RIGHT, width_pwrl_status_es, draw_pwrl_status_es, click_pwrl_status, "powerline_status"},
+    {statusmon, 1, BAR_ALIGN_RIGHT, width_pwrl_status_es, draw_pwrl_status_es, click_pwrl_status, "powerline_status"},
 #elif BAR_STATUSCMD_PATCH && BAR_STATUS_PATCH
-    {'A', 1, BAR_ALIGN_CENTER, width_status_es, draw_status_es, click_statuscmd_es, "status_es"},
+    {statusmon, 1, BAR_ALIGN_CENTER, width_status_es, draw_status_es, click_statuscmd_es, "status_es"},
 #elif BAR_STATUS_PATCH
-    {'A', 1, BAR_ALIGN_CENTER, width_status_es, draw_status_es, click_status, "status_es"},
+    {statusmon, 1, BAR_ALIGN_CENTER, width_status_es, draw_status_es, click_status, "status_es"},
 #endif // BAR_STATUS2D_PATCH | BAR_STATUSCMD_PATCH
 #endif // BAR_EXTRASTATUS_PATCH
 #if BAR_FLEXWINTITLE_PATCH
@@ -758,9 +766,12 @@ static const char *xkb_layouts[] = {
 /* commands */
 #if !NODMENU_PATCH
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
+#endif                         // NODMENU_PATCH
 static const char *dmenucmd[] = {"dmenu_run",
+#if !NODMENU_PATCH
                                  "-m",
                                  dmenumon,
+#endif // NODMENU_PATCH
                                  "-fn",
                                  dmenufont,
                                  "-nb",
