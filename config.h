@@ -22,7 +22,7 @@ static const unsigned int gappov = 10; /* vert outer gap between windows and scr
 static const int smartgaps_fact = 1;   /* gap factor when there is only one client; 0 = no gaps, 3 = 3x outer gaps */
 #endif                                 // VANITYGAPS_PATCH
 #if AUTOSTART_PATCH
-static const char autostartblocksh[] = "bar.sh";
+static const char autostartblocksh[] = "";
 static const char autostartsh[] = "autostart.sh";
 static const char dwmdir[] = "dwm";
 static const char localshare[] = ".local/share";
