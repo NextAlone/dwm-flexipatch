@@ -231,7 +231,11 @@ static const unsigned int alphas[][3] = {
     [SchemeTitleNorm] = {OPAQUE, baralpha, borderalpha},    [SchemeTitleSel] = {OPAQUE, baralpha, borderalpha},
     [SchemeTagsNorm] = {OPAQUE, baralpha, borderalpha},     [SchemeTagsSel] = {OPAQUE, baralpha, borderalpha},
     [SchemeHidNorm] = {OPAQUE, baralpha, borderalpha},      [SchemeHidSel] = {OPAQUE, baralpha, borderalpha},
-    [SchemeUrg] = {OPAQUE, baralpha, borderalpha},
+    [SchemeUrg] = {OPAQUE, baralpha, borderalpha},          [SchemeTag1] = {OPAQUE, baralpha, borderalpha},
+    [SchemeTag2] = {OPAQUE, baralpha, borderalpha},         [SchemeTag3] = {OPAQUE, baralpha, borderalpha},
+    [SchemeTag4] = {OPAQUE, baralpha, borderalpha},         [SchemeTag5] = {OPAQUE, baralpha, borderalpha},
+    [SchemeTag6] = {OPAQUE, baralpha, borderalpha},         [SchemeTag7] = {OPAQUE, baralpha, borderalpha},
+    [SchemeTag8] = {OPAQUE, baralpha, borderalpha},         [SchemeTag9] = {OPAQUE, baralpha, borderalpha},
 #if BAR_FLEXWINTITLE_PATCH
     [SchemeFlexActTTB] = {OPAQUE, baralpha, borderalpha},   [SchemeFlexActLTR] = {OPAQUE, baralpha, borderalpha},
     [SchemeFlexActMONO] = {OPAQUE, baralpha, borderalpha},  [SchemeFlexActGRID] = {OPAQUE, baralpha, borderalpha},
