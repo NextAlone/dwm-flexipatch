@@ -9,7 +9,7 @@ static const unsigned int borderpx = 0; /* border pixel of windows */
 #endif                              // ROUNDED_CORNERS_PATCH
 static const unsigned int snap = 8; /* snap pixel */
 #if SWALLOW_PATCH
-static const int swallowfloating = 0; /* 1 means swallow floating windows by default */
+static const int swallowfloating = 1; /* 1 means swallow floating windows by default */
 #endif                                // SWALLOW_PATCH
 #if NO_MOD_BUTTONS_PATCH
 static int nomodbuttons = 1; /* allow client mouse button bindings that have no modifier */
