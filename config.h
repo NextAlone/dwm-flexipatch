@@ -830,7 +830,7 @@ static Key keys[] = {
     {0, XF86XK_AudioMute, spawn, {.v = volume_mute}},
     {0, XF86XK_Calculator, spawn, {.v = lock}},
     {M, XK_Print, spawn, SHCMD("maim | xclip -selection clipboard -t image/png")},
-    {0, XK_Print, spawn, {.v = flameshot}},
+    {0, XK_Print, spawn, SHCMD("maim -o -s | xclip -selection clipboard -t image/png")},
     {S, XK_Print, spawn, {.v = screen_recorder}},
     {M, XK_w, spawn, {.v = chrome}},
 // {M, XK_p, spawn, {.v = power}},
