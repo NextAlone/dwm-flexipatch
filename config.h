@@ -44,7 +44,7 @@ static const int topbar = 1; /* 0 means bottom bar */
 /*  Modes after showtab_nmodes are disabled.                                */
 enum showtab_modes { showtab_never, showtab_auto, showtab_nmodes, showtab_always };
 static const int showtab = showtab_auto; /* Default tab bar show mode */
-static const int toptab = True;          /* False means bottom tab bar */
+static const int toptab = False;         /* False means bottom tab bar */
 #endif                                   // TAB_PATCH
 #if BAR_HEIGHT_PATCH
 static const int bar_height = 26; /* 0 means derive from font, >= 1 explicit height */
@@ -100,7 +100,7 @@ static int fakefsindicatortype = INDICATOR_PLUS;
 static int floatfakefsindicatortype = INDICATOR_PLUS_AND_LARGER_SQUARE;
 #endif // FAKEFULLSCREEN_CLIENT_PATCH
 #if ONLYQUITONEMPTY_PATCH
-static const int quit_empty_window_count = 2; /* only allow dwm to quit if no windows are open, value here represents number of deamons */
+static const int quit_empty_window_count = 0; /* only allow dwm to quit if no (<= count) windows are open */
 #endif                                        // ONLYQUITONEMPTY_PATCH
 #if BAR_EXTRASTATUS_PATCH
 static const char statussep = ';'; /* separator between status bars */
