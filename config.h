@@ -652,11 +652,11 @@ static const Layout layouts[] = {
 #else
 static const Layout layouts[] = {
 /* symbol     arrange function */
-#if TILE_LAYOUT
-    {"[]=", tile}, /* first entry is default */
-#endif
 #if MONOCLE_LAYOUT
     {"[M]", monocle},
+#endif
+#if TILE_LAYOUT
+    {"[]=", tile}, /* first entry is default */
 #endif
 #if FIBONACCI_SPIRAL_LAYOUT
     {"[@]", spiral},
@@ -983,8 +983,8 @@ static Key keys[] = {
 #if XRDB_PATCH && !BAR_VTCOLORS_PATCH
     {M | S, XK_F5, xrdb, {.v = NULL}},
 #endif // XRDB_PATCH
-    {M, XK_t, setlayout, {.v = &layouts[0]}},
-    {M, XK_f, setlayout, {.v = &layouts[1]}},
+    {M, XK_f, setlayout, {.v = &layouts[0]}},
+    {M, XK_t, setlayout, {.v = &layouts[1]}},
     {M, XK_m, setlayout, {.v = &layouts[2]}},
     {M, XK_g, setlayout, {.v = &layouts[3]}},
 #if COLUMNS_LAYOUT
