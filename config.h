@@ -433,15 +433,14 @@ static const Rule rules[] = {
      *	_NET_WM_WINDOW_TYPE(ATOM) = wintype
      */
     RULE(.wintype = WTYPE "DIALOG", .isfloating = 1) RULE(.wintype = WTYPE "UTILITY", .isfloating = 1)
-        RULE(.wintype = WTYPE "TOOLBAR", .isfloating = 1) RULE(.wintype = WTYPE "SPLASH", .isfloating = 1) RULE(.class = "Gimp")
-            RULE(.class = "Google-chrome-unstable") RULE(.class = "jetbrains-clion") RULE(.class = "jetbrains-idea") RULE(.class = "Code")
-                RULE(.class = "TelegramDesktop", .isfloating = 1, .iscentered = 1) RULE(.class = "Wine", .isfloating = 1, .noswallow = 1)
-                    RULE(.class = "Wine", .title = "Wine System Tray", .isfloating = 1, .noswallow = 1)
-                        RULE(.class = "SimpleScreenRecorder", .isfloating = 1, ) RULE(.class = "fcitx5-config-qt", .isfloating = 1, .iscentered = 1)
-                            RULE(.class = "GParted", .isfloating = 1, .iscentered = 1) RULE(.class = "kitty", .isterminal = 1, .noswallow = 1)
-                                RULE(.class = "GParted", .isfloating = 1)
+        RULE(.wintype = WTYPE "TOOLBAR", .isfloating = 1) RULE(.wintype = WTYPE "SPLASH", .isfloating = 1)
+            RULE(.class = "jetbrains-toolbox", .isfloating = 1, .iscentered = 1) RULE(.class = "TelegramDesktop", .isfloating = 1, .iscentered = 1)
+                RULE(.class = "Wine", .isfloating = 1, .noswallow = 1) RULE(.class = "Wine", .title = "Wine System Tray", .isfloating = 1,
+                                                                            .noswallow = 1) RULE(.class = "SimpleScreenRecorder", .isfloating = 1, )
+                    RULE(.class = "fcitx5-config-qt", .isfloating = 1, .iscentered = 1) RULE(.class = "GParted", .isfloating = 1, .iscentered = 1)
+                        RULE(.class = "kitty", .isterminal = 1, .noswallow = 1) RULE(.class = "GParted", .isfloating = 1)
 #if SCRATCHPADS_PATCH
-                                    RULE(.instance = "spterm", .tags = SPTAG(0), .isfloating = 1)
+                            RULE(.instance = "spterm", .tags = SPTAG(0), .isfloating = 1)
 #endif // SCRATCHPADS_PATCH
 };
 
