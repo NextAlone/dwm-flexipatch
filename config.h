@@ -15,12 +15,12 @@ static const int swallowfloating = 1; /* 1 means swallow floating windows by def
 static int nomodbuttons = 1; /* allow client mouse button bindings that have no modifier */
 #endif                       // NO_MOD_BUTTONS_PATCH
 #if VANITYGAPS_PATCH
-static const unsigned int gappih = 10; /* horiz inner gap between windows */
-static const unsigned int gappiv = 10; /* vert inner gap between windows */
-static const unsigned int gappoh = 10; /* horiz outer gap between windows and screen edge */
-static const unsigned int gappov = 10; /* vert outer gap between windows and screen edge */
-static const int smartgaps_fact = 1;   /* gap factor when there is only one client; 0 = no gaps, 3 = 3x outer gaps */
-#endif                                 // VANITYGAPS_PATCH
+static const unsigned int gappih = 5; /* horiz inner gap between windows */
+static const unsigned int gappiv = 5; /* vert inner gap between windows */
+static const unsigned int gappoh = 5; /* horiz outer gap between windows and screen edge */
+static const unsigned int gappov = 5; /* vert outer gap between windows and screen edge */
+static const int smartgaps_fact = 1;  /* gap factor when there is only one client; 0 = no gaps, 3 = 3x outer gaps */
+#endif                                // VANITYGAPS_PATCH
 #if AUTOSTART_PATCH
 static const char autostartblocksh[] = "";
 static const char autostartsh[] = "autostart.sh";
@@ -50,9 +50,9 @@ static const int toptab = True;          /* False means bottom tab bar */
 static const int bar_height = 26; /* 0 means derive from font, >= 1 explicit height */
 #endif                            // BAR_HEIGHT_PATCH
 #if BAR_PADDING_PATCH
-static const int vertpad = 10; /* vertical padding of bar */
-static const int sidepad = 10; /* horizontal padding of bar */
-#endif                         // BAR_PADDING_PATCH
+static const int vertpad = 5; /* vertical padding of bar */
+static const int sidepad = 5; /* horizontal padding of bar */
+#endif                        // BAR_PADDING_PATCH
 #if BAR_WINICON_PATCH
 #define ICONSIZE    20 /* icon size */
 #define ICONSPACING 5  /* space between icon and title */
@@ -497,7 +497,7 @@ static const BarRule barrules[] = {
     {-1, 0, BAR_ALIGN_LEFT, width_taggrid, draw_taggrid, click_taggrid, "taggrid"},
 #endif // BAR_TAGGRID_PATCH
 #if BAR_SYSTRAY_PATCH
-    {1, 0, BAR_ALIGN_RIGHT, width_systray, draw_systray, click_systray, "systray"},
+    {'A', 0, BAR_ALIGN_RIGHT, width_systray, draw_systray, click_systray, "systray"},
 #endif // BAR_SYSTRAY_PATCH
 #if BAR_LTSYMBOL_PATCH
     {-1, 0, BAR_ALIGN_LEFT, width_ltsymbol, draw_ltsymbol, click_ltsymbol, "layout"},
