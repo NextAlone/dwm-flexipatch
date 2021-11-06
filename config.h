@@ -15,10 +15,10 @@ static const int swallowfloating = 1; /* 1 means swallow floating windows by def
 static int nomodbuttons = 1; /* allow client mouse button bindings that have no modifier */
 #endif                       // NO_MOD_BUTTONS_PATCH
 #if VANITYGAPS_PATCH
-static const unsigned int gappih = 8; /* horiz inner gap between windows */
-static const unsigned int gappiv = 8; /* vert inner gap between windows */
-static const unsigned int gappoh = 8; /* horiz outer gap between windows and screen edge */
-static const unsigned int gappov = 8; /* vert outer gap between windows and screen edge */
+static const unsigned int gappih = 5; /* horiz inner gap between windows */
+static const unsigned int gappiv = 5; /* vert inner gap between windows */
+static const unsigned int gappoh = 5; /* horiz outer gap between windows and screen edge */
+static const unsigned int gappov = 5; /* vert outer gap between windows and screen edge */
 static const int smartgaps_fact = 1;  /* gap factor when there is only one client; 0 = no gaps, 3 = 3x outer gaps */
 #endif                                // VANITYGAPS_PATCH
 #if AUTOSTART_PATCH
@@ -50,8 +50,8 @@ static const int toptab = False;         /* False means bottom tab bar */
 static const int bar_height = 26; /* 0 means derive from font, >= 1 explicit height */
 #endif                            // BAR_HEIGHT_PATCH
 #if BAR_PADDING_PATCH
-static const int vertpad = 0; /* vertical padding of bar */
-static const int sidepad = 0; /* horizontal padding of bar */
+static const int vertpad = 5; /* vertical padding of bar */
+static const int sidepad = 5; /* horizontal padding of bar */
 #endif                        // BAR_PADDING_PATCH
 #if BAR_WINICON_PATCH
 #define ICONSIZE    20 /* icon size */
