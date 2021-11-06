@@ -653,10 +653,10 @@ static const Layout layouts[] = {
 static const Layout layouts[] = {
 /* symbol     arrange function */
 #if MONOCLE_LAYOUT
-    {"[M]", monocle},
+    {"[M]", monocle}, /* first entry is default */
 #endif
 #if TILE_LAYOUT
-    {"[]=", tile}, /* first entry is default */
+    {"[]=", tile},
 #endif
 #if FIBONACCI_SPIRAL_LAYOUT
     {"[@]", spiral},
@@ -986,9 +986,8 @@ static Key keys[] = {
     {M, XK_f, setlayout, {.v = &layouts[0]}},
     {M, XK_t, setlayout, {.v = &layouts[1]}},
     {M, XK_m, setlayout, {.v = &layouts[2]}},
-    {M, XK_g, setlayout, {.v = &layouts[3]}},
 #if COLUMNS_LAYOUT
-    {M, XK_c, setlayout, {.v = &layouts[3]}},
+    {M, XK_c, setlayout, {.v = &layouts[8]}},
 #endif // COLUMNS_LAYOUT
 #if FLEXTILE_DELUXE_LAYOUT
     {M | C, XK_t, rotatelayoutaxis, {.i = +1}},              /* flextile, 1 = layout axis */
