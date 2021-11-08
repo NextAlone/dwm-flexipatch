@@ -46,19 +46,16 @@ show(Client *c)
 }
 
 void
-togglewin(const Arg *arg)
-{
-	Client *c = (Client*)arg->v;
-	if (!c)
-		return;
-	if (c == selmon->sel)
-		hide(c);
-	else {
-		if (HIDDEN(c))
-			show(c);
-		focus(c);
-		restack(c->mon);
-	}
+togglewin(const Arg *arg) {
+  Client *c = (Client *) arg->v;
+  if (!c) return;
+  if (c == selmon->sel) {
+    // hide(c);
+  } else {
+    if (HIDDEN(c)) show(c);
+    focus(c);
+    restack(c->mon);
+  }
 }
 
 Client *
