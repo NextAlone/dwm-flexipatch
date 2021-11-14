@@ -28,10 +28,10 @@ static const char dwmdir[] = "dwm";
 static const char localshare[] = ".local/share";
 #endif // AUTOSTART_PATCH
 #if BAR_ANYBAR_PATCH
-static const int usealtbar = 1;                                 /* 1 means use non-dwm status bar */
-static const char *altbarclass = "status2d";                    /* Alternate bar class name */
-static const char *altbarcmd = "$HOME/.local/share/dwm/bar.sh"; /* Alternate bar launch command */
-#endif                                                          // BAR_ANYBAR_PATCH
+static const int usealtbar = 1;      /* 1 means use non-dwm status bar */
+static const char *altbarclass = ""; /* Alternate bar class name */
+static const char *altbarcmd = "";   /* Alternate bar launch command */
+#endif                               // BAR_ANYBAR_PATCH
 #if BAR_HOLDBAR_PATCH
 static const int showbar = 0; /* 0 means no bar */
 #else
