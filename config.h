@@ -442,8 +442,7 @@ static const Rule rules[] = {
                                 RULE(.class = "SimpleScreenRecorder", .isfloating = 1, )
                                     RULE(.class = "fcitx5-config-qt", .isfloating = 1, .iscentered = 1)
                                         RULE(.class = "GParted", .isfloating = 1, .iscentered = 1)
-                                            RULE(.class = "kitty", .isterminal = 1, .noswallow = 1) RULE(.class = "GParted", .isfloating = 1)
-                                                RULE(.class = "icalingua", .isfloating = 1, .iscentered = 1) 
+                                            RULE(.class = "kitty", .isterminal = 1, .noswallow = 1) RULE(.class = "GParted", .isfloating = 1) RULE(.class = "icalingua", .isfloating = 1, .iscentered = 1)
 #if SCRATCHPADS_PATCH
                                                     RULE(.instance = "spterm", .tags = SPTAG(0), .isfloating = 1)
 #endif // SCRATCHPADS_PATCH
@@ -774,9 +773,12 @@ static const char *xkb_layouts[] = {
 /* commands */
 #if !NODMENU_PATCH
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
+#endif                         // NODMENU_PATCH
 static const char *dmenucmd[] = {"dmenu_run",
+#if !NODMENU_PATCH
                                  "-m",
                                  dmenumon,
+#endif // NODMENU_PATCH
                                  "-fn",
                                  dmenufont,
                                  "-nb",
@@ -791,9 +793,8 @@ static const char *dmenucmd[] = {"dmenu_run",
                                  topbar ? NULL : "-b",
 #endif // BAR_DMENUMATCHTOP_PATCH
                                  NULL};
-#endif                                          // NODMENU_PATCH
 static const char *termcmd[] = {"kitty", NULL}; // change this to your term
-static const char *rofi[] = {"/home/nextalone/.config/rofi/launchers/text/executable_launcher.sh", NULL};
+static const char *rofi[] = {"/home/nextalone/.config/rofi/launcher.sh", NULL};
 static const char *power[] = {"/home/nextalone/.config/rofi/powermenu/executable_powermenu.sh", NULL};
 static const char *flameshot[] = {"flameshot", "gui", NULL};
 static const char *lock[] = {"slock", NULL};
@@ -842,6 +843,7 @@ static Key keys[] = {
     {M, XK_Escape, setkeymode, {.ui = COMMANDMODE}},
 #endif // KEYMODES_PATCH
     {M, XK_r, spawn, {.v = rofi}},
+    {M, XK_p, spawn, {.v = dmenucmd}},
     {M, XK_Return, spawn, {.v = termcmd}},
 #if RIODRAW_PATCH
     {M | C, XK_p, riospawnsync, {.v = dmenucmd}},
