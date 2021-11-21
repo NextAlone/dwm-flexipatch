@@ -445,8 +445,10 @@ static const Rule rules[] = {
                                             RULE(.class = "GParted", .isfloating = 1, .iscentered = 1)
                                                 RULE(.class = "kitty", .isterminal = 1, .noswallow = 1) RULE(.class = "GParted", .isfloating = 1)
                                                     RULE(.class = "icalingua", .isfloating = 1, .iscentered = 1)
+                                                        RULE(.class = "Steam", .isfloating = 1, .iscentered = 1)
+                                                            RULE(.class = "SimpleScreenRecorder", .isfloating = 1, .iscentered = 1)
 #if SCRATCHPADS_PATCH
-                                                        RULE(.instance = "spterm", .tags = SPTAG(0), .isfloating = 1)
+                                                                RULE(.instance = "spterm", .tags = SPTAG(0), .isfloating = 1)
 #endif // SCRATCHPADS_PATCH
 };
 
