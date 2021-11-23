@@ -798,7 +798,8 @@ static const char *dmenucmd[] = {"dmenu_run",
 #endif // BAR_DMENUMATCHTOP_PATCH
                                  NULL};
 static const char *termcmd[] = {"kitty", NULL}; // change this to your term
-static const char *rofi[] = {"/home/nextalone/.config/rofi/launcher.sh", NULL};
+static const char *rofi_drun[] = {"/home/nextalone/.config/rofi/drun.sh", NULL};
+static const char *rofi_calc[] = {"/home/nextalone/.config/rofi/calc.sh", NULL};
 static const char *flameshot[] = {"flameshot", "gui", NULL};
 static const char *lock[] = {"slock", NULL};
 static const char *screen_recorder[] = {"simplescreenrecorder", NULL};
@@ -847,8 +848,9 @@ static Key keys[] = {
 #if KEYMODES_PATCH
     {M, XK_Escape, setkeymode, {.ui = COMMANDMODE}},
 #endif // KEYMODES_PATCH
-    {M, XK_r, spawn, {.v = rofi}},
-    {M, XK_p, spawn, {.v = dmenucmd}},
+    {M, XK_r, spawn, {.v = rofi_drun}},
+    {M, XK_c, spawn, {.v = rofi_calc}},
+    {M, XK_d, spawn, {.v = dmenucmd}},
     {M, XK_Return, spawn, {.v = termcmd}},
 #if RIODRAW_PATCH
     {M | C, XK_p, riospawnsync, {.v = dmenucmd}},
@@ -997,9 +999,6 @@ static Key keys[] = {
     {M, XK_f, setlayout, {.v = &layouts[0]}},
     {M, XK_t, setlayout, {.v = &layouts[1]}},
     {M, XK_m, setlayout, {.v = &layouts[2]}},
-#if COLUMNS_LAYOUT
-    {M, XK_c, setlayout, {.v = &layouts[8]}},
-#endif // COLUMNS_LAYOUT
 #if FLEXTILE_DELUXE_LAYOUT
     {M | C, XK_t, rotatelayoutaxis, {.i = +1}},              /* flextile, 1 = layout axis */
     {M | C, XK_Tab, rotatelayoutaxis, {.i = +2}},            /* flextile, 2 = master axis */
@@ -1241,7 +1240,7 @@ static Command commands[] = {
 static Button buttons[] = {
 /* click                event mask           button          function        argument */
 #if BAR_STATUSBUTTON_PATCH
-    {ClkButton, 0, Button1, spawn, {.v = rofi}},
+    {ClkButton, 0, Button1, spawn, {.v = rofi_drun}},
 #endif // BAR_STATUSBUTTON_PATCH
     {ClkLtSymbol, 0, Button1, setlayout, {0}},
 #if BAR_LAYOUTMENU_PATCH
