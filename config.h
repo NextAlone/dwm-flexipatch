@@ -5,7 +5,7 @@
 static const unsigned int borderpx = 0; /* border pixel of windows */
 static const int corner_radius = 10;
 #else
-static const unsigned int borderpx = 0; /* border pixel of windows */
+static const unsigned int borderpx = 1; /* border pixel of windows */
 #endif                              // ROUNDED_CORNERS_PATCH
 static const unsigned int snap = 8; /* snap pixel */
 #if SWALLOW_PATCH
@@ -120,6 +120,8 @@ static const char *fonts[] = {"monospace:size=10", "Material Design Icons Deskto
 static const char dmenufont[] = "monospace:size=10";
 
 static char c000000[] = "#000000"; // placeholder value
+
+#include "themes/onedark.h"
 
 #if BAR_FLEXWINTITLE_PATCH
 #endif // BAR_FLEXWINTITLE_PATCH
@@ -268,19 +270,17 @@ static const int color_ptrs[][ColCount] = {
 };
 #endif // BAR_VTCOLORS_PATCH
 
-#include "themes/onedark.h"
-
 static char *colors[][ColCount] = {
     /*                       fg                bg                border                float */
-    [SchemeNorm] = {gray3, black, black, normfloatcolor},
-    [SchemeSel] = {gray4, black, black, selfloatcolor},
-    [SchemeTitleNorm] = {gray3, black, black, titlenormfloatcolor},
+    [SchemeNorm] = {gray3, black, black, gray4},
+    [SchemeSel] = {gray4, black, black, black},
+    [SchemeTitleNorm] = {gray3, black, black, gray4},
     [SchemeTitleSel] = {gray4, black, black, titleselfloatcolor},
-    [SchemeTagsNorm] = {gray3, black, black, tagsnormfloatcolor},
+    [SchemeTagsNorm] = {gray3, black, black, gray4},
     [SchemeTagsSel] = {gray4, black, black, tagsselfloatcolor},
     [SchemeHidNorm] = {gray1, black, c000000, c000000},
     [SchemeHidSel] = {gray2, black, c000000, c000000},
-    [SchemeUrg] = {urgfgcolor, black, urgbordercolor, urgfloatcolor},
+    [SchemeUrg] = {urgfgcolor, black, urgbordercolor, blue},
     [SchemeTag1] = {col_yellow, black, black, black},
     [SchemeTag2] = {col_red, black, black, black},
     [SchemeTag3] = {col_cyan, black, black, black},
@@ -436,20 +436,18 @@ static const Rule rules[] = {
         RULE(.wintype = WTYPE "TOOLBAR", .isfloating = 1) RULE(.wintype = WTYPE "SPLASH", .isfloating = 1)
             RULE(.class = "toolbox", .isfloating = 1, .iscentered = 1) RULE(.class = "jetbrains", .title = "win0", .isfloating = 1, .iscentered = 1)
                 RULE(.class = "jetbrains", .title = "History for Selection", .isfloating = 1,
-                     .iscentered = 1) RULE(.class = "jetbrains", .title = "Welcome", .isfloating = 1, .iscentered = 1)
-                    RULE(.class = "jetbrains", .title = "Clone Repository", .isfloating = 1, .iscentered = 1)
-                        RULE(.class = "TelegramDesktop", .isfloating = 1, .iscentered = 1) RULE(.class = "Wine", .isfloating = 1, .noswallow = 1)
-                            RULE(.class = "Wine", .title = "Wine System Tray", .isfloating = 1, .noswallow = 1)
-                                RULE(.class = "SimpleScreenRecorder", .isfloating = 1, ) RULE(.class = "fcitx5-config-qt", .isfloating = 1,
-                                                                                              .iscentered = 1)
-                                    RULE(.class = "GParted", .isfloating = 1, .iscentered = 1) RULE(.class = "kitty", .isterminal = 1, .noswallow = 1)
-                                        RULE(.class = "GParted", .isfloating = 1) RULE(.class = "icalingua", .isfloating = 1, .iscentered = 1)
-                                            RULE(.class = "Steam", .isfloating = 1, .iscentered = 1) RULE(.class = "SimpleScreenRecorder",
-                                                                                                          .isfloating = 1, .iscentered = 1)
-                                                RULE(.class = "Kotatogram", .isfloating = 1, .iscentered = 1)
-                                                    RULE(.class = "Xdg-desktop-portal-gtk", .title = "Choose Files", .isfloating = 1, .iscentered = 1)
+                     .iscentered = 1) RULE(.class = "jetbrains", .title = "Welcome", .isfloating = 1,
+                                           .iscentered = 1) RULE(.class = "jetbrains", .title = "Clone Repository", .isfloating = 1, .iscentered = 1)
+                    RULE(.class = "TelegramDesktop", .isfloating = 1) RULE(.class = "Wine", .isfloating = 1, .noswallow = 1)
+                        RULE(.class = "Wine", .title = "Wine System Tray", .isfloating = 1, .noswallow = 1)
+                            RULE(.class = "SimpleScreenRecorder", .isfloating = 1) RULE(.class = "fcitx5-config-qt", .isfloating = 1, .iscentered = 1)
+                                RULE(.class = "GParted", .isfloating = 1, .iscentered = 1) RULE(.class = "kitty", .isterminal = 1, .noswallow = 1)
+                                    RULE(.class = "GParted", .isfloating = 1) RULE(.class = "icalingua", .isfloating = 1, .iscentered = 1)
+                                        RULE(.class = "Steam", .isfloating = 1, .iscentered = 1)
+                                            RULE(.class = "SimpleScreenRecorder", .isfloating = 1) RULE(.class = "KotatogramDesktop", .isfloating = 1)
+                                                RULE(.class = "Xdg-desktop-portal-gtk", .title = "Choose Files", .isfloating = 1)
 #if SCRATCHPADS_PATCH
-                                                        RULE(.instance = "spterm", .tags = SPTAG(0), .isfloating = 1)
+                                                    RULE(.instance = "spterm", .tags = SPTAG(0), .isfloating = 1)
 #endif // SCRATCHPADS_PATCH
 };
 
