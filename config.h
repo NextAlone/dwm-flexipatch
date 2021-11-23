@@ -435,20 +435,21 @@ static const Rule rules[] = {
     RULE(.wintype = WTYPE "DIALOG", .isfloating = 1) RULE(.wintype = WTYPE "UTILITY", .isfloating = 1)
         RULE(.wintype = WTYPE "TOOLBAR", .isfloating = 1) RULE(.wintype = WTYPE "SPLASH", .isfloating = 1)
             RULE(.class = "toolbox", .isfloating = 1, .iscentered = 1) RULE(.class = "jetbrains", .title = "win0", .isfloating = 1, .iscentered = 1)
-                RULE(.class = "jetbrains", .title = "History for Selection", .isfloating = 1, .iscentered = 1)
-                    RULE(.class = "jetbrains", .title = "Welcome", .isfloating = 1, .iscentered = 1)
-                        RULE(.class = "jetbrains", .title = "Clone Repository", .isfloating = 1, .iscentered = 1)
-                            RULE(.class = "TelegramDesktop", .isfloating = 1, .iscentered = 1) RULE(.class = "Wine", .isfloating = 1, .noswallow = 1)
-                                RULE(.class = "Wine", .title = "Wine System Tray", .isfloating = 1, .noswallow = 1)
-                                    RULE(.class = "SimpleScreenRecorder", .isfloating = 1, )
-                                        RULE(.class = "fcitx5-config-qt", .isfloating = 1, .iscentered = 1)
-                                            RULE(.class = "GParted", .isfloating = 1, .iscentered = 1)
-                                                RULE(.class = "kitty", .isterminal = 1, .noswallow = 1) RULE(.class = "GParted", .isfloating = 1)
-                                                    RULE(.class = "icalingua", .isfloating = 1, .iscentered = 1)
-                                                        RULE(.class = "Steam", .isfloating = 1, .iscentered = 1)
-                                                            RULE(.class = "SimpleScreenRecorder", .isfloating = 1, .iscentered = 1)
+                RULE(.class = "jetbrains", .title = "History for Selection", .isfloating = 1,
+                     .iscentered = 1) RULE(.class = "jetbrains", .title = "Welcome", .isfloating = 1, .iscentered = 1)
+                    RULE(.class = "jetbrains", .title = "Clone Repository", .isfloating = 1, .iscentered = 1)
+                        RULE(.class = "TelegramDesktop", .isfloating = 1, .iscentered = 1) RULE(.class = "Wine", .isfloating = 1, .noswallow = 1)
+                            RULE(.class = "Wine", .title = "Wine System Tray", .isfloating = 1, .noswallow = 1)
+                                RULE(.class = "SimpleScreenRecorder", .isfloating = 1, ) RULE(.class = "fcitx5-config-qt", .isfloating = 1,
+                                                                                              .iscentered = 1)
+                                    RULE(.class = "GParted", .isfloating = 1, .iscentered = 1) RULE(.class = "kitty", .isterminal = 1, .noswallow = 1)
+                                        RULE(.class = "GParted", .isfloating = 1) RULE(.class = "icalingua", .isfloating = 1, .iscentered = 1)
+                                            RULE(.class = "Steam", .isfloating = 1, .iscentered = 1) RULE(.class = "SimpleScreenRecorder",
+                                                                                                          .isfloating = 1, .iscentered = 1)
+                                                RULE(.class = "Kotatogram", .isfloating = 1, .iscentered = 1)
+                                                    RULE(.class = "Xdg-desktop-portal-gtk", .title = "Choose Files", .isfloating = 1, .iscentered = 1)
 #if SCRATCHPADS_PATCH
-                                                                RULE(.instance = "spterm", .tags = SPTAG(0), .isfloating = 1)
+                                                        RULE(.instance = "spterm", .tags = SPTAG(0), .isfloating = 1)
 #endif // SCRATCHPADS_PATCH
 };
 
@@ -799,7 +800,6 @@ static const char *dmenucmd[] = {"dmenu_run",
                                  NULL};
 static const char *termcmd[] = {"kitty", NULL}; // change this to your term
 static const char *rofi[] = {"/home/nextalone/.config/rofi/launcher.sh", NULL};
-static const char *power[] = {"/home/nextalone/.config/rofi/powermenu/executable_powermenu.sh", NULL};
 static const char *flameshot[] = {"flameshot", "gui", NULL};
 static const char *lock[] = {"slock", NULL};
 static const char *screen_recorder[] = {"simplescreenrecorder", NULL};
@@ -840,6 +840,7 @@ static Key keys[] = {
     {0, XF86XK_Calculator, spawn, {.v = lock}},
     {M, XK_Print, spawn, SHCMD("maim | xclip -selection clipboard -t image/png")},
     {0, XK_Print, spawn, SHCMD("maim -b 2 -s -B | xclip -selection clipboard -t image/png")},
+    {C, XK_Print, spawn, SHCMD("maim -b 1 -B -s | tesseract stdin stdout -l eng+jpn | xsel --clipboard --input")},
     {S, XK_Print, spawn, {.v = screen_recorder}},
     {M, XK_w, spawn, {.v = chrome}},
 // {M, XK_p, spawn, {.v = power}},
