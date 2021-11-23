@@ -273,7 +273,7 @@ static const int color_ptrs[][ColCount] = {
 static char *colors[][ColCount] = {
     /*                       fg                bg                border                float */
     [SchemeNorm] = {gray3, black, black, gray4},
-    [SchemeSel] = {gray4, black, black, black},
+    [SchemeSel] = {gray4, black, black, gray1},
     [SchemeTitleNorm] = {gray3, black, black, gray4},
     [SchemeTitleSel] = {gray4, black, black, titleselfloatcolor},
     [SchemeTagsNorm] = {gray3, black, black, gray4},
@@ -443,7 +443,8 @@ static const Rule rules[] = {
                             RULE(.class = "SimpleScreenRecorder", .isfloating = 1) RULE(.class = "fcitx5-config-qt", .isfloating = 1, .iscentered = 1)
                                 RULE(.class = "GParted", .isfloating = 1, .iscentered = 1) RULE(.class = "kitty", .isterminal = 1, .noswallow = 1)
                                     RULE(.class = "GParted", .isfloating = 1) RULE(.class = "icalingua", .isfloating = 1, .iscentered = 1)
-                                        RULE(.class = "Steam", .isfloating = 1, .iscentered = 1)
+                                        RULE(.class = "Steam", .isfloating = 1, .iscentered = 1) RULE(.class = "Lxpolkit", .isfloating = 1,
+                                                                                                      .iscentered = 1)
                                             RULE(.class = "SimpleScreenRecorder", .isfloating = 1) RULE(.class = "KotatogramDesktop", .isfloating = 1)
                                                 RULE(.class = "Xdg-desktop-portal-gtk", .title = "Choose Files", .isfloating = 1)
 #if SCRATCHPADS_PATCH
