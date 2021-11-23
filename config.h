@@ -843,6 +843,7 @@ static Key keys[] = {
     {C, XK_Print, spawn, SHCMD("maim -b 1 -B -s | tesseract stdin stdout -l eng+jpn | xsel --clipboard --input")},
     {S, XK_Print, spawn, {.v = screen_recorder}},
     {M, XK_w, spawn, {.v = chrome}},
+    {M, XK_p, spawn, SHCMD("xprop | rg -e WM_CLASS -e WM_NAME -e WM_WINDOW_ROLE | xsel --clipboard --input")},
 // {M, XK_p, spawn, {.v = power}},
 #if KEYMODES_PATCH
     {M, XK_Escape, setkeymode, {.ui = COMMANDMODE}},
