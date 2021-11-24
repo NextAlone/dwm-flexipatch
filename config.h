@@ -447,6 +447,7 @@ static const Rule rules[] = {
                                                                                                       .iscentered = 1)
                                             RULE(.class = "SimpleScreenRecorder", .isfloating = 1) RULE(.class = "KotatogramDesktop", .isfloating = 1)
                                                 RULE(.class = "Xdg-desktop-portal-gtk", .title = "Choose Files", .isfloating = 1)
+                                                    RULE(.class = "qqmusic", .isfloating = 1)
 #if SCRATCHPADS_PATCH
                                                     RULE(.instance = "spterm", .tags = SPTAG(0), .isfloating = 1)
 #endif // SCRATCHPADS_PATCH
@@ -796,6 +797,8 @@ static const char *dmenucmd[] = {"dmenu_run",
 #if BAR_DMENUMATCHTOP_PATCH
                                  topbar ? NULL : "-b",
 #endif // BAR_DMENUMATCHTOP_PATCH
+                                 "-h",
+                                 bar_height,
                                  NULL};
 static const char *termcmd[] = {"kitty", NULL}; // change this to your term
 static const char *rofi_drun[] = {"/home/nextalone/.config/rofi/drun.sh", NULL};
