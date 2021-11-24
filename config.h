@@ -448,6 +448,7 @@ static const Rule rules[] = {
                                             RULE(.class = "SimpleScreenRecorder", .isfloating = 1) RULE(.class = "KotatogramDesktop", .isfloating = 1)
                                                 RULE(.class = "Xdg-desktop-portal-gtk", .title = "Choose Files", .isfloating = 1)
                                                     RULE(.class = "qqmusic", .isfloating = 1)
+                                                        RULE(.class = "Nm-connection-editor", .isfloating = 1)
 #if SCRATCHPADS_PATCH
                                                     RULE(.instance = "spterm", .tags = SPTAG(0), .isfloating = 1)
 #endif // SCRATCHPADS_PATCH
