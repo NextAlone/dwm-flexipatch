@@ -1,0 +1,12 @@
+static char black[] = "#1e222a";
+static char gray1[] = "#464A54"; // unfocused window border
+static char gray2[] = "#4C667B"; // unfocused window border
+static char gray3[] = "#6d727d";
+static char gray4[] = "#84A5C7";
+static char blue[] = "#61afef"; // focused window border
+static char green[] = "#7EC7A2";
+static char red[] = "#e06c75";
+static char orange[] = "#caaa6a";
+static char yellow[] = "#EBCB8B";
+static char pink[] = "#c678dd";
+static char col_borderbar[] = "#1e222a"; // inner border

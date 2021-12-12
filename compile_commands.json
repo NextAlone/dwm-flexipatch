@@ -1,12 +1,12 @@
 [
  {
-  "directory": "/home/nextalone/Documents/Repos/dwm",
+  "directory": "/home/nextalone/Documents/Repos/Cpp/dwm",
   "arguments": [
    "cc",
    "-c",
-   "-std=c99",
+   "-std=c2x",
    "-pedantic",
-   "-Wall",
+   "-w",
    "-Wno-deprecated-declarations",
    "-Os",
    "-I/usr/X11R6/include",
@@ -21,13 +21,13 @@
   "file": "drw.c"
  },
  {
-  "directory": "/home/nextalone/Documents/Repos/dwm",
+  "directory": "/home/nextalone/Documents/Repos/Cpp/dwm",
   "arguments": [
    "cc",
    "-c",
-   "-std=c99",
+   "-std=c2x",
    "-pedantic",
-   "-Wall",
+   "-w",
    "-Wno-deprecated-declarations",
    "-Os",
    "-I/usr/X11R6/include",
@@ -42,13 +42,13 @@
   "file": "dwm.c"
  },
  {
-  "directory": "/home/nextalone/Documents/Repos/dwm",
+  "directory": "/home/nextalone/Documents/Repos/Cpp/dwm",
   "arguments": [
    "cc",
    "-c",
-   "-std=c99",
+   "-std=c2x",
    "-pedantic",
-   "-Wall",
+   "-w",
    "-Wno-deprecated-declarations",
    "-Os",
    "-I/usr/X11R6/include",
