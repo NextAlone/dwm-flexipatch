@@ -2,8 +2,8 @@
 
 /* appearance */
 #if ROUNDED_CORNERS_PATCH
-static const unsigned int borderpx = 0; /* border pixel of windows */
-static const int corner_radius = 10;
+static const unsigned int borderpx = 1; /* border pixel of windows */
+static const int corner_radius = 12;
 #else
 static const unsigned int borderpx = 1; /* border pixel of windows */
 #endif                              // ROUNDED_CORNERS_PATCH
@@ -121,7 +121,7 @@ static const char dmenufont[] = "monospace:size=10";
 
 static char c000000[] = "#000000"; // placeholder value
 
-#include "themes/onedark.h"
+#include "onedark.h"
 
 #if BAR_FLEXWINTITLE_PATCH
 #endif // BAR_FLEXWINTITLE_PATCH
@@ -432,7 +432,7 @@ static const Rule rules[] = {
      *	WM_WINDOW_ROLE(STRING) = role
      *	_NET_WM_WINDOW_TYPE(ATOM) = wintype
      */
-    RULE(.wintype = WTYPE "DIALOG", .isfloating = 1) RULE(.wintype = WTYPE "UTILITY", .isfloating = 1)
+    RULE(.wintype = WTYPE "DIALOG", .isfloating = 1, .iscentered = 1) RULE(.wintype = WTYPE "UTILITY", .isfloating = 1)
         RULE(.wintype = WTYPE "TOOLBAR", .isfloating = 1) RULE(.wintype = WTYPE "SPLASH", .isfloating = 1)
             RULE(.class = "toolbox", .isfloating = 1, .iscentered = 1) RULE(.class = "jetbrains", .title = "win0", .isfloating = 1, .iscentered = 1)
                 RULE(.class = "jetbrains", .title = "History for Selection", .isfloating = 1,
@@ -447,10 +447,11 @@ static const Rule rules[] = {
                                                                                                       .iscentered = 1)
                                             RULE(.class = "SimpleScreenRecorder", .isfloating = 1) RULE(.class = "KotatogramDesktop", .isfloating = 1)
                                                 RULE(.class = "Xdg-desktop-portal-gtk", .title = "Choose Files", .isfloating = 1)
-                                                    RULE(.class = "qqmusic", .isfloating = 1)
-                                                        RULE(.class = "Nm-connection-editor", .isfloating = 1)
+                                                    RULE(.class = "qqmusic", .isfloating = 1) RULE(.class = "Nm-connection-editor", .isfloating = 1)
+                                                        RULE(.class = "\345\276\256\344\277\241", .isfloating = 1)
+                                                            RULE(.class = "flameshot", .isfloating = 1)
 #if SCRATCHPADS_PATCH
-                                                    RULE(.instance = "spterm", .tags = SPTAG(0), .isfloating = 1)
+                                                                RULE(.instance = "spterm", .tags = SPTAG(0), .isfloating = 1)
 #endif // SCRATCHPADS_PATCH
 };
 
@@ -847,7 +848,7 @@ static Key keys[] = {
     {C, XK_Print, spawn, SHCMD("maim -b 1 -B -s | tesseract stdin stdout -l eng+jpn | xsel --clipboard --input")},
     {S, XK_Print, spawn, {.v = screen_recorder}},
     {M, XK_w, spawn, {.v = chrome}},
-    {M, XK_p, spawn, SHCMD("xprop | rg -e WM_CLASS -e WM_NAME -e WM_WINDOW_ROLE | xsel --clipboard --input")},
+    {M, XK_p, spawn, SHCMD("xprop WM_CLASS WM_NAME WM_WINDOW_ROLE | xsel --clipboard --input")},
 // {M, XK_p, spawn, {.v = power}},
 #if KEYMODES_PATCH
     {M, XK_Escape, setkeymode, {.ui = COMMANDMODE}},

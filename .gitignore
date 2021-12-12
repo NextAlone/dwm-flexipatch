@@ -4,3 +4,6 @@ dwm-msg
 config.h
 patches.h
 /.idea
+*.zst
+src/
+/patch.zip
