@@ -436,10 +436,10 @@ static const Rule rules[] = {
         RULE(.wintype = WTYPE "TOOLBAR", .isfloating = 1) RULE(.wintype = WTYPE "SPLASH", .isfloating = 1)
             RULE(.class = "toolbox", .isfloating = 1/*, .iscentered = 1*/) RULE(.class = "jetbrains", .title = "win0", .isfloating = 1/*, .iscentered = 1*/)
                 RULE(.class = "jetbrains", .title = "History for Selection", .isfloating = 1/*, .iscentered = 1*/) RULE(.class = "jetbrains", .title = "Welcome", .isfloating = 1/*, .iscentered = 1*/) RULE(.class = "jetbrains", .title = "Clone Repository", .isfloating = 1/*, .iscentered = 1*/)
-                    RULE(.class = "TelegramDesktop", .isfloating = 1) RULE(.class = "Wine", .isfloating = 1, .noswallow = 1)
-                        RULE(.class = "Wine", .title = "Wine System Tray", .isfloating = 1, .noswallow = 1)
+                    RULE(.class = "TelegramDesktop", .isfloating = 1) RULE(.class = "Wine", .isfloating = 1)
+                        RULE(.class = "Wine", .title = "Wine System Tray", .isfloating = 1)
                             RULE(.class = "SimpleScreenRecorder", .isfloating = 1) RULE(.class = "fcitx5-config-qt", .isfloating = 1/*, .iscentered = 1*/)
-                                RULE(.class = "GParted", .isfloating = 1/*, .iscentered = 1*/) RULE(.class = "kitty", .isterminal = 1, .noswallow = 1)
+                                RULE(.class = "GParted", .isfloating = 1/*, .iscentered = 1*/) RULE(.class = "kitty")
                                     RULE(.class = "GParted", .isfloating = 1) RULE(.class = "icalingua", .isfloating = 1/*, .iscentered = 1*/)
                                         RULE(.class = "Steam", .isfloating = 1/*, .iscentered = 1*/) RULE(.class = "Lxpolkit", .isfloating = 1/*, .iscentered = 1*/)
                                             RULE(.class = "SimpleScreenRecorder", .isfloating = 1) RULE(.class = "KotatogramDesktop", .isfloating = 1)
@@ -447,6 +447,8 @@ static const Rule rules[] = {
                                                     RULE(.class = "qqmusic", .isfloating = 1) RULE(.class = "Nm-connection-editor", .isfloating = 1)
                                                         RULE(.class = "\345\276\256\344\277\241", .isfloating = 1)
                                                             RULE(.class = "flameshot", .isfloating = 1)
+                                                                // RULE(.class = "", .title = "Android Emulator - Pixel:5554", .isfloating = 1)
+                                                                //     RULE(.class = "Emulator", .isfloating = 1)
 #if SCRATCHPADS_PATCH
                                                                 RULE(.instance = "spterm", .tags = SPTAG(0), .isfloating = 1)
 #endif // SCRATCHPADS_PATCH
