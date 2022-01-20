@@ -90,7 +90,7 @@
  *
  * Examples:
  *    xsetroot -name "$(echo -e '<\x01a<\x02b<\x03c')"
- *    xsetroot -name "$(echo -e '/\x01d/\x02d/\x03f')"
+ *    xsetroot -name "$(echo -e '/\x01d/\x02e/\x03f')"
  *
  * https://gitlab.com/udiboy1209-suckless/dwm/-/commit/071f5063e8ac4280666828179f92788d893eea40#4b1a539194be7467cefbda22f675a3b7c19ceca7
  * https://dwm.suckless.org/patches/statuscolors/
@@ -152,8 +152,18 @@
  */
 #define BAR_SYSTRAY_PATCH 1
 
-/* Show tag symbols in bar */
+/* Show tag symbols in the bar. */
 #define BAR_TAGS_PATCH 1
+
+/* Show tag symbols + class of master window in the bar.
+ * https://dwm.suckless.org/patches/taglabels/
+ */
+#define BAR_TAGLABELS_PATCH 0
+
+/* This patch underlines the selected tag, or optionally all tags.
+ * https://dwm.suckless.org/patches/underlinetags/
+ */
+#define BAR_UNDERLINETAGS_PATCH 0
 
 /* This patch adds the window icon next to the window title in the bar.
  *
