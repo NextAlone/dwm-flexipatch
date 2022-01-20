@@ -9,7 +9,7 @@ static const unsigned int borderpx = 1; /* border pixel of windows */
 #endif                              // ROUNDED_CORNERS_PATCH
 static const unsigned int snap = 8; /* snap pixel */
 #if SWALLOW_PATCH
-static const int swallowfloating = 1; /* 1 means swallow floating windows by default */
+static const int swallowfloating = 0; /* 1 means swallow floating windows by default */
 #endif                                // SWALLOW_PATCH
 #if NO_MOD_BUTTONS_PATCH
 static int nomodbuttons = 1; /* allow client mouse button bindings that have no modifier */
@@ -22,7 +22,7 @@ static const unsigned int gappov = 8; /* vert outer gap between windows and scre
 static const int smartgaps_fact = 1;  /* gap factor when there is only one client; 0 = no gaps, 3 = 3x outer gaps */
 #endif                                // VANITYGAPS_PATCH
 #if AUTOSTART_PATCH
-static const char autostartblocksh[] = "";
+static const char autostartblocksh[] = "autostart_blocking.sh";
 static const char autostartsh[] = "autostart.sh";
 static const char dwmdir[] = "dwm";
 static const char localshare[] = ".local/share";
@@ -91,6 +91,18 @@ static const char buttonbar[] = "󰀘";
 static const unsigned int systrayspacing = 5; /* systray spacing */
 static const int showsystray = 1;             /* 0 means no systray */
 #endif                                        // BAR_SYSTRAY_PATCH
+#if BAR_TAGLABELS_PATCH
+static const char ptagf[] = "[%s %s]"; /* format of a tag label */
+static const char etagf[] = "[%s]";    /* format of an empty tag */
+static const int lcaselbl = 0;         /* 1 means make tag label lowercase */
+#endif                                 // BAR_TAGLABELS_PATCH
+#if BAR_UNDERLINETAGS_PATCH
+static const unsigned int ulinepad = 5;     /* horizontal padding between the underline and tag */
+static const unsigned int ulinestroke = 2;  /* thickness / height of the underline */
+static const unsigned int ulinevoffset = 0; /* how far above the bottom of the bar the line should appear */
+static const int ulineall = 0;              /* 1 to show underline on all tags, 0 for just the active ones */
+#endif                                      // BAR_UNDERLINETAGS_PATCH
+
 /* Indicators: see patch/bar_indicators.h for options */
 static int tagindicatortype = INDICATOR_BOTTOM_BAR;
 static int tiledindicatortype = INDICATOR_NONE;
@@ -501,6 +513,9 @@ static const BarRule barrules[] = {
 #if BAR_TAGS_PATCH
     {-1, 0, BAR_ALIGN_LEFT, width_tags, draw_tags, click_tags, "tags"},
 #endif // BAR_TAGS_PATCH
+#if BAR_TAGLABELS_PATCH
+    {-1, 0, BAR_ALIGN_LEFT, width_taglabels, draw_taglabels, click_taglabels, "taglabels"},
+#endif // BAR_TAGLABELS_PATCH
 #if BAR_TAGGRID_PATCH
     {-1, 0, BAR_ALIGN_LEFT, width_taggrid, draw_taggrid, click_taggrid, "taggrid"},
 #endif // BAR_TAGGRID_PATCH
@@ -703,10 +718,9 @@ static const Layout layouts[] = {
 #if NROWGRID_LAYOUT
     {"###", nrowgrid},
 #endif
-    // #if CYCLELAYOUTS_PATCH
-    // {NULL, NULL},
-    // #endif
-    {"><>", NULL}, /* no layout function means floating behavior */
+#if CYCLELAYOUTS_PATCH
+    {NULL, NULL},
+#endif
 };
 #endif // FLEXTILE_DELUXE_LAYOUT
 
@@ -798,8 +812,6 @@ static const char *dmenucmd[] = {"dmenu_run",
 #if BAR_DMENUMATCHTOP_PATCH
                                  topbar ? NULL : "-b",
 #endif // BAR_DMENUMATCHTOP_PATCH
-                                 "-h",
-                                 bar_height,
                                  NULL};
 static const char *termcmd[] = {"kitty", NULL}; // change this to your term
 static const char *rofi_drun[] = {"/home/nextalone/.config/rofi/drun.sh", NULL};
@@ -1004,6 +1016,9 @@ static Key keys[] = {
     {M, XK_f, setlayout, {.v = &layouts[0]}},
     {M, XK_t, setlayout, {.v = &layouts[1]}},
     {M, XK_m, setlayout, {.v = &layouts[2]}},
+#if COLUMNS_LAYOUT
+    {M, XK_c, setlayout, {.v = &layouts[3]}},
+#endif // COLUMNS_LAYOUT
 #if FLEXTILE_DELUXE_LAYOUT
     {M | C, XK_t, rotatelayoutaxis, {.i = +1}},              /* flextile, 1 = layout axis */
     {M | C, XK_Tab, rotatelayoutaxis, {.i = +2}},            /* flextile, 2 = master axis */
