@@ -3,8 +3,8 @@
 # Contributor: Grigorios Bouzakis <grbzks@gmail.com>
 
 pkgname=dwm
-pkgver=6.2
-pkgrel=3
+pkgver=6.3
+pkgrel=1
 pkgdesc="A dynamic window manager for X"
 url="https://dwm.suckless.org"
 arch=('x86_64')
