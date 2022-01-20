@@ -857,7 +857,7 @@ static Key keys[] = {
     {M, XK_Print, spawn, SHCMD("maim -u | xclip -selection clipboard -t image/png")},
     {0, XK_Print, spawn, SHCMD("maim -b 2 -s -B -u | xclip -selection clipboard -t image/png")},
     {A, XK_Print, spawn, {.v = flameshot}},
-    {C, XK_Print, spawn, SHCMD("maim -b 1 -B -s -u | tesseract stdin stdout -l eng+jpn | xsel --clipboard --input")},
+    {C, XK_Print, spawn, SHCMD("maim -b 2 -B -s -u | tesseract stdin stdout -l eng+jpn | xsel --clipboard --input")},
     {S, XK_Print, spawn, {.v = screen_recorder}},
     {M, XK_w, spawn, {.v = chrome}},
     {M, XK_p, spawn, SHCMD("xprop WM_CLASS WM_NAME WM_WINDOW_ROLE | xsel --clipboard --input")},
