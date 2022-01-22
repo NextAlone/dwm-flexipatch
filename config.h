@@ -444,24 +444,22 @@ static const Rule rules[] = {
      *	WM_WINDOW_ROLE(STRING) = role
      *	_NET_WM_WINDOW_TYPE(ATOM) = wintype
      */
-    RULE(.wintype = WTYPE "DIALOG", .isfloating = 1 /*, .iscentered = 1*/) RULE(.wintype = WTYPE "UTILITY", .isfloating = 1)
-        RULE(.wintype = WTYPE "TOOLBAR", .isfloating = 1) RULE(.wintype = WTYPE "SPLASH", .isfloating = 1) RULE(.class = "jetbrains", .title = "win0",
-                                                                                                                .isfloating = 1 /*, .iscentered = 1*/)
-            RULE(.class = "jetbrains", .isfloating = 0 /*, .iscentered = 1*/) RULE(.class = "TelegramDesktop", .isfloating = 1)
-                RULE(.class = "Wine", .isfloating = 1) RULE(.class = "Wine", .title = "Wine System Tray", .isfloating = 1)
-                    RULE(.class = "SimpleScreenRecorder", .isfloating = 1) RULE(.class = "fcitx5-config-qt", .isfloating = 1 /*, .iscentered = 1*/)
-                        RULE(.class = "GParted", .isfloating = 1 /*, .iscentered = 1*/) RULE(.class = "kitty")
-                            RULE(.class = "GParted", .isfloating = 1) RULE(.class = "icalingua", .isfloating = 1 /*, .iscentered = 1*/)
-                                RULE(.class = "Steam", .isfloating = 1 /*, .iscentered = 1*/) RULE(.class = "Lxpolkit",
-                                                                                                   .isfloating = 1 /*, .iscentered = 1*/)
-                                    RULE(.class = "SimpleScreenRecorder", .isfloating = 1) RULE(.class = "KotatogramDesktop", .isfloating = 1)
-                                        RULE(.class = "Xdg-desktop-portal-gtk", .title = "Choose Files", .isfloating = 1)
-                                            RULE(.class = "qqmusic", .isfloating = 1) RULE(.class = "Nm-connection-editor", .isfloating = 1)
-                                                RULE(.class = "\345\276\256\344\277\241", .isfloating = 1) RULE(.class = "flameshot", .isfloating = 1)
+    RULE(.wintype = WTYPE "DIALOG", .isfloating = 1 /*, .iscentered = 1*/) RULE(.wintype = WTYPE "UTILITY",
+                                                                                .isfloating = 1) RULE(.wintype = WTYPE "TOOLBAR", .isfloating = 1)
+        RULE(.wintype = WTYPE "SPLASH", .isfloating = 1) RULE(.class = "TelegramDesktop", .isfloating = 1) RULE(.class = "Wine", .isfloating = 1)
+            RULE(.class = "Wine", .title = "Wine System Tray", .isfloating = 1) RULE(.class = "SimpleScreenRecorder", .isfloating = 1)
+                RULE(.class = "fcitx5-config-qt",
+                     .isfloating = 1 /*, .iscentered = 1*/) RULE(.class = "GParted", .isfloating = 1 /*, .iscentered = 1*/) RULE(.class = "kitty")
+                    RULE(.class = "GParted", .isfloating = 1) RULE(.class = "icalingua", .isfloating = 1 /*, .iscentered = 1*/)
+                        RULE(.class = "Steam", .isfloating = 1 /*, .iscentered = 1*/) RULE(.class = "Lxpolkit", .isfloating = 1 /*, .iscentered = 1*/)
+                            RULE(.class = "SimpleScreenRecorder", .isfloating = 1) RULE(.class = "KotatogramDesktop", .isfloating = 1)
+                                RULE(.class = "Xdg-desktop-portal-gtk", .title = "Choose Files", .isfloating = 1)
+                                    RULE(.class = "qqmusic", .isfloating = 1) RULE(.class = "Nm-connection-editor", .isfloating = 1)
+                                        RULE(.class = "\345\276\256\344\277\241", .isfloating = 1) RULE(.class = "flameshot", .isfloating = 1)
 // RULE(.class = "", .title = "Android Emulator - Pixel:5554", .isfloating = 1)
 //     RULE(.class = "Emulator", .isfloating = 1)
 #if SCRATCHPADS_PATCH
-                                                    RULE(.instance = "spterm", .tags = SPTAG(0), .isfloating = 1)
+                                            RULE(.instance = "spterm", .tags = SPTAG(0), .isfloating = 1)
 #endif // SCRATCHPADS_PATCH
 };
 
@@ -585,9 +583,9 @@ static const BarRule barrules[] = {
 static const float mfact = 0.60; /* factor of master area size [0.05..0.95] */
 static const int nmaster = 1;    /* number of clients in master area */
 #if FLEXTILE_DELUXE_LAYOUT
-static const int nstack = 0;      /* number of clients in primary stack area */
-#endif                            // FLEXTILE_DELUXE_LAYOUT
-static const int resizehints = 1; /* 1 means respect size hints in tiled resizals */
+static const int nstack = 0;         /* number of clients in primary stack area */
+#endif                               // FLEXTILE_DELUXE_LAYOUT
+static const int resizehints = 1;    /* 1 means respect size hints in tiled resizals */
 static const int lockfullscreen = 1; /* 1 will force focus on the fullscreen window */
 #if DECORATION_HINTS_PATCH
 static const int decorhints = 1; /* 1 means respect decoration hints */
