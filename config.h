@@ -821,6 +821,8 @@ static const char *chrome[] = {"google-chrome-stable", NULL};
 static const char *volume_up[] = {"pactl", "set-sink-volume", "@DEFAULT_SINK@", "+2%", NULL};
 static const char *volume_down[] = {"pactl", "set-sink-volume", "@DEFAULT_SINK@", "-2%", NULL};
 static const char *volume_mute[] = {"pactl", "set-sink-mute", "@DEFAULT_SINK@", "toggle", NULL};
+static const char *brightness_up[] = {"brightnessctl", "set", "+5%", NULL};
+static const char *brightness_down[] = {"brightnessctl", "set", "5%-", NULL};
 #if BAR_STATUSCMD_PATCH
 #if BAR_DWMBLOCKS_PATCH
 /* This defines the name of the executable that handles the bar (used for signalling purposes) */
@@ -848,6 +850,8 @@ static Key on_empty_keys[] = {
 #include <X11/XF86keysym.h>
 static Key keys[] = {
     /* modifier                     key            function                argument */
+    {0, XF86XK_MonBrightnessUp, spawn, {.v = brightness_up}},
+    {0, XF86XK_MonBrightnessDown, spawn, {.v = brightness_down}},
     {0, XF86XK_AudioRaiseVolume, spawn, {.v = volume_up}},
     {0, XF86XK_AudioLowerVolume, spawn, {.v = volume_down}},
     {0, XF86XK_AudioMute, spawn, {.v = volume_mute}},
