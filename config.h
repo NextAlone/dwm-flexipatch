@@ -815,6 +815,7 @@ static const char *termcmd[] = {"kitty", NULL}; // change this to your term
 static const char *rofi_drun[] = {"/home/nextalone/.config/rofi/drun.sh", NULL};
 static const char *rofi_calc[] = {"/home/nextalone/.config/rofi/calc.sh", NULL};
 static const char *flameshot[] = {"flameshot", "gui", NULL};
+static const char *deepin_screenshot[] = {"deepin-screenshot", NULL};
 static const char *lock[] = {"slock", NULL};
 static const char *screen_recorder[] = {"simplescreenrecorder", NULL};
 static const char *chrome[] = {"google-chrome-stable", NULL};
@@ -859,6 +860,7 @@ static Key keys[] = {
     {M, XK_Print, spawn, SHCMD("maim -u | xclip -selection clipboard -t image/png")},
     {0, XK_Print, spawn, SHCMD("maim -b 2 -s -B -u | xclip -selection clipboard -t image/png")},
     {A, XK_Print, spawn, {.v = flameshot}},
+    {C | A, XK_a, spawn,  SHCMD("maim -b 2 -s -B -u | xclip -selection clipboard -t image/png")},
     {C, XK_Print, spawn, SHCMD("maim -b 2 -B -s -u | tesseract stdin stdout -l eng+jpn | xsel --clipboard --input")},
     {S, XK_Print, spawn, {.v = screen_recorder}},
     {M, XK_w, spawn, {.v = chrome}},
