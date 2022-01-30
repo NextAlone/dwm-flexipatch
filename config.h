@@ -815,7 +815,7 @@ static const char *termcmd[] = {"kitty", NULL}; // change this to your term
 static const char *rofi_drun[] = {"/home/nextalone/.config/rofi/drun.sh", NULL};
 static const char *rofi_calc[] = {"/home/nextalone/.config/rofi/calc.sh", NULL};
 static const char *flameshot[] = {"flameshot", "gui", NULL};
-static const char *deepin_screenshot[] = {"deepin-screenshot", NULL};
+static const char *telegram[] = {"telegram-desktop", NULL};
 static const char *lock[] = {"slock", NULL};
 static const char *screen_recorder[] = {"simplescreenrecorder", NULL};
 static const char *chrome[] = {"google-chrome-stable", NULL};
@@ -865,6 +865,7 @@ static Key keys[] = {
     {S, XK_Print, spawn, {.v = screen_recorder}},
     {M, XK_w, spawn, {.v = chrome}},
     {M, XK_p, spawn, SHCMD("xprop WM_CLASS WM_NAME WM_WINDOW_ROLE | xsel --clipboard --input")},
+    {M, XK_e, spawn, {.v = telegram}},
 // {M, XK_p, spawn, {.v = power}},
 #if KEYMODES_PATCH
     {M, XK_Escape, setkeymode, {.ui = COMMANDMODE}},
