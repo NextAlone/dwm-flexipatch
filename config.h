@@ -456,6 +456,7 @@ static const Rule rules[] = {
                                 RULE(.class = "Xdg-desktop-portal-gtk", .title = "Choose Files", .isfloating = 1)
                                     RULE(.class = "qqmusic", .isfloating = 1) RULE(.class = "Nm-connection-editor", .isfloating = 1)
                                         RULE(.class = "\345\276\256\344\277\241", .isfloating = 1) RULE(.class = "flameshot", .isfloating = 1)
+                                            RULE(.class = "Steam", .isfloating = 0)
 // RULE(.class = "", .title = "Android Emulator - Pixel:5554", .isfloating = 1)
 //     RULE(.class = "Emulator", .isfloating = 1)
 #if SCRATCHPADS_PATCH
