@@ -400,7 +400,7 @@ static Sp scratchpads[] = {
  * them. This works seamlessly with alternative tags and alttagsdecoration patches.
  */
 static char *tagicons[][NUMTAGS] = {
-    [DEFAULT_TAGS] = {"󰨞", "󰟍", "󰊠", "󱂚", "󰈐", "󰎆", "󰇮", "󰸼", "󰒓"},
+    [DEFAULT_TAGS] = {"󱂚", "󰟍", "󰊠", "󰨞", "󰈐", "󰎆", "󰇮", "󰸼", "󰒓"},
     [ALTERNATIVE_TAGS] = {"A", "B", "C", "D", "E", "F", "G", "H", "I"},
     [ALT_TAGS_DECORATION] = {"<1>", "<2>", "<3>", "<4>", "<5>", "<6>", "<7>", "<8>", "<9>"},
 };
@@ -820,8 +820,8 @@ static const char *telegram[] = {"telegram-desktop", NULL};
 static const char *lock[] = {"slock", NULL};
 static const char *screen_recorder[] = {"simplescreenrecorder", NULL};
 static const char *chrome[] = {"google-chrome-stable", NULL};
-static const char *volume_up[] = {"pactl", "set-sink-volume", "@DEFAULT_SINK@", "+2%", NULL};
-static const char *volume_down[] = {"pactl", "set-sink-volume", "@DEFAULT_SINK@", "-2%", NULL};
+static const char *volume_up[] = {"pactl", "set-sink-volume", "@DEFAULT_SINK@", "+5%", NULL};
+static const char *volume_down[] = {"pactl", "set-sink-volume", "@DEFAULT_SINK@", "-5%", NULL};
 static const char *volume_mute[] = {"pactl", "set-sink-mute", "@DEFAULT_SINK@", "toggle", NULL};
 static const char *brightness_up[] = {"brightnessctl", "set", "+5%", NULL};
 static const char *brightness_down[] = {"brightnessctl", "set", "5%-", NULL};
