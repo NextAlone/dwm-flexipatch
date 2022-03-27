@@ -549,9 +549,9 @@ typedef struct {
 } Rule;
 
 #if XKB_PATCH
-#define RULE(...) {.monitor = -1, .xkb_layout = -1, __VA_ARGS__},
+#define RULE(...) {.monitor = -1, .xkb_layout = -1, __VA_ARGS__}
 #else
-#define RULE(...) {.monitor = -1, __VA_ARGS__},
+#define RULE(...) {.monitor = -1, __VA_ARGS__}
 #endif // XKB_PATCH
 
 /* Cross patch compatibility rule macro helper macros */
@@ -1782,7 +1782,7 @@ void
 drawbar(Monitor *m)
 {
 	Bar *bar;
-	
+
 	#if !BAR_FLEXWINTITLE_PATCH
 	if (m->showbar)
 	#endif // BAR_FLEXWINTITLE_PATCH
