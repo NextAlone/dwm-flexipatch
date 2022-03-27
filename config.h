@@ -452,11 +452,20 @@ static const Rule rules[] = {
                      .isfloating = 1 /*, .iscentered = 1*/) RULE(.class = "GParted", .isfloating = 1 /*, .iscentered = 1*/) RULE(.class = "kitty")
                     RULE(.class = "GParted", .isfloating = 1) RULE(.class = "icalingua", .isfloating = 1 /*, .iscentered = 1*/)
                         RULE(.class = "Steam", .isfloating = 1 /*, .iscentered = 1*/) RULE(.class = "Lxpolkit", .isfloating = 1 /*, .iscentered = 1*/)
-                            RULE(.class = "SimpleScreenRecorder", .isfloating = 1) RULE(.class = "KotatogramDesktop", .isfloating = 1)
+                            RULE(.class = "SimpleScreenRecorder", .isfloating = 1) RULE(.class = "64Gram", .isfloating = 1)
                                 RULE(.class = "Xdg-desktop-portal-gtk", .title = "Choose Files", .isfloating = 1)
                                     RULE(.class = "qqmusic", .isfloating = 1) RULE(.class = "Nm-connection-editor", .isfloating = 1)
                                         RULE(.class = "\345\276\256\344\277\241", .isfloating = 1) RULE(.class = "flameshot", .isfloating = 1)
-                                            RULE(.class = "Steam", .isfloating = 0)
+                                            RULE(.class = "Steam", .isfloating = 0) RULE(.class = "Pinentry-gtk-2", .isfloating = 1)
+// Jetbrains family
+    RULE(.class ="jetbrains-pycharm", .isfloating = 0)
+        RULE(.class = "jetbrains-clion", .isfloating = 0 )
+            RULE(.class = "jetbrains-studio", .isfloating = 0)
+                RULE(.class = "jetbrains-rider", .isfloating = 0)
+                    RULE(.class = "jetbrains-webstorm", .isfloating = 0)
+                        RULE(.class = "jetbrains-goland", .isfloating = 0)
+                            RULE(.class = "jetbrains-idea", .isfloating = 0)
+
 // RULE(.class = "", .title = "Android Emulator - Pixel:5554", .isfloating = 1)
 //     RULE(.class = "Emulator", .isfloating = 1)
 #if SCRATCHPADS_PATCH
