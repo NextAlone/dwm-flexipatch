@@ -444,43 +444,33 @@ static const Rule rules[] = {
      *	WM_WINDOW_ROLE(STRING) = role
      *	_NET_WM_WINDOW_TYPE(ATOM) = wintype
      */
+    // Jetbrains family
     RULE(.wintype = WTYPE "DIALOG", .isfloating = 1 /*, .iscentered = 1*/),
     RULE(.wintype = WTYPE "UTILITY", .isfloating = 1),
     RULE(.wintype = WTYPE "TOOLBAR", .isfloating = 1),
     RULE(.wintype = WTYPE "SPLASH", .isfloating = 1),
     RULE(.class = "TelegramDesktop", .isfloating = 1),
     RULE(.class = "Wine", .isfloating = 1),
-    RULE(.class = "Wine", .title = "Wine System Tray", .isfloating = 1),
     RULE(.class = "SimpleScreenRecorder", .isfloating = 1),
     RULE(.class = "fcitx5-config-qt", .isfloating = 1 /*, .iscentered = 1*/),
-    RULE(.class = "GParted", .isfloating = 1 /*, .iscentered = 1*/),
-    RULE(.class = "kitty"),
     RULE(.class = "GParted", .isfloating = 1),
-    RULE(.class = "icalingua", .isfloating = 1 /*, .iscentered = 1*/),
-    RULE(.class = "Steam", .isfloating = 1 /*, .iscentered = 1*/),
+    RULE(.class = "Steam", .isfloating = 0 /*, .iscentered = 1*/),
     RULE(.class = "Lxpolkit", .isfloating = 1 /*, .iscentered = 1*/),
     RULE(.class = "SimpleScreenRecorder", .isfloating = 1),
     RULE(.class = "64Gram", .isfloating = 1),
     RULE(.class = "Xdg-desktop-portal-gtk", .title = "Choose Files", .isfloating = 1),
-    RULE(.class = "qqmusic", .isfloating = 1),
     RULE(.class = "Nm-connection-editor", .isfloating = 1),
     RULE(.class = "\345\276\256\344\277\241", .isfloating = 1),
-    RULE(.class = "flameshot", .isfloating = 1),
+    RULE(.class = "flameshot", .title = "Configuration", .isfloating = 1),
     RULE(.class = "Steam", .isfloating = 0),
     RULE(.class = "Pinentry-gtk-2", .isfloating = 1),
-    // Jetbrains family
-    RULE(.class = "jetbrains-pycharm", .isfloating = 0),
-    RULE(.class = "jetbrains-clion", .isfloating = 0),
-    RULE(.class = "jetbrains-studio", .isfloating = 0),
-    RULE(.class = "jetbrains-rider", .isfloating = 0),
-    RULE(.class = "jetbrains-webstorm", .isfloating = 0),
-    RULE(.class = "jetbrains-goland", .isfloating = 0),
-    RULE(.class = "jetbrains-idea", .isfloating = 0)
+    RULE(.class = "weixin", .isfloating = 1),
+    RULE(.class = "wemeetapp", .isfloating = 1),
 
 // ,RULE(.class = "", .title = "Android Emulator - Pixel:5554", .isfloating = 1)
 //     ,RULE(.class = "Emulator", .isfloating = 1)
 #if SCRATCHPADS_PATCH
-                                            RULE(.instance = "spterm", .tags = SPTAG(0), .isfloating = 1)
+    RULE(.instance = "spterm", .tags = SPTAG(0), .isfloating = 1)
 #endif // SCRATCHPADS_PATCH
 };
 
@@ -833,8 +823,9 @@ static const char *dmenucmd[] = {"dmenu_run",
 #endif // BAR_DMENUMATCHTOP_PATCH
                                  NULL};
 static const char *termcmd[] = {"kitty", NULL}; // change this to your term
-static const char *rofi_drun[] = {"/home/nextalone/.config/rofi/drun.sh", NULL};
-static const char *rofi_calc[] = {"/home/nextalone/.config/rofi/calc.sh", NULL};
+static const char *rofi_drun[] = {"/home/nextalone/.config/rofi/drun", NULL};
+static const char *rofi_calc[] = {"/home/nextalone/.config/rofi/calc", NULL};
+static const char *rofi_power[] = {"/home/nextalone/.config/rofi/power", NULL};
 static const char *flameshot[] = {"flameshot", "gui", NULL};
 static const char *telegram[] = {"telegram-desktop", NULL};
 static const char *lock[] = {"slock", NULL};
@@ -881,11 +872,11 @@ static Key keys[] = {
     {M, XK_Print, spawn, SHCMD("maim -u | xclip -selection clipboard -t image/png")},
     {0, XK_Print, spawn, SHCMD("maim -b 2 -s -B -u | xclip -selection clipboard -t image/png")},
     {A, XK_Print, spawn, {.v = flameshot}},
-    {C | A, XK_a, spawn,  SHCMD("maim -b 2 -s -B -u | xclip -selection clipboard -t image/png")},
+    {C | A, XK_a, spawn, SHCMD("maim -b 2 -s -B -u | xclip -selection clipboard -t image/png")},
     {C, XK_Print, spawn, SHCMD("maim -b 2 -B -s -u | tesseract stdin stdout -l eng+jpn | xsel --clipboard --input")},
     {S, XK_Print, spawn, {.v = screen_recorder}},
     {M, XK_w, spawn, {.v = chrome}},
-    {M, XK_p, spawn, SHCMD("xprop WM_CLASS WM_NAME WM_WINDOW_ROLE | xsel --clipboard --input")},
+    {M, XK_o, spawn, SHCMD("xprop WM_CLASS WM_NAME WM_WINDOW_ROLE _NET_WM_WINDOW_TYPE | xsel --clipboard --input")},
     {M, XK_e, spawn, {.v = telegram}},
 // {M, XK_p, spawn, {.v = power}},
 #if KEYMODES_PATCH
@@ -893,6 +884,7 @@ static Key keys[] = {
 #endif // KEYMODES_PATCH
     {M, XK_r, spawn, {.v = rofi_drun}},
     {M, XK_c, spawn, {.v = rofi_calc}},
+    {M, XK_p, spawn, {.v = rofi_power}},
     {M, XK_d, spawn, {.v = dmenucmd}},
     {M, XK_Return, spawn, {.v = termcmd}},
 #if RIODRAW_PATCH
@@ -1043,7 +1035,6 @@ static Key keys[] = {
     {M, XK_t, setlayout, {.v = &layouts[1]}},
     {M, XK_m, setlayout, {.v = &layouts[2]}},
 #if COLUMNS_LAYOUT
-    {M, XK_c, setlayout, {.v = &layouts[3]}},
 #endif // COLUMNS_LAYOUT
 #if FLEXTILE_DELUXE_LAYOUT
     {M | C, XK_t, rotatelayoutaxis, {.i = +1}},              /* flextile, 1 = layout axis */
