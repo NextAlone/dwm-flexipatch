@@ -101,7 +101,7 @@
 #define WIDTH(X)                ((X)->w + 2 * (X)->bw)
 #define HEIGHT(X)               ((X)->h + 2 * (X)->bw)
 #define WTYPE                   "_NET_WM_WINDOW_TYPE_"
-#if SCRATCHPADS_PATCH
+#if SCRATCHPADS_PATCH && !RENAMED_SCRATCHPADS_PATCH
 #define TOTALTAGS               (NUMTAGS + LENGTH(scratchpads))
 #define TAGMASK                 ((1 << TOTALTAGS) - 1)
 #define SPTAG(i)                ((1 << NUMTAGS) << (i))
@@ -154,7 +154,11 @@ enum {
   SchemeTag7,
   SchemeTag8,
   SchemeTag9,
-#if BAR_FLEXWINTITLE_PATCH
+  #if RENAMED_SCRATCHPADS_PATCH
+    SchemeScratchSel,
+    SchemeScratchNorm,
+  #endif // RENAMED_SCRATCHPADS_PATCH
+  #if BAR_FLEXWINTITLE_PATCH
   SchemeFlexActTTB,
   SchemeFlexActLTR,
   SchemeFlexActMONO,
@@ -412,6 +416,9 @@ struct Client {
 	#if IPC_PATCH
 	ClientState prevstate;
 	#endif // IPC_PATCH
+	#if RENAMED_SCRATCHPADS_PATCH
+	char scratchkey;
+	#endif // RENAMED_SCRATCHPADS_PATCH
 	#if XKB_PATCH
 	XkbInfo *xkb;
 	#endif // XKB_PATCH
@@ -553,6 +560,9 @@ typedef struct {
 	const char *floatpos;
 	#endif // FLOATPOS_PATCH
 	int monitor;
+	#if RENAMED_SCRATCHPADS_PATCH
+	const char scratchkey;
+	#endif // RENAMED_SCRATCHPADS_PATCH
 	#if XKB_PATCH
 	int xkb_layout;
 	#endif // XKB_PATCH
@@ -859,6 +869,9 @@ applyrules(Client *c)
 	#endif // SIZEHINTS_ISFREESIZE_PATCH
 	c->isfloating = 0;
 	c->tags = 0;
+	#if RENAMED_SCRATCHPADS_PATCH
+	c->scratchkey = 0;
+	#endif // RENAMED_SCRATCHPADS_PATCH
 	XGetClassHint(dpy, c->win, &ch);
 	class    = ch.res_class ? ch.res_class : broken;
 	instance = ch.res_name  ? ch.res_name  : broken;
@@ -900,7 +913,9 @@ applyrules(Client *c)
 			#endif // SIZEHINTS_ISFREESIZE_PATCH
 			c->isfloating = r->isfloating;
 			c->tags |= r->tags;
-			#if SCRATCHPADS_PATCH
+			#if RENAMED_SCRATCHPADS_PATCH
+			c->scratchkey = r->scratchkey;
+			#elif SCRATCHPADS_PATCH
 			if ((r->tags & SPTAGMASK) && r->isfloating) {
 				c->x = c->mon->wx + (c->mon->ww / 2 - WIDTH(c) / 2);
 				c->y = c->mon->wy + (c->mon->wh / 2 - HEIGHT(c) / 2);
@@ -973,7 +988,7 @@ applyrules(Client *c)
 		XFree(ch.res_name);
 	#if EMPTYVIEW_PATCH
 	if (c->tags & TAGMASK)                    c->tags = c->tags & TAGMASK;
-	#if SCRATCHPADS_PATCH
+	#if SCRATCHPADS_PATCH && !RENAMED_SCRATCHPADS_PATCH
 	else if (c->mon->tagset[c->mon->seltags]) c->tags = c->mon->tagset[c->mon->seltags] & ~SPTAGMASK;
 	#elif SCRATCHPAD_ALT_1_PATCH
 	else if (c->tags != SCRATCHPAD_MASK && c->mon->tagset[c->mon->seltags]) c->tags = c->mon->tagset[c->mon->seltags];
@@ -981,7 +996,7 @@ applyrules(Client *c)
 	else if (c->mon->tagset[c->mon->seltags]) c->tags = c->mon->tagset[c->mon->seltags];
 	#endif // SCRATCHPADS_PATCH
 	else                                      c->tags = 1;
-	#elif SCRATCHPADS_PATCH
+	#elif SCRATCHPADS_PATCH && !RENAMED_SCRATCHPADS_PATCH
 	c->tags = c->tags & TAGMASK ? c->tags & TAGMASK : (c->mon->tagset[c->mon->seltags] & ~SPTAGMASK);
 	#elif SCRATCHPAD_ALT_1_PATCH
 	if (c->tags != SCRATCHPAD_MASK)
@@ -2007,10 +2022,21 @@ focus(Client *c)
 		attachstack(c);
 		grabbuttons(c, 1);
 		#if !BAR_FLEXWINTITLE_PATCH
+		#if RENAMED_SCRATCHPADS_PATCH
+		if (c->scratchkey != 0 && c->isfloating)
+			XSetWindowBorder(dpy, c->win, scheme[SchemeScratchSel][ColFloat].pixel);
+		else if (c->scratchkey != 0)
+			XSetWindowBorder(dpy, c->win, scheme[SchemeScratchSel][ColBorder].pixel);
+		else if (c->isfloating)
+			XSetWindowBorder(dpy, c->win, scheme[SchemeSel][ColFloat].pixel);
+		else
+			XSetWindowBorder(dpy, c->win, scheme[SchemeSel][ColBorder].pixel);
+		#else
 		if (c->isfloating)
 			XSetWindowBorder(dpy, c->win, scheme[SchemeSel][ColFloat].pixel);
 		else
 			XSetWindowBorder(dpy, c->win, scheme[SchemeSel][ColBorder].pixel);
+		#endif // RENAMED_SCRATCHPADS_PATCH
 		#endif // BAR_FLEXWINTITLE_PATCH
 		setfocus(c);
 	} else {
@@ -2698,7 +2724,7 @@ movemouse(const Arg *arg)
 
 	XUngrabPointer(dpy, CurrentTime);
 	if ((m = recttomon(c->x, c->y, c->w, c->h)) != selmon) {
-		#if SCRATCHPADS_PATCH
+		#if SCRATCHPADS_PATCH && !RENAMED_SCRATCHPADS_PATCH
 		if (c->tags & SPTAGMASK) {
 			c->mon->tagset[c->mon->seltags] ^= (c->tags & SPTAGMASK);
 			m->tagset[m->seltags] |= (c->tags & SPTAGMASK);
@@ -3050,7 +3076,7 @@ resizemouse(const Arg *arg)
 	XUngrabPointer(dpy, CurrentTime);
 	while (XCheckMaskEvent(dpy, EnterWindowMask, &ev));
 	if ((m = recttomon(c->x, c->y, c->w, c->h)) != selmon) {
-		#if SCRATCHPADS_PATCH
+		#if SCRATCHPADS_PATCH && !RENAMED_SCRATCHPADS_PATCH
 		if (c->tags & SPTAGMASK) {
 			c->mon->tagset[c->mon->seltags] ^= (c->tags & SPTAGMASK);
 			m->tagset[m->seltags] |= (c->tags & SPTAGMASK);
@@ -3249,7 +3275,7 @@ sendmon(Client *c, Monitor *m)
 	arrange(c->mon);
 	#endif // SENDMON_KEEPFOCUS_PATCH
 	c->mon = m;
-	#if SCRATCHPADS_PATCH
+	#if SCRATCHPADS_PATCH && !RENAMED_SCRATCHPADS_PATCH
 	if (!(c->tags & SPTAGMASK))
 	#endif // SCRATCHPADS_PATCH
 	#if EMPTYVIEW_PATCH
@@ -3792,6 +3818,7 @@ showhide(Client *c)
 	if (!c)
 		return;
 	if (ISVISIBLE(c)) {
+		#if !RENAMED_SCRATCHPADS_PATCH
 		#if SCRATCHPADS_PATCH && SCRATCHPADS_KEEP_POSITION_AND_SIZE_PATCH
 		if (
 			(c->tags & SPTAGMASK) &&
@@ -3812,6 +3839,7 @@ showhide(Client *c)
 			c->y = c->mon->wy + (c->mon->wh / 2 - HEIGHT(c) / 2);
 		}
 		#endif // SCRATCHPADS_KEEP_POSITION_AND_SIZE_PATCH | SCRATCHPADS_PATCH
+		#endif // RENAMED_SCRATCHPADS_PATCH
 		/* show clients top down */
 		#if SAVEFLOATS_PATCH || EXRESIZE_PATCH
 		if (!c->mon->lt[c->mon->sellt]->arrange && c->sfx != -9999 && !c->isfullscreen) {
@@ -3839,6 +3867,11 @@ showhide(Client *c)
 			resize(c, c->x, c->y, c->w, c->h, 0);
 		showhide(c->snext);
 	} else {
+		#if RENAMED_SCRATCHPADS_PATCH && RENAMED_SCRATCHPADS_AUTO_HIDE_PATCH
+		/* optional: auto-hide scratchpads when moving to other tags */
+		if (c->scratchkey != 0 && !(c->tags & c->mon->tagset[c->mon->seltags]))
+			c->tags = 0;
+		#endif // RENAMED_SCRATCHPADS_AUTO_HIDE_PATCH
 		/* hide clients bottom up */
 		showhide(c->snext);
 		XMoveWindow(dpy, c->win, WIDTH(c) * -2, c->y);
@@ -4178,7 +4211,7 @@ toggleview(const Arg *arg)
 		selmon->tagset[selmon->seltags] = newtagset;
 
 		#if PERTAG_PATCH
-		#if SCRATCHPADS_PATCH
+		#if SCRATCHPADS_PATCH && !RENAMED_SCRATCHPADS_PATCH
 		if (newtagset == ~SPTAGMASK)
 		#else
 		if (newtagset == ~0)
@@ -4248,10 +4281,21 @@ unfocus(Client *c, int setfocus, Client *nextfocus)
 	#endif // LOSEFULLSCREEN_PATCH
 	grabbuttons(c, 0);
 	#if !BAR_FLEXWINTITLE_PATCH
+	#if RENAMED_SCRATCHPADS_PATCH
+	if (c->scratchkey != 0 && c->isfloating)
+		XSetWindowBorder(dpy, c->win, scheme[SchemeScratchNorm][ColFloat].pixel);
+	else if (c->scratchkey != 0)
+		XSetWindowBorder(dpy, c->win, scheme[SchemeScratchNorm][ColBorder].pixel);
+	else if (c->isfloating)
+		XSetWindowBorder(dpy, c->win, scheme[SchemeNorm][ColFloat].pixel);
+	else
+		XSetWindowBorder(dpy, c->win, scheme[SchemeNorm][ColBorder].pixel);
+	#else
 	if (c->isfloating)
 		XSetWindowBorder(dpy, c->win, scheme[SchemeNorm][ColFloat].pixel);
 	else
 		XSetWindowBorder(dpy, c->win, scheme[SchemeNorm][ColBorder].pixel);
+	#endif // RENAMED_SCRATCHPADS_PATCH
 	#endif // BAR_FLEXWINTITLE_PATCH
 	if (setfocus) {
 		XSetInputFocus(dpy, root, RevertToPointerRoot, CurrentTime);
