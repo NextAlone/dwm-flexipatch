@@ -7,7 +7,7 @@ static const int corner_radius = 12;
 #else
 static const unsigned int borderpx = 1; /* border pixel of windows */
 #endif                              // ROUNDED_CORNERS_PATCH
-static const unsigned int snap = 8; /* snap pixel */
+static const unsigned int snap = 12; /* snap pixel */
 #if SWALLOW_PATCH
 static const int swallowfloating = 0; /* 1 means swallow floating windows by default */
 #endif                                // SWALLOW_PATCH
@@ -15,10 +15,10 @@ static const int swallowfloating = 0; /* 1 means swallow floating windows by def
 static int nomodbuttons = 1; /* allow client mouse button bindings that have no modifier */
 #endif                       // NO_MOD_BUTTONS_PATCH
 #if VANITYGAPS_PATCH
-static const unsigned int gappih = 8; /* horiz inner gap between windows */
-static const unsigned int gappiv = 8; /* vert inner gap between windows */
-static const unsigned int gappoh = 8; /* horiz outer gap between windows and screen edge */
-static const unsigned int gappov = 8; /* vert outer gap between windows and screen edge */
+static const unsigned int gappih = 12; /* horiz inner gap between windows */
+static const unsigned int gappiv = 12; /* vert inner gap between windows */
+static const unsigned int gappoh = 12; /* horiz outer gap between windows and screen edge */
+static const unsigned int gappov = 12; /* vert outer gap between windows and screen edge */
 static const int smartgaps_fact = 1;  /* gap factor when there is only one client; 0 = no gaps, 3 = 3x outer gaps */
 #endif                                // VANITYGAPS_PATCH
 #if AUTOSTART_PATCH
@@ -51,7 +51,7 @@ static const int bar_height = 26; /* 0 means derive from font, >= 1 explicit hei
 #endif                            // BAR_HEIGHT_PATCH
 #if BAR_PADDING_PATCH
 static const int vertpad = 8; /* vertical padding of bar */
-static const int sidepad = 8; /* horizontal padding of bar */
+static const int sidepad = 12; /* horizontal padding of bar */
 #endif                        // BAR_PADDING_PATCH
 #if BAR_WINICON_PATCH
 #define ICONSIZE    20 /* icon size */
