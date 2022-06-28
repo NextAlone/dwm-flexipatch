@@ -281,11 +281,15 @@ static const int color_ptrs[][ColCount] = {
     [SchemeHidNorm] = {5, 0, 0, -1},    [SchemeHidSel] = {6, -1, -1, -1}, [SchemeUrg] = {7, 9, 9, 15},
 };
 #endif // BAR_VTCOLORS_PATCH
-
+static const char normbg[] = "#E6E6F1";
+static const char normfg[] = "#2E3440";
+static const char normborder[] = "#D8DEE9";
+static const char selfbg[] = "#3B4252";
+static const char selfborder[] = "#88C0D0";
 static char *colors[][ColCount] = {
     /*                       fg                bg                border                float */
-    [SchemeNorm] = {gray3, black, black, orange},
-    [SchemeSel] = {gray4, black, black, gray4},
+    [SchemeNorm] = {gray4, normbg, normborder, orange},
+    [SchemeSel] = {normfg, normbg, selfborder, gray4},
     [SchemeTitleNorm] = {gray3, black, black, gray4},
     [SchemeTitleSel] = {gray4, black, black, titleselfloatcolor},
     [SchemeTagsNorm] = {gray3, black, black, gray4},
@@ -293,15 +297,15 @@ static char *colors[][ColCount] = {
     [SchemeHidNorm] = {gray1, black, c000000, c000000},
     [SchemeHidSel] = {gray2, black, c000000, c000000},
     [SchemeUrg] = {urgfgcolor, black, urgbordercolor, blue},
-    [SchemeTag1] = {col_yellow, black, black, black},
-    [SchemeTag2] = {col_red, black, black, black},
-    [SchemeTag3] = {col_cyan, black, black, black},
-    [SchemeTag4] = {col_blue, black, black, black},
-    [SchemeTag5] = {col_magenta, black, black, black},
-    [SchemeTag6] = {col_br_yellow, black, black, black},
-    [SchemeTag7] = {col_br_green, black, black, black},
-    [SchemeTag8] = {col_br_blue, black, black, black},
-    [SchemeTag9] = {col_br_red, black, black, black},
+    [SchemeTag1] = {col_yellow, normbg, black, black},
+    [SchemeTag2] = {col_red, normbg, black, black},
+    [SchemeTag3] = {col_cyan, normbg, black, black},
+    [SchemeTag4] = {col_blue, normbg, black, black},
+    [SchemeTag5] = {col_magenta, normbg, black, black},
+    [SchemeTag6] = {col_br_yellow, normbg, black, black},
+    [SchemeTag7] = {col_br_green, normbg, black, black},
+    [SchemeTag8] = {col_br_blue, normbg, black, black},
+    [SchemeTag9] = {col_br_red, normbg, black, black},
 #if BAR_FLEXWINTITLE_PATCH
     [SchemeFlexActTTB] = {titleselfgcolor, actTTBbgcolor, actTTBbgcolor, c000000},
     [SchemeFlexActLTR] = {titleselfgcolor, actLTRbgcolor, actLTRbgcolor, c000000},
