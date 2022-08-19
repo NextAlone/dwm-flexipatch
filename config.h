@@ -488,6 +488,7 @@ static const Rule rules[] = {
                                                                             RULE(.class = "Pinentry-gtk-2", .isfloating = 1)
                                                                                 RULE(.class = "weixin", .isfloating = 1)
                                                                                     RULE(.class = "wemeetapp", .isfloating = 1)
+                                                                                      RULE(.class = "electron-wechat", .isfloating = 1)
 
 // ,RULE(.class = "", .title = "Android Emulator - Pixel:5554", .isfloating = 1)
 //     ,RULE(.class = "Emulator", .isfloating = 1)
@@ -851,7 +852,7 @@ static const char *rofi_drun[] = {"/home/nextalone/.config/rofi/drun", NULL};
 static const char *rofi_calc[] = {"/home/nextalone/.config/rofi/calc", NULL};
 static const char *rofi_power[] = {"/home/nextalone/.config/rofi/power", NULL};
 static const char *flameshot[] = {"flameshot", "gui", NULL};
-static const char *telegram[] = {"telegram-desktop", NULL};
+static const char *telegram[] = {"64gram-desktop", NULL};
 static const char *lock[] = {"slock", NULL};
 static const char *screen_recorder[] = {"simplescreenrecorder", NULL};
 static const char *chrome[] = {"google-chrome-stable", NULL};
