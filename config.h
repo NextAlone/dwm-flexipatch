@@ -6,11 +6,14 @@ static const unsigned int borderpx = 1; /* border pixel of windows */
 static const int corner_radius = 12;
 #else
 static const unsigned int borderpx = 1; /* border pixel of windows */
-#endif                              // ROUNDED_CORNERS_PATCH
+#endif                               // ROUNDED_CORNERS_PATCH
 static const unsigned int snap = 12; /* snap pixel */
 #if SWALLOW_PATCH
 static const int swallowfloating = 0; /* 1 means swallow floating windows by default */
 #endif                                // SWALLOW_PATCH
+#if BAR_TAGPREVIEW_PATCH
+static const int scalepreview = 4; /* Tag preview scaling */
+#endif                             // BAR_TAGPREVIEW_PATCH
 #if NO_MOD_BUTTONS_PATCH
 static int nomodbuttons = 1; /* allow client mouse button bindings that have no modifier */
 #endif                       // NO_MOD_BUTTONS_PATCH
@@ -19,8 +22,8 @@ static const unsigned int gappih = 12; /* horiz inner gap between windows */
 static const unsigned int gappiv = 12; /* vert inner gap between windows */
 static const unsigned int gappoh = 12; /* horiz outer gap between windows and screen edge */
 static const unsigned int gappov = 12; /* vert outer gap between windows and screen edge */
-static const int smartgaps_fact = 1;  /* gap factor when there is only one client; 0 = no gaps, 3 = 3x outer gaps */
-#endif                                // VANITYGAPS_PATCH
+static const int smartgaps_fact = 1;   /* gap factor when there is only one client; 0 = no gaps, 3 = 3x outer gaps */
+#endif                                 // VANITYGAPS_PATCH
 #if AUTOSTART_PATCH
 static const char autostartblocksh[] = "autostart_blocking.sh";
 static const char autostartsh[] = "autostart.sh";
@@ -50,9 +53,9 @@ static const int toptab = False;         /* False means bottom tab bar */
 static const int bar_height = 26; /* 0 means derive from font, >= 1 explicit height */
 #endif                            // BAR_HEIGHT_PATCH
 #if BAR_PADDING_PATCH
-static const int vertpad = 8; /* vertical padding of bar */
+static const int vertpad = 8;  /* vertical padding of bar */
 static const int sidepad = 12; /* horizontal padding of bar */
-#endif                        // BAR_PADDING_PATCH
+#endif                         // BAR_PADDING_PATCH
 #if BAR_WINICON_PATCH
 #define ICONSIZE    20 /* icon size */
 #define ICONSPACING 5  /* space between icon and title */
@@ -97,11 +100,27 @@ static const char etagf[] = "[%s]";    /* format of an empty tag */
 static const int lcaselbl = 0;         /* 1 means make tag label lowercase */
 #endif                                 // BAR_TAGLABELS_PATCH
 #if BAR_UNDERLINETAGS_PATCH
-static const unsigned int ulinepad = 5;         /* horizontal padding between the underline and tag */
-static const unsigned int ulinestroke  = 2;     /* thickness / height of the underline */
-static const unsigned int ulinevoffset = 0;     /* how far above the bottom of the bar the line should appear */
-static const int ulineall = 0;                  /* 1 to show underline on all tags, 0 for just the active ones */
-#endif // BAR_UNDERLINETAGS_PATCH
+static const unsigned int ulinepad = 5;     /* horizontal padding between the underline and tag */
+static const unsigned int ulinestroke = 2;  /* thickness / height of the underline */
+static const unsigned int ulinevoffset = 0; /* how far above the bottom of the bar the line should appear */
+static const int ulineall = 0;              /* 1 to show underline on all tags, 0 for just the active ones */
+#endif                                      // BAR_UNDERLINETAGS_PATCH
+
+#if NAMETAG_PATCH
+#if NAMETAG_PREPEND_PATCH
+/* The format in which the tag is written when named. E.g. %d: %.12s will write the tag number
+ * followed the first 12 characters of the given string. You can also just use "%d: %s" here. */
+#define NAMETAG_FORMAT "%d: %.12s"
+#else
+#define NAMETAG_FORMAT "%s"
+#endif // NAMETAG_PREPEND_PATCH
+/* The maximum amount of bytes reserved for each tag text. */
+#define MAX_TAGLEN 16
+/* The command to run (via popen). This can be tailored by adding a prompt, passing other command
+ * line arguments or providing name options. Optionally you can use other dmenu like alternatives
+ * like rofi -dmenu. */
+#define NAMETAG_COMMAND "dmenu < /dev/null"
+#endif // NAMETAG_PATCH
 
 /* Indicators: see patch/bar_indicators.h for options */
 static int tagindicatortype = INDICATOR_BOTTOM_BAR;
@@ -201,15 +220,15 @@ static char col_cyan[] = "#449dab";
 static char col_br_cyan[] = "#0db9d7";
 
 #if RENAMED_SCRATCHPADS_PATCH
-static char scratchselfgcolor[]          = "#FFF7D4";
-static char scratchselbgcolor[]          = "#77547E";
-static char scratchselbordercolor[]      = "#894B9F";
-static char scratchselfloatcolor[]       = "#894B9F";
+static char scratchselfgcolor[] = "#FFF7D4";
+static char scratchselbgcolor[] = "#77547E";
+static char scratchselbordercolor[] = "#894B9F";
+static char scratchselfloatcolor[] = "#894B9F";
 
-static char scratchnormfgcolor[]         = "#FFF7D4";
-static char scratchnormbgcolor[]         = "#664C67";
-static char scratchnormbordercolor[]     = "#77547E";
-static char scratchnormfloatcolor[]      = "#77547E";
+static char scratchnormfgcolor[] = "#FFF7D4";
+static char scratchnormbgcolor[] = "#664C67";
+static char scratchnormbordercolor[] = "#77547E";
+static char scratchnormfloatcolor[] = "#77547E";
 #endif // RENAMED_SCRATCHPADS_PATCH
 
 #if BAR_FLEXWINTITLE_PATCH
@@ -263,8 +282,7 @@ static const unsigned int alphas[][3] = {
     [SchemeTag6] = {OPAQUE, baralpha, borderalpha},         [SchemeTag7] = {OPAQUE, baralpha, borderalpha},
     [SchemeTag8] = {OPAQUE, baralpha, borderalpha},         [SchemeTag9] = {OPAQUE, baralpha, borderalpha},
 #if RENAMED_SCRATCHPADS_PATCH
-    [SchemeScratchSel]  = { OPAQUE, baralpha, borderalpha },
-    [SchemeScratchNorm] = { OPAQUE, baralpha, borderalpha },
+    [SchemeScratchSel] = {OPAQUE, baralpha, borderalpha},   [SchemeScratchNorm] = {OPAQUE, baralpha, borderalpha},
 #endif // RENAMED_SCRATCHPADS_PATCH
 #if BAR_FLEXWINTITLE_PATCH
     [SchemeFlexActTTB] = {OPAQUE, baralpha, borderalpha},   [SchemeFlexActLTR] = {OPAQUE, baralpha, borderalpha},
@@ -421,11 +439,16 @@ static Sp scratchpads[] = {
  * until it an icon matches. Similarly if there are two tag icons then it would alternate between
  * them. This works seamlessly with alternative tags and alttagsdecoration patches.
  */
-static char *tagicons[][NUMTAGS] = {
-    [DEFAULT_TAGS] = {"󰊠", "󰟍", "󱂚", "󰨞", "󰈐", "󰎆", "󰇮", "󰸼", "󰒓"},
-    [ALTERNATIVE_TAGS] = {"A", "B", "C", "D", "E", "F", "G", "H", "I"},
-    [ALT_TAGS_DECORATION] = {"<1>", "<2>", "<3>", "<4>", "<5>", "<6>", "<7>", "<8>", "<9>"},
-};
+#if NAMETAG_PATCH
+static char tagicons[][NUMTAGS][MAX_TAGLEN] =
+#else
+static char *tagicons[][NUMTAGS] =
+#endif // NAMETAG_PATCH
+    {
+        [DEFAULT_TAGS] = {"󰊠", "󰟍", "󱂚", "󰨞", "󰈐", "󰎆", "󰇮", "󰸼", "󰒓"},
+        [ALTERNATIVE_TAGS] = {"A", "B", "C", "D", "E", "F", "G", "H", "I"},
+        [ALT_TAGS_DECORATION] = {"<1>", "<2>", "<3>", "<4>", "<5>", "<6>", "<7>", "<8>", "<9>"},
+    };
 
 #if BAR_TAGGRID_PATCH
 /* grid of tags */
@@ -467,35 +490,24 @@ static const Rule rules[] = {
      *	_NET_WM_WINDOW_TYPE(ATOM) = wintype
      */
     // Jetbrains family
-    RULE(.wintype = WTYPE "DIALOG", .isfloating = 1 /*, .iscentered = 1*/)
-        RULE(.wintype = WTYPE "UTILITY", .isfloating = 1)
-            RULE(.wintype = WTYPE "TOOLBAR", .isfloating = 1)
-                RULE(.wintype = WTYPE "SPLASH", .isfloating = 1)
-                    RULE(.class = "TelegramDesktop", .isfloating = 1)
-                        RULE(.class = "Wine", .isfloating = 1)
-                            RULE(.class = "SimpleScreenRecorder", .isfloating = 1)
-                                RULE(.class = "fcitx5-config-qt", .isfloating = 1 /*, .iscentered = 1*/)
-                                    RULE(.class = "GParted", .isfloating = 1)
-                                        RULE(.class = "Steam", .isfloating = 0 /*, .iscentered = 1*/)
-                                            RULE(.class = "Lxpolkit", .isfloating = 1 /*, .iscentered = 1*/)
-                                                RULE(.class = "SimpleScreenRecorder", .isfloating = 1)
-                                                    RULE(.class = "64Gram", .isfloating = 1)
-                                                        RULE(.class = "Xdg-desktop-portal-gtk", .title = "Choose Files", .isfloating = 1)
-                                                            RULE(.class = "Nm-connection-editor", .isfloating = 1)
-                                                                RULE(.class = "\345\276\256\344\277\241", .isfloating = 1)
-                                                                    RULE(.class = "flameshot", .title = "Configuration", .isfloating = 1)
-                                                                        RULE(.class = "Steam", .isfloating = 0)
-                                                                            RULE(.class = "Pinentry-gtk-2", .isfloating = 1)
-                                                                                RULE(.class = "weixin", .isfloating = 1)
-                                                                                    RULE(.class = "wemeetapp", .isfloating = 1)
-                                                                                      RULE(.class = "electron-wechat", .isfloating = 1)
+    RULE(.wintype = WTYPE "DIALOG", .isfloating = 1 /*, .iscentered = 1*/) RULE(.wintype = WTYPE "UTILITY", .isfloating = 1)
+        RULE(.wintype = WTYPE "TOOLBAR", .isfloating = 1) RULE(.wintype = WTYPE "SPLASH", .isfloating = 1)
+            RULE(.class = "TelegramDesktop", .isfloating = 1) RULE(.class = "Wine", .isfloating = 1)
+                RULE(.class = "SimpleScreenRecorder", .isfloating = 1) RULE(.class = "fcitx5-config-qt", .isfloating = 1 /*, .iscentered = 1*/)
+                    RULE(.class = "GParted", .isfloating = 1) RULE(.class = "Steam", .isfloating = 0 /*, .iscentered = 1*/)
+                        RULE(.class = "Lxpolkit", .isfloating = 1 /*, .iscentered = 1*/) RULE(.class = "SimpleScreenRecorder", .isfloating = 1)
+                            RULE(.class = "64Gram", .isfloating = 1) RULE(.class = "Xdg-desktop-portal-gtk", .title = "Choose Files", .isfloating = 1)
+                                RULE(.class = "Nm-connection-editor", .isfloating = 1) RULE(.class = "\345\276\256\344\277\241", .isfloating = 1)
+                                    RULE(.class = "flameshot", .title = "Configuration", .isfloating = 1) RULE(.class = "Steam", .isfloating = 0)
+                                        RULE(.class = "Pinentry-gtk-2", .isfloating = 1) RULE(.class = "weixin", .isfloating = 1)
+                                            RULE(.class = "wemeetapp", .isfloating = 1) RULE(.class = "electron-wechat", .isfloating = 1)
 
 // ,RULE(.class = "", .title = "Android Emulator - Pixel:5554", .isfloating = 1)
 //     ,RULE(.class = "Emulator", .isfloating = 1)
 #if RENAMED_SCRATCHPADS_PATCH
-                                                                                        RULE(.instance = "spterm", .scratchkey = 's', .isfloating = 1)
+                                                RULE(.instance = "spterm", .scratchkey = 's', .isfloating = 1)
 #elif SCRATCHPADS_PATCH
-                                                                                        RULE(.instance = "spterm", .tags = SPTAG(0), .isfloating = 1)
+                                                RULE(.instance = "spterm", .tags = SPTAG(0), .isfloating = 1)
 #endif // SCRATCHPADS_PATCH
 };
 
@@ -554,7 +566,7 @@ static const BarRule barrules[] = {
     {-1, 0, BAR_ALIGN_LEFT, width_taggrid, draw_taggrid, click_taggrid, "taggrid"},
 #endif // BAR_TAGGRID_PATCH
 #if BAR_SYSTRAY_PATCH
-    {'A', 0, BAR_ALIGN_RIGHT, width_systray, draw_systray, click_systray, "systray"},
+    {0, 0, BAR_ALIGN_RIGHT, width_systray, draw_systray, click_systray, "systray"},
 #endif // BAR_SYSTRAY_PATCH
 #if BAR_LTSYMBOL_PATCH
     {-1, 0, BAR_ALIGN_LEFT, width_ltsymbol, draw_ltsymbol, click_ltsymbol, "layout"},
@@ -825,14 +837,7 @@ static const char *xkb_layouts[] = {
   }
 
 /* commands */
-#if !NODMENU_PATCH
-static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-#endif                         // NODMENU_PATCH
 static const char *dmenucmd[] = {"dmenu_run",
-#if !NODMENU_PATCH
-                                 "-m",
-                                 dmenumon,
-#endif // NODMENU_PATCH
                                  "-fn",
                                  dmenufont,
                                  "-nb",
@@ -879,14 +884,14 @@ static const char *statuscmd[] = {"/bin/sh", "-c", NULL, NULL};
 
 #if ON_EMPTY_KEYS_PATCH
 static const char *firefoxcmd[] = {"firefox", NULL};
-static Key on_empty_keys[] = {
+static const Key on_empty_keys[] = {
     /* modifier key            function                argument */
     {0, XK_f, spawn, {.v = firefoxcmd}},
 };
 #endif // ON_EMPTY_KEYS_PATCH
 
 #include <X11/XF86keysym.h>
-static Key keys[] = {
+static const Key keys[] = {
     /* modifier                     key            function                argument */
     {0, XF86XK_MonBrightnessUp, spawn, {.v = brightness_up}},
     {0, XF86XK_MonBrightnessDown, spawn, {.v = brightness_down}},
@@ -1023,6 +1028,14 @@ static Key keys[] = {
     {M | A | S, XK_0, defaultgaps, {0}},
 #endif // VANITYGAPS_PATCH
     {M, XK_Tab, view, {0}},
+#if SHIFTTAG_PATCH
+    {M | S, XK_Left, shifttag, {.i = -1}},  // note keybinding conflict with focusadjacenttag tagtoleft
+    {M | S, XK_Right, shifttag, {.i = +1}}, // note keybinding conflict with focusadjacenttag tagtoright
+#endif                                      // SHIFTTAG_PATCH
+#if SHIFTTAGCLIENTS_PATCH
+    {M | S | C, XK_Left, shifttagclients, {.i = -1}},
+    {M | S | C, XK_Right, shifttagclients, {.i = +1}},
+#endif // SHIFTTAGCLIENTS_PATCH
 #if SHIFTVIEW_PATCH
     {M | S, XK_Tab, shiftview, {.i = -1}},
     {M | S, XK_backslash, shiftview, {.i = +1}},
@@ -1031,6 +1044,14 @@ static Key keys[] = {
     {M | A, XK_Tab, shiftviewclients, {.i = -1}},
     {M | A, XK_backslash, shiftviewclients, {.i = +1}},
 #endif // SHIFTVIEW_CLIENTS_PATCH
+#if SHIFTBOTH_PATCH
+    {M | C, XK_Left, shiftboth, {.i = -1}},  // note keybinding conflict with focusadjacenttag tagandviewtoleft
+    {M | C, XK_Right, shiftboth, {.i = +1}}, // note keybinding conflict with focusadjacenttag tagandviewtoright
+#endif                                       // SHIFTBOTH_PATCH
+#if SHIFTSWAPTAGS_PATCH && SWAPTAGS_PATCH
+    {M | A | S, XK_Left, shiftswaptags, {.i = -1}},
+    {M | A | S, XK_Right, shiftswaptags, {.i = +1}},
+#endif // SHIFTSWAPTAGS_PATCH
 #if BAR_WINTITLEACTIONS_PATCH
     {M | C, XK_z, showhideclient, {0}},
 #endif // BAR_WINTITLEACTIONS_PATCH
@@ -1127,10 +1148,10 @@ static Key keys[] = {
     {M | S, XK_comma, tagmon, {.i = -1}},
     {M | S, XK_period, tagmon, {.i = +1}},
 #if FOCUSADJACENTTAG_PATCH
-    {M, XK_Left, viewtoleft, {0}},   // note keybinding conflict with focusdir
-    {M, XK_Right, viewtoright, {0}}, // note keybinding conflict with focusdir
-    {M | S, XK_Left, tagtoleft, {0}},
-    {M | S, XK_Right, tagtoright, {0}},
+    {M, XK_Left, viewtoleft, {0}},      // note keybinding conflict with focusdir
+    {M, XK_Right, viewtoright, {0}},    // note keybinding conflict with focusdir
+    {M | S, XK_Left, tagtoleft, {0}},   // note keybinding conflict with shifttag
+    {M | S, XK_Right, tagtoright, {0}}, // note keybinding conflict with shifttag
     {M | C, XK_Left, tagandviewtoleft, {0}},
     {M | C, XK_Right, tagandviewtoright, {0}},
 #endif // FOCUSADJACENTTAG_PATCH
@@ -1165,6 +1186,9 @@ static Key keys[] = {
 #if BAR_ALTERNATIVE_TAGS_PATCH
     {M, XK_n, togglealttag, {0}},
 #endif // BAR_ALTERNATIVE_TAGS_PATCH
+#if NAMETAG_PATCH
+    {M | S, XK_n, nametag, {0}},
+#endif // NAMETAG_PATCH
 #if BAR_TAGGRID_PATCH
     {M | C, XK_Up, switchtag, {.ui = SWITCHTAG_UP | SWITCHTAG_VIEW}},
     {M | C, XK_Down, switchtag, {.ui = SWITCHTAG_DOWN | SWITCHTAG_VIEW}},
@@ -1274,14 +1298,14 @@ static Key keys[] = {
         TAGKEYS(XK_9, 8)};
 
 #if KEYMODES_PATCH
-static Key cmdkeys[] = {
+static const Key cmdkeys[] = {
     /* modifier                    keys                     function         argument */
     {0, XK_Escape, clearcmd, {0}},
     {C, XK_c, clearcmd, {0}},
     {0, XK_i, setkeymode, {.ui = INSERTMODE}},
 };
 
-static Command commands[] = {
+static const Command commands[] = {
     /* modifier (4 keys)                          keysyms (4 keys)                                function         argument */
     {{C, S, 0, 0}, {XK_w, XK_h, 0, 0}, setlayout, {.v = &layouts[0]}},
     {{C, 0, 0, 0}, {XK_w, XK_o, 0, 0}, setlayout, {.v = &layouts[2]}},
@@ -1305,7 +1329,7 @@ static Command commands[] = {
 #else
 /* click can be ClkTagBar, ClkLtSymbol, ClkStatusText, ClkWinTitle, ClkClientWin, or ClkRootWin */
 #endif //
-static Button buttons[] = {
+static const Button buttons[] = {
 /* click                event mask           button          function        argument */
 #if BAR_STATUSBUTTON_PATCH
     {ClkButton, 0, Button1, spawn, {.v = rofi_drun}},
@@ -1385,6 +1409,9 @@ static Signal signals[] = {
 #if STACKER_PATCH
     {"pushstack", pushstack},
 #endif // STACKER_PATCH
+#if FLOATPOS_PATCH
+    {"floatpos", floatpos},
+#endif // FLOATPOS_PATCH
 #if FOCUSURGENT_PATCH
     {"focusurgent", focusurgent},
 #endif // FOCUSURGENT_PATCH
@@ -1424,6 +1451,9 @@ static Signal signals[] = {
 #if MOVEPLACE_PATCH
     {"moveplace", moveplace},
 #endif // MOVEPLACE_PATCH
+#if NAMETAG_PATCH
+    {"nametag", nametag},
+#endif // NAMETAG_PATCH
 #if EXRESIZE_PATCH
     {"explace", explace},
     {"togglehorizontalexpand", togglehorizontalexpand},
@@ -1457,12 +1487,27 @@ static Signal signals[] = {
     {"viewall", viewallex},
     {"viewex", viewex},
     {"toggleview", toggleview},
+#if BAR_WINTITLEACTIONS_PATCH
+    {"showhideclient", showhideclient},
+#endif // BAR_WINTITLEACTIONS_PATCH
+#if SHIFTBOTH_PATCH
+    {"shiftboth", shiftboth},
+#endif // SHIFTBOTH_PATCH
+#if SHIFTTAG_PATCH
+    {"shifttag", shifttag},
+#endif // SHIFTTAG_PATCH
+#if SHIFTTAGCLIENTS_PATCH
+    {"shifttagclients", shifttagclients},
+#endif // SHIFTTAGCLIENTS_PATCH
 #if SHIFTVIEW_PATCH
     {"shiftview", shiftview},
 #endif // SHIFTVIEW_PATCH
 #if SHIFTVIEW_CLIENTS_PATCH
     {"shiftviewclients", shiftviewclients},
 #endif // SHIFTVIEW_CLIENTS_PATCH
+#if SHIFTSWAPTAGS_PATCH && SWAPTAGS_PATCH
+    {"shiftswaptags", shiftswaptags},
+#endif // SHIFTSWAPTAGS_PATCH
 #if SELFRESTART_PATCH
     {"self_restart", self_restart},
 #endif // SELFRESTART_PATCH
@@ -1626,6 +1671,9 @@ static IPCCommand ipccommands[] = {
 #if MOVERESIZE_PATCH
     IPCCOMMAND(moveresize, 1, {ARG_TYPE_STR}),
 #endif // MOVERESIZE_PATCH
+#if NAMETAG_PATCH
+    IPCCOMMAND(nametag, 1, {ARG_TYPE_NONE}),
+#endif // NAMETAG_PATCH
 #if RIODRAW_PATCH
     IPCCOMMAND(rioresize, 1, {ARG_TYPE_NONE}),
 #endif // RIODRAW_PATCH
@@ -1645,12 +1693,27 @@ static IPCCommand ipccommands[] = {
 #if SETBORDERPX_PATCH
     IPCCOMMAND(setborderpx, 1, {ARG_TYPE_SINT}),
 #endif // SETBORDERPX_PATCH
+#if BAR_WINTITLEACTIONS_PATCH
+    IPCCOMMAND(showhideclient, 1, {ARG_TYPE_NONE}),
+#endif // BAR_WINTITLEACTIONS_PATCH
+#if SHIFTBOTH_PATCH
+    IPCCOMMAND(shiftboth, 1, {ARG_TYPE_SINT}),
+#endif // SHIFTBOTH_PATCH
+#if SHIFTTAG_PATCH
+    IPCCOMMAND(shifttag, 1, {ARG_TYPE_SINT}),
+#endif // SHIFTTAG_PATCH
+#if SHIFTTAGCLIENTS_PATCH
+    IPCCOMMAND(shifttagclients, 1, {ARG_TYPE_SINT}),
+#endif // SHIFTVIEWCLIENTS_PATCH
 #if SHIFTVIEW_PATCH
     IPCCOMMAND(shiftview, 1, {ARG_TYPE_SINT}),
 #endif // SHIFTVIEW_PATCH
 #if SHIFTVIEW_CLIENTS_PATCH
     IPCCOMMAND(shiftviewclients, 1, {ARG_TYPE_SINT}),
 #endif // SHIFTVIEW_CLIENTS_PATCH
+#if SHIFTSWAPTAGS_PATCH && SWAPTAGS_PATCH
+    IPCCOMMAND(shiftswaptags, 1, {ARG_TYPE_SINT}),
+#endif // SHIFTSWAPTAGS_PATCH
 #if STACKER_PATCH
     IPCCOMMAND(pushstack, 1, {ARG_TYPE_SINT}),
 #endif // STACKER_PATCH
