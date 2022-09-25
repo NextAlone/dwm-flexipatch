@@ -445,7 +445,7 @@
 * This patch interferes with the center transient windows patches.
 * https://dwm.suckless.org/patches/alwayscenter/
  */
-#define ALWAYSCENTER_PATCH 1
+#define ALWAYSCENTER_PATCH 0
 
 /* This patch allows windows to be resized with its aspect ratio remaining constant.
 * https://dwm.suckless.org/patches/aspectresize/
@@ -518,7 +518,7 @@
 * adding wintype as a client rule filter, hence this no longer works out of the box. This
 * patch restores previous behaviour with the center patch.
  */
-#define CENTER_TRANSIENT_WINDOWS_PATCH 0
+#define CENTER_TRANSIENT_WINDOWS_PATCH 1
 
 /* As above, except that the transient window is centered within the position of the parent
 * window, rather than at the center of the screen. This takes precedence over the above patch.
@@ -719,7 +719,7 @@
 /* This patch adds a keybinding to kills all visible clients that are not selected.
 * https://dwm.suckless.org/patches/killunsel/
  */
-#define KILLUNSEL_PATCH 0
+#define KILLUNSEL_PATCH 1
 
 /* This changes the window manager name to LG3d instead of dwm as a workaround for Java
 * applications that assume that the window manager is using window reparenting.
@@ -851,7 +851,7 @@
 #define ON_EMPTY_KEYS_PATCH 0
 
 /* Minor patch that prevents more than one rule being matched for a given client. */
-#define ONLY_ONE_RULE_MATCH_PATCH 0
+#define ONLY_ONE_RULE_MATCH_PATCH 1
 
 /* This patch makes it so dwm will only exit via quit() if no windows are open.
 * This is to prevent you accidentally losing all your work.
