@@ -1255,6 +1255,10 @@ cleanup(void)
 	Layout foo = { "", NULL };
 	size_t i;
 
+	#if ALT_TAB_PATCH
+	alttabend();
+	#endif // ALT_TAB_PATCH
+
 	#if SEAMLESS_RESTART_PATCH
 	for (m = mons; m; m = m->next)
 		persistmonitorstate(m);
