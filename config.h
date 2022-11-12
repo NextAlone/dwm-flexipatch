@@ -863,8 +863,8 @@ static const char *telegram[] = {"env", "QT_QPA_PLATFORMTHEME=gtk3", "64gram-des
 static const char *lock[] = {"slock", NULL};
 static const char *screen_recorder[] = {"simplescreenrecorder", NULL};
 static const char *chrome[] = {"google-chrome-stable", NULL};
-static const char *volume_up[] = {"pactl", "set-sink-volume", "@DEFAULT_SINK@", "+5%", NULL};
-static const char *volume_down[] = {"pactl", "set-sink-volume", "@DEFAULT_SINK@", "-5%", NULL};
+static const char *volume_up[] = {"pactl", "set-sink-volume", "@DEFAULT_SINK@", "+1%", NULL};
+static const char *volume_down[] = {"pactl", "set-sink-volume", "@DEFAULT_SINK@", "-1%", NULL};
 static const char *volume_mute[] = {"pactl", "set-sink-mute", "@DEFAULT_SINK@", "toggle", NULL};
 static const char *brightness_up[] = {"brightnessctl", "set", "+5%", NULL};
 static const char *brightness_down[] = {"brightnessctl", "set", "5%-", NULL};
