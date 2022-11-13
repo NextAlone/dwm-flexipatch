@@ -503,6 +503,7 @@ static const Rule rules[] = {
                                             RULE(.class = "wemeetapp", .isfloating = 1) RULE(.class = "electron-wechat", .isfloating = 1)
                                                 RULE(.class = "Lxsession-default-apps", .isfloating = 1)
                                                     RULE(.class = "Lxappearance", .isfloating = 1)
+                                                        RULE(.class = "Blueman-manager", .isfloating = 1)
 
 // ,RULE(.class = "", .title = "Android Emulator - Pixel:5554", .isfloating = 1)
 //     ,RULE(.class = "Emulator", .isfloating = 1)
