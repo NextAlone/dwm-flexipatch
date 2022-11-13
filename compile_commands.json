@@ -1,6 +1,6 @@
 [
  {
-  "directory": "/home/nextalone/Documents/Repos/Cpp/dwm",
+  "directory": "/home/nextalone/Repos/Cpp/dwm",
   "arguments": [
    "cc",
    "-c",
@@ -21,7 +21,7 @@
   "file": "drw.c"
  },
  {
-  "directory": "/home/nextalone/Documents/Repos/Cpp/dwm",
+  "directory": "/home/nextalone/Repos/Cpp/dwm",
   "arguments": [
    "cc",
    "-c",
@@ -42,7 +42,7 @@
   "file": "dwm.c"
  },
  {
-  "directory": "/home/nextalone/Documents/Repos/Cpp/dwm",
+  "directory": "/home/nextalone/Repos/Cpp/dwm",
   "arguments": [
    "cc",
    "-c",
