@@ -1057,7 +1057,7 @@ static const Key keys[] = {
     {ModKey | Super | Shift, XK_0, defaultgaps, {0}},
 #endif // VANITYGAPS_PATCH
 #if ALT_TAB_PATCH
-    {Mod1Mask, XK_Tab, alttabstart, {0}},
+    {ModKey, XK_Tab, alttabstart, {0}},
 #else
     {ModKey, XK_Tab, view, {0}},
 #endif // ALT_TAB_PATCH
