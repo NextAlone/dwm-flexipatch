@@ -166,8 +166,6 @@ static char c000000[] = "#000000"; // placeholder value
 
 #include "onedark.h"
 
-#if BAR_FLEXWINTITLE_PATCH
-#endif // BAR_FLEXWINTITLE_PATCH
 static char normfgcolor[] = "#bbbbbb";
 static char normbgcolor[] = "#222222";
 static char normbordercolor[] = "#444444";
@@ -795,26 +793,26 @@ static const char *xkb_layouts[] = {
 #endif // XKB_PATCH
 
 /* key definitions */
-#define Super   Mod4Mask
-#define ModKey  Mod1Mask
+#define ModKey  Mod4Mask
+#define Alt     Mod1Mask
 #define Shift   ShiftMask
 #define Control ControlMask
 #if COMBO_PATCH && SWAPTAGS_PATCH && TAGOTHERMONITOR_PATCH
 #define TAGKEYS(KEY, TAG)                                                                                              \
   {ModKey, KEY, comboview, {.ui = 1 << TAG}}, {ModKey | Control, KEY, toggleview, {.ui = 1 << TAG}},                   \
       {ModKey | Shift, KEY, combotag, {.ui = 1 << TAG}}, {ModKey | Control | Shift, KEY, toggletag, {.ui = 1 << TAG}}, \
-      {ModKey | Super | Shift, KEY, swaptags, {.ui = 1 << TAG}}, {ModKey | Super, KEY, tagnextmon, {.ui = 1 << TAG}},  \
-      {ModKey | Super | Control, KEY, tagprevmon, {.ui = 1 << TAG}},
+      {ModKey | Alt | Shift, KEY, swaptags, {.ui = 1 << TAG}}, {ModKey | Alt, KEY, tagnextmon, {.ui = 1 << TAG}},      \
+      {ModKey | Alt | Control, KEY, tagprevmon, {.ui = 1 << TAG}},
 #elif COMBO_PATCH && SWAPTAGS_PATCH
 #define TAGKEYS(KEY, TAG)                                                                                              \
   {ModKey, KEY, comboview, {.ui = 1 << TAG}}, {ModKey | Control, KEY, toggleview, {.ui = 1 << TAG}},                   \
       {ModKey | Shift, KEY, combotag, {.ui = 1 << TAG}}, {ModKey | Control | Shift, KEY, toggletag, {.ui = 1 << TAG}}, \
-      {ModKey | Super | Shift, KEY, swaptags, {.ui = 1 << TAG}},
+      {ModKey | Alt | Shift, KEY, swaptags, {.ui = 1 << TAG}},
 #elif COMBO_PATCH && TAGOTHERMONITOR_PATCH
 #define TAGKEYS(KEY, TAG)                                                                                              \
   {ModKey, KEY, comboview, {.ui = 1 << TAG}}, {ModKey | Control, KEY, toggleview, {.ui = 1 << TAG}},                   \
       {ModKey | Shift, KEY, combotag, {.ui = 1 << TAG}}, {ModKey | Control | Shift, KEY, toggletag, {.ui = 1 << TAG}}, \
-      {ModKey | Super, KEY, tagnextmon, {.ui = 1 << TAG}}, {ModKey | Super | Control, KEY, tagprevmon, {.ui = 1 << TAG}},
+      {ModKey | Alt, KEY, tagnextmon, {.ui = 1 << TAG}}, {ModKey | Alt | Control, KEY, tagprevmon, {.ui = 1 << TAG}},
 #elif COMBO_PATCH
 #define TAGKEYS(KEY, TAG)                                                                            \
   {ModKey, KEY, comboview, {.ui = 1 << TAG}}, {ModKey | Control, KEY, toggleview, {.ui = 1 << TAG}}, \
@@ -822,19 +820,19 @@ static const char *xkb_layouts[] = {
 #elif SWAPTAGS_PATCH && TAGOTHERMONITOR_PATCH
 #define TAGKEYS(KEY, TAG)                                                                                                                     \
   {ModKey, KEY, view, {.ui = 1 << TAG}}, {ModKey | Control, KEY, toggleview, {.ui = 1 << TAG}}, {ModKey | Shift, KEY, tag, {.ui = 1 << TAG}}, \
-      {ModKey | Control | Shift, KEY, toggletag, {.ui = 1 << TAG}}, {ModKey | Super | Shift, KEY, swaptags, {.ui = 1 << TAG}},                \
-      {ModKey | Super, KEY, tagnextmon, {.ui = 1 << TAG}}, {ModKey | Super | Control, KEY, tagprevmon, {.ui = 1 << TAG}},
+      {ModKey | Control | Shift, KEY, toggletag, {.ui = 1 << TAG}}, {ModKey | Alt | Shift, KEY, swaptags, {.ui = 1 << TAG}},                  \
+      {ModKey | Alt, KEY, tagnextmon, {.ui = 1 << TAG}}, {ModKey | Alt | Control, KEY, tagprevmon, {.ui = 1 << TAG}},
 #elif SWAPTAGS_PATCH
 #define TAGKEYS(KEY, TAG)                                                                                                                     \
   {ModKey, KEY, view, {.ui = 1 << TAG}}, {ModKey | Control, KEY, toggleview, {.ui = 1 << TAG}}, {ModKey | Shift, KEY, tag, {.ui = 1 << TAG}}, \
       {ModKey | Control | Shift, KEY,                                                                                                         \
        toggletag,                                                                                    \{.ui = 1 << TAG}},                      \
-      {ModKey | Super | Shift, KEY, swaptags, {.ui = 1 << TAG}},
+      {ModKey | Alt | Shift, KEY, swaptags, {.ui = 1 << TAG}},
 #elif TAGOTHERMONITOR_PATCH
 #define TAGKEYS(KEY, TAG)                                                                                                                     \
   {ModKey, KEY, view, {.ui = 1 << TAG}}, {ModKey | Control, KEY, toggleview, {.ui = 1 << TAG}}, {ModKey | Shift, KEY, tag, {.ui = 1 << TAG}}, \
-      {ModKey | Control | Shift, KEY, toggletag, {.ui = 1 << TAG}}, {ModKey | Super, KEY, tagnextmon, {.ui = 1 << TAG}},                      \
-      {ModKey | Super | Control, KEY, tagprevmon, {.ui = 1 << TAG}},
+      {ModKey | Control | Shift, KEY, toggletag, {.ui = 1 << TAG}}, {ModKey | Alt, KEY, tagnextmon, {.ui = 1 << TAG}},                        \
+      {ModKey | Alt | Control, KEY, tagprevmon, {.ui = 1 << TAG}},
 #else
 #define TAGKEYS(KEY, TAG)                                                                                                                     \
   {ModKey, KEY, view, {.ui = 1 << TAG}}, {ModKey | Control, KEY, toggleview, {.ui = 1 << TAG}}, {ModKey | Shift, KEY, tag, {.ui = 1 << TAG}}, \
@@ -931,9 +929,9 @@ static const Key keys[] = {
     {0, XF86XK_Calculator, spawn, {.v = lock}},
     {ModKey, XK_Print, spawn, SHCMD("maim -u | xclip -selection clipboard -t image/png")},
     {0, XK_Print, spawn, SHCMD("maim -b 2 -s -B -u | xclip -selection clipboard -t image/png")},
-    {Super, XK_Print, spawn, {.v = flameshot}},
-    // {Control | Super, XK_a, spawn, SHCMD("maim -b 2 -s -B -u | xclip -selection clipboard -t image/png")},
-    {Control | Super, XK_a, spawn, {.v = flameshot}},
+    {Alt, XK_Print, spawn, {.v = flameshot}},
+    // {Control | Alt, XK_a, spawn, SHCMD("maim -b 2 -s -B -u | xclip -selection clipboard -t image/png")},
+    {Control | Alt, XK_a, spawn, {.v = flameshot}},
     {Control, XK_Print, spawn, SHCMD("maim -b 2 -B -s -u | tesseract stdin stdout -l eng+jpn | xsel --clipboard --input")},
     {Shift, XK_Print, spawn, {.v = screen_recorder}},
     {ModKey, XK_w, spawn, {.v = chrome}},
@@ -978,14 +976,14 @@ static const Key keys[] = {
     {ModKey, XK_v, switchcol, {0}},
 #endif // SWITCHCOL_PATCH
 #if ROTATESTACK_PATCH
-    {ModKey | Super, XK_j, rotatestack, {.i = +1}},
-    {ModKey | Super, XK_k, rotatestack, {.i = -1}},
+    {ModKey | Alt, XK_j, rotatestack, {.i = +1}},
+    {ModKey | Alt, XK_k, rotatestack, {.i = -1}},
 #endif // ROTATESTACK_PATCH
 #if INPLACEROTATE_PATCH
-    {ModKey | Super, XK_j, inplacerotate, {.i = +2}}, // same as rotatestack
-    {ModKey | Super, XK_k, inplacerotate, {.i = -2}}, // same as reotatestack
-    {ModKey | Super | Shift, XK_j, inplacerotate, {.i = +1}},
-    {ModKey | Super | Shift, XK_k, inplacerotate, {.i = -1}},
+    {ModKey | Alt, XK_j, inplacerotate, {.i = +2}}, // same as rotatestack
+    {ModKey | Alt, XK_k, inplacerotate, {.i = -2}}, // same as reotatestack
+    {ModKey | Alt | Shift, XK_j, inplacerotate, {.i = +1}},
+    {ModKey | Alt | Shift, XK_k, inplacerotate, {.i = -1}},
 #endif // INPLACEROTATE_PATCH
 #if PUSH_PATCH || PUSH_NO_MASTER_PATCH
     {ModKey | Control, XK_j, pushdown, {0}},
@@ -1009,14 +1007,14 @@ static const Key keys[] = {
     {ModKey | Control | Shift, XK_r, aspectresize, {.i = -24}},
 #endif // ASPECTRESIZE_PATCH
 #if MOVERESIZE_PATCH
-    {ModKey | Super, XK_Down, moveresize, {.v = "0x 25y 0w 0h"}},
-    {ModKey | Super, XK_Up, moveresize, {.v = "0x -25y 0w 0h"}},
-    {ModKey | Super, XK_Right, moveresize, {.v = "25x 0y 0w 0h"}},
-    {ModKey | Super, XK_Left, moveresize, {.v = "-25x 0y 0w 0h"}},
-    {ModKey | Super | Shift, XK_Down, moveresize, {.v = "0x 0y 0w 25h"}},
-    {ModKey | Super | Shift, XK_Up, moveresize, {.v = "0x 0y 0w -25h"}},
-    {ModKey | Super | Shift, XK_Right, moveresize, {.v = "0x 0y 25w 0h"}},
-    {ModKey | Super | Shift, XK_Left, moveresize, {.v = "0x 0y -25w 0h"}},
+    {ModKey | Alt, XK_Down, moveresize, {.v = "0x 25y 0w 0h"}},
+    {ModKey | Alt, XK_Up, moveresize, {.v = "0x -25y 0w 0h"}},
+    {ModKey | Alt, XK_Right, moveresize, {.v = "25x 0y 0w 0h"}},
+    {ModKey | Alt, XK_Left, moveresize, {.v = "-25x 0y 0w 0h"}},
+    {ModKey | Alt | Shift, XK_Down, moveresize, {.v = "0x 0y 0w 25h"}},
+    {ModKey | Alt | Shift, XK_Up, moveresize, {.v = "0x 0y 0w -25h"}},
+    {ModKey | Alt | Shift, XK_Right, moveresize, {.v = "0x 0y 25w 0h"}},
+    {ModKey | Alt | Shift, XK_Left, moveresize, {.v = "0x 0y -25w 0h"}},
 #endif // MOVERESIZE_PATCH
 #if MOVESTACK_PATCH
     {ModKey | Shift, XK_j, movestack, {.i = +1}},
@@ -1039,22 +1037,22 @@ static const Key keys[] = {
 #endif // INSETS_PATCH
     {ModKey | Shift, XK_Return, zoom, {0}},
 #if VANITYGAPS_PATCH
-    {ModKey | Super, XK_u, incrgaps, {.i = +1}},
-    {ModKey | Super | Shift, XK_u, incrgaps, {.i = -1}},
-    {ModKey | Super, XK_i, incrigaps, {.i = +1}},
-    {ModKey | Super | Shift, XK_i, incrigaps, {.i = -1}},
-    {ModKey | Super, XK_o, incrogaps, {.i = +1}},
-    {ModKey | Super | Shift, XK_o, incrogaps, {.i = -1}},
-    {ModKey | Super, XK_6, incrihgaps, {.i = +1}},
-    {ModKey | Super | Shift, XK_6, incrihgaps, {.i = -1}},
-    {ModKey | Super, XK_7, incrivgaps, {.i = +1}},
-    {ModKey | Super | Shift, XK_7, incrivgaps, {.i = -1}},
-    {ModKey | Super, XK_8, incrohgaps, {.i = +1}},
-    {ModKey | Super | Shift, XK_8, incrohgaps, {.i = -1}},
-    {ModKey | Super, XK_9, incrovgaps, {.i = +1}},
-    {ModKey | Super | Shift, XK_9, incrovgaps, {.i = -1}},
-    {ModKey | Super, XK_0, togglegaps, {0}},
-    {ModKey | Super | Shift, XK_0, defaultgaps, {0}},
+    {ModKey | Alt, XK_u, incrgaps, {.i = +1}},
+    {ModKey | Alt | Shift, XK_u, incrgaps, {.i = -1}},
+    {ModKey | Alt, XK_i, incrigaps, {.i = +1}},
+    {ModKey | Alt | Shift, XK_i, incrigaps, {.i = -1}},
+    {ModKey | Alt, XK_o, incrogaps, {.i = +1}},
+    {ModKey | Alt | Shift, XK_o, incrogaps, {.i = -1}},
+    {ModKey | Alt, XK_6, incrihgaps, {.i = +1}},
+    {ModKey | Alt | Shift, XK_6, incrihgaps, {.i = -1}},
+    {ModKey | Alt, XK_7, incrivgaps, {.i = +1}},
+    {ModKey | Alt | Shift, XK_7, incrivgaps, {.i = -1}},
+    {ModKey | Alt, XK_8, incrohgaps, {.i = +1}},
+    {ModKey | Alt | Shift, XK_8, incrohgaps, {.i = -1}},
+    {ModKey | Alt, XK_9, incrovgaps, {.i = +1}},
+    {ModKey | Alt | Shift, XK_9, incrovgaps, {.i = -1}},
+    {ModKey | Alt, XK_0, togglegaps, {0}},
+    {ModKey | Alt | Shift, XK_0, defaultgaps, {0}},
 #endif // VANITYGAPS_PATCH
 #if ALT_TAB_PATCH
     {ModKey, XK_Tab, alttabstart, {0}},
@@ -1074,16 +1072,16 @@ static const Key keys[] = {
     {ModKey | Shift, XK_backslash, shiftview, {.i = +1}},
 #endif // SHIFTVIEW_PATCH
 #if SHIFTVIEW_CLIENTS_PATCH
-    {ModKey | Super, XK_Tab, shiftviewclients, {.i = -1}},
-    {ModKey | Super, XK_backslash, shiftviewclients, {.i = +1}},
+    {ModKey | Alt, XK_Tab, shiftviewclients, {.i = -1}},
+    {ModKey | Alt, XK_backslash, shiftviewclients, {.i = +1}},
 #endif // SHIFTVIEW_CLIENTS_PATCH
 #if SHIFTBOTH_PATCH
     {ModKey | Control, XK_Left, shiftboth, {.i = -1}},  // note keybinding conflict with focusadjacenttag tagandviewtoleft
     {ModKey | Control, XK_Right, shiftboth, {.i = +1}}, // note keybinding conflict with focusadjacenttag tagandviewtoright
 #endif                                                  // SHIFTBOTH_PATCH
 #if SHIFTSWAPTAGS_PATCH && SWAPTAGS_PATCH
-    {ModKey | Super | Shift, XK_Left, shiftswaptags, {.i = -1}},
-    {ModKey | Super | Shift, XK_Right, shiftswaptags, {.i = +1}},
+    {ModKey | Alt | Shift, XK_Left, shiftswaptags, {.i = -1}},
+    {ModKey | Alt | Shift, XK_Right, shiftswaptags, {.i = +1}},
 #endif // SHIFTSWAPTAGS_PATCH
 #if BAR_WINTITLEACTIONS_PATCH
     {ModKey | Control, XK_z, showhideclient, {0}},
@@ -1121,11 +1119,11 @@ static const Key keys[] = {
     {ModKey | Control, XK_t, rotatelayoutaxis, {.i = +1}},            /* flextile, 1 = layout axis */
     {ModKey | Control, XK_Tab, rotatelayoutaxis, {.i = +2}},          /* flextile, 2 = master axis */
     {ModKey | Control | Shift, XK_Tab, rotatelayoutaxis, {.i = +3}},  /* flextile, 3 = stack axis */
-    {ModKey | Control | Super, XK_Tab, rotatelayoutaxis, {.i = +4}},  /* flextile, 4 = secondary stack axis */
+    {ModKey | Control | Alt, XK_Tab, rotatelayoutaxis, {.i = +4}},    /* flextile, 4 = secondary stack axis */
     {ModKey | Mod5Mask, XK_t, rotatelayoutaxis, {.i = -1}},           /* flextile, 1 = layout axis */
     {ModKey | Mod5Mask, XK_Tab, rotatelayoutaxis, {.i = -2}},         /* flextile, 2 = master axis */
     {ModKey | Mod5Mask | Shift, XK_Tab, rotatelayoutaxis, {.i = -3}}, /* flextile, 3 = stack axis */
-    {ModKey | Mod5Mask | Super, XK_Tab, rotatelayoutaxis, {.i = -4}}, /* flextile, 4 = secondary stack axis */
+    {ModKey | Mod5Mask | Alt, XK_Tab, rotatelayoutaxis, {.i = -4}},   /* flextile, 4 = secondary stack axis */
     {ModKey | Control, XK_Return, mirrorlayout, {0}},                 /* flextile, flip master and stack areas */
 #endif                                                                // FLEXTILE_DELUXE_LAYOUT
     {ModKey, XK_space, setlayout, {0}},
@@ -1150,7 +1148,7 @@ static const Key keys[] = {
     {ModKey | Shift, XK_grave, removescratch, {.ui = 0}},
 #endif // SCRATCHPADS_PATCH | RENAMED_SCRATCHPADS_PATCH
 #if UNFLOATVISIBLE_PATCH
-    {ModKey | Super, XK_space, unfloatvisible, {0}},
+    {ModKey | Alt, XK_space, unfloatvisible, {0}},
     {ModKey | Shift, XK_t, unfloatvisible, {.v = &layouts[0]}},
 #endif // UNFLOATVISIBLE_PATCH
 #if TOGGLEFULLSCREEN_PATCH
@@ -1209,12 +1207,12 @@ static const Key keys[] = {
     {ModKey | Control, XK_F9, tagall, {.v = "9"}},
 #endif // TAGALL_PATCH
 #if TAGALLMON_PATCH
-    {ModKey | Super | Shift, XK_comma, tagallmon, {.i = +1}},
-    {ModKey | Super | Shift, XK_period, tagallmon, {.i = -1}},
+    {ModKey | Alt | Shift, XK_comma, tagallmon, {.i = +1}},
+    {ModKey | Alt | Shift, XK_period, tagallmon, {.i = -1}},
 #endif // TAGALLMON_PATCH
 #if TAGSWAPMON_PATCH
-    {ModKey | Super | Control, XK_comma, tagswapmon, {.i = +1}},
-    {ModKey | Super | Control, XK_period, tagswapmon, {.i = -1}},
+    {ModKey | Alt | Control, XK_comma, tagswapmon, {.i = +1}},
+    {ModKey | Alt | Control, XK_period, tagswapmon, {.i = -1}},
 #endif // TAGSWAPMON_PATCH
 #if BAR_ALTERNATIVE_TAGS_PATCH
     {ModKey, XK_n, togglealttag, {0}},
@@ -1227,10 +1225,10 @@ static const Key keys[] = {
     {ModKey | Control, XK_Down, switchtag, {.ui = SWITCHTAG_DOWN | SWITCHTAG_VIEW}},
     {ModKey | Control, XK_Right, switchtag, {.ui = SWITCHTAG_RIGHT | SWITCHTAG_VIEW}},
     {ModKey | Control, XK_Left, switchtag, {.ui = SWITCHTAG_LEFT | SWITCHTAG_VIEW}},
-    {ModKey | Super, XK_Up, switchtag, {.ui = SWITCHTAG_UP | SWITCHTAG_TAG | SWITCHTAG_VIEW}},
-    {ModKey | Super, XK_Down, switchtag, {.ui = SWITCHTAG_DOWN | SWITCHTAG_TAG | SWITCHTAG_VIEW}},
-    {ModKey | Super, XK_Right, switchtag, {.ui = SWITCHTAG_RIGHT | SWITCHTAG_TAG | SWITCHTAG_VIEW}},
-    {ModKey | Super, XK_Left, switchtag, {.ui = SWITCHTAG_LEFT | SWITCHTAG_TAG | SWITCHTAG_VIEW}},
+    {ModKey | Alt, XK_Up, switchtag, {.ui = SWITCHTAG_UP | SWITCHTAG_TAG | SWITCHTAG_VIEW}},
+    {ModKey | Alt, XK_Down, switchtag, {.ui = SWITCHTAG_DOWN | SWITCHTAG_TAG | SWITCHTAG_VIEW}},
+    {ModKey | Alt, XK_Right, switchtag, {.ui = SWITCHTAG_RIGHT | SWITCHTAG_TAG | SWITCHTAG_VIEW}},
+    {ModKey | Alt, XK_Left, switchtag, {.ui = SWITCHTAG_LEFT | SWITCHTAG_TAG | SWITCHTAG_VIEW}},
 #endif // BAR_TAGGRID_PATCH
 #if MOVEPLACE_PATCH
     {ModKey, XK_KP_7, moveplace, {.ui = WIN_NW}}, /* XK_KP_Home,  */
@@ -1303,16 +1301,16 @@ static const Key keys[] = {
     {Shift | Shift, XK_comma, floatpos, {.v = "  0w  26h"}},  // ↓
     {Shift | Shift, XK_period, floatpos, {.v = " 26w  26h"}}, // ↘
     /* Client is positioned in a floating grid, movement is relative to client's current position */
-    {Shift | Super, XK_u, floatpos, {.v = "-1p -1p"}},      // ↖
-    {Shift | Super, XK_i, floatpos, {.v = " 0p -1p"}},      // ↑
-    {Shift | Super, XK_o, floatpos, {.v = " 1p -1p"}},      // ↗
-    {Shift | Super, XK_j, floatpos, {.v = "-1p  0p"}},      // ←
-    {Shift | Super, XK_k, floatpos, {.v = " 0p  0p"}},      // ·
-    {Shift | Super, XK_l, floatpos, {.v = " 1p  0p"}},      // →
-    {Shift | Super, XK_m, floatpos, {.v = "-1p  1p"}},      // ↙
-    {Shift | Super, XK_comma, floatpos, {.v = " 0p  1p"}},  // ↓
-    {Shift | Super, XK_period, floatpos, {.v = " 1p  1p"}}, // ↘
-#endif                                                      // FLOATPOS_PATCH
+    {Shift | Alt, XK_u, floatpos, {.v = "-1p -1p"}},      // ↖
+    {Shift | Alt, XK_i, floatpos, {.v = " 0p -1p"}},      // ↑
+    {Shift | Alt, XK_o, floatpos, {.v = " 1p -1p"}},      // ↗
+    {Shift | Alt, XK_j, floatpos, {.v = "-1p  0p"}},      // ←
+    {Shift | Alt, XK_k, floatpos, {.v = " 0p  0p"}},      // ·
+    {Shift | Alt, XK_l, floatpos, {.v = " 1p  0p"}},      // →
+    {Shift | Alt, XK_m, floatpos, {.v = "-1p  1p"}},      // ↙
+    {Shift | Alt, XK_comma, floatpos, {.v = " 0p  1p"}},  // ↓
+    {Shift | Alt, XK_period, floatpos, {.v = " 1p  1p"}}, // ↘
+#endif                                                    // FLOATPOS_PATCH
 #if SETBORDERPX_PATCH
     {ModKey | Control, XK_minus, setborderpx, {.i = -1}},
     {ModKey | Control, XK_plus, setborderpx, {.i = +1}},
